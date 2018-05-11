@@ -1,4 +1,5 @@
 from global_sets.component import m
+import pickle
 
 '''-----------------------------------------------------------------------------
 This is used to create dual variables for a model
@@ -68,15 +69,19 @@ def save_all(model,results,name):
     print('-'*100)
     print(results.Solution.Constraint.items())
 
-def load_all(model,results,name):
+def load_result(model,name):
     with open('{}.pickle'.format(name), 'rb') as f:
         results = pickle.load(f)
+    return results
+
+def load_all(model,results,name):
     model.solutions.load_from(results)
     print('Valar Dohaeris\nEntire Solution (include dual) Loaded')
     print('-'*100)
     print(results.Solution.Variable.items())
     print('-'*100)
     print(results.Solution.Constraint.items())
+    return results
 
 '''-----------------------------------------------------------------------------
 This is used to debug pyomo models by printing relevant constraints and

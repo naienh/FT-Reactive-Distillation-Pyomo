@@ -68,6 +68,10 @@ def trans_product_scaled(dic):
 #####----------------------------------------------------------------------#####
 
 def cal_MW(name):
+    if name == 'H2O': return 18
+    if name == 'CO2': return 44
+    if name == 'CO': return 28
+    if name == 'H2': return 2
     start = name.index('C')+1
     end = name.index('H')
     MW = int(name[start:end])*12 + int(name[end+1:])
@@ -205,7 +209,6 @@ def save_all(model,results,name):
     print(results.Solution.Variable.items())
     print('-'*100)
     print(results.Solution.Constraint.items())
-
 
 def load_all(model,results,name):
     with open('{}.pickle'.format(name), 'rb') as f:
