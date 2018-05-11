@@ -4,7 +4,7 @@
 # dHi = A + B/T + C*ln(T)+DT^2 + E/T^2 (T: K)
 
 import xlrd
-from data.utility import readcol
+from utility.data_utility import readcol
 try:
     workbook = xlrd.open_workbook("data/VLE_data.xlsx")
 except:

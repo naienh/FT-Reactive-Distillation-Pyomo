@@ -5,7 +5,7 @@
 # dHv (kJ/mol)
 
 import xlrd
-from data.utility import readcol
+from utility.data_utility import readcol
 try:
     workbook = xlrd.open_workbook("data/thermo_data.xlsx")
 except:

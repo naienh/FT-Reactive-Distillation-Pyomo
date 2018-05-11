@@ -149,10 +149,14 @@ This is used to get the current DOF of the model, will be checking for
 equality and inequality, as well as fixed variables
 -----------------------------------------------------------------------------'''
 def check_DOF(pyomo,m):
-    constraint_number = len([i for i in m.component_data_objects(pyomo.Constraint, active=True)])
+    equality_number = len([i for i in m.component_data_objects(pyomo.Constraint, active=True)\
+                if i.upper is not None and i.lower is not None])
+    inequality_number = len([i for i in m.component_data_objects(pyomo.Constraint, active=True)\
+                if i.upper is None or i.lower is None])
     variable_number = len([i for i in m.component_data_objects(pyomo.Var, active=True)])
     fixed_variable_number = sum([i.fixed for i in m.component_data_objects(pyomo.Var, active=True)])
-    print('Active Constraints:\t',constraint_number)
+    print('Active Equality Constraints:\t',equality_number)
+    print('Active Inequality Constraints:\t',inequality_number)
     print('Active Variables:\t',variable_number)
     print('Fixed Variables:\t',fixed_variable_number)
-    print('DOF:\t\t\t',variable_number-fixed_variable_number-constraint_number)
+    print('DOF:\t\t\t',variable_number-fixed_variable_number-equality_number)
