@@ -41,14 +41,14 @@ def VLE_block_rule(block):
     # fugacity variable
     block.Hen = pe.Var(block.COMP_HENRY,within=pe.NonNegativeReals)  # Bar
     block.Hen0 = pe.Var(block.COMP_HENRY,within=pe.Reals,initialize=5)
-    block.gamma = pe.Var(block.COMP_NONHENRY,within=pe.NonNegativeReals,initialize=0.1)
-    block.P_sat = pe.Var(block.COMP_NONHENRY,within=pe.NonNegativeReals,initialize=1e-20)  # Bar
+    block.gamma = pe.Var(block.COMP_NONHENRY,within=pe.PositiveReals,initialize=0.1)
+    block.P_sat = pe.Var(block.COMP_NONHENRY,within=pe.PositiveReals,initialize=1e-20)  # Bar
     block.P_sat_dY_inf = pe.Var(within=pe.Reals)
     block.P_sat_dY0 = pe.Var(within=pe.Reals)
 
     block.Hen_ref = pe.Var(within=pe.NonNegativeReals,initialize=14)
     block.Hen0_ref = pe.Var(within=pe.Reals,initialize=3.6)
-    block.gamma_ref = pe.Var(within=pe.NonNegativeReals,initialize=0.2)
+    block.gamma_ref = pe.Var(within=pe.PositiveReals,initialize=0.2)
 
     print('>','Importing VLE Blocks......')
     print('>','Adding the following local variable:')
