@@ -3,6 +3,7 @@
 # this module define the rules for constructing a kinetics block in the master block
 # this is the global component set import, so that all modules uses the same set
 from global_sets.component import m
+from physics.bounds import kinetic_bounds
 
 # data import
 from data import kinetic_data as k
@@ -34,19 +35,55 @@ def kinetic_block_rule(block):
     # print('\t'*2,'-'*36)
     # print('')
 
+    #-----------------------------VARIABLES Bounds------------------------------
+    def k_FT_bounds(model):
+        lower = min(kinetic_bounds['k_FT'])
+        lower = lower - abs(lower)*0.1
+        upper = max(kinetic_bounds['k_FT'])
+        upper = upper + abs(upper)*0.1
+        return (lower,upper)
+
+    def g0_FT_bounds(model):
+        lower = min(kinetic_bounds['g0_FT'])
+        lower = lower - abs(lower)*0.1
+        upper = max(kinetic_bounds['g0_FT'])
+        upper = upper + abs(upper)*0.1
+        return (lower,upper)
+
+    def alpha_bounds(model):
+        lower = min(kinetic_bounds['alpha'])
+        lower = lower - abs(lower)*0.1
+        upper = max(kinetic_bounds['alpha'])
+        upper = upper + abs(upper)*0.1
+        return (lower,upper)
+
+    def k_WGS_bounds(model):
+        lower = min(kinetic_bounds['k_WGS'])
+        lower = lower - abs(lower)*0.1
+        upper = max(kinetic_bounds['k_WGS'])
+        upper = upper + abs(upper)*0.1
+        return (lower,upper)
+
+    def Ke_WGS_bounds(model):
+        lower = min(kinetic_bounds['Ke_WGS'])
+        lower = lower - abs(lower)*0.1
+        upper = max(kinetic_bounds['Ke_WGS'])
+        upper = upper + abs(upper)*0.1
+        return (lower,upper)
+
     #------------------------------LOCAL VARIABLES------------------------------
 
     # FT Reaction
-    block.k_FT = pe.Var(within=pe.PositiveReals,bounds=(5.5e-5,2.5e-3),initialize=5e-4)
+    block.k_FT = pe.Var(within=pe.PositiveReals,bounds=k_FT_bounds,initialize=5e-4)
     block.r_FT_total = pe.Var(within=pe.PositiveReals)
-    block.g0_FT = pe.Var(within=pe.Reals,bounds=(-5,15))
-    block.alpha = pe.Var(within=pe.PositiveReals,bounds=(0.45,0.95),initialize=0.7)
+    block.g0_FT = pe.Var(within=pe.Reals,bounds=g0_FT_bounds)
+    block.alpha = pe.Var(within=pe.PositiveReals,bounds=alpha_bounds,initialize=0.7)
     block.r_FT_cnum = pe.Var(block.C_NUMBER,within=pe.PositiveReals)
     block.r_FT_comp = pe.Var(m.COMP_TOTAL,within=pe.Reals)         # kmol/s
 
     # WGS Reaction
-    block.k_WGS = pe.Var(within=pe.PositiveReals,bounds=(2.3e-6,2e-3),initialize=2e-4)
-    block.Ke_WGS = pe.Var(within=pe.PositiveReals,bounds=(2,3.5),initialize=3)
+    block.k_WGS = pe.Var(within=pe.PositiveReals,bounds=k_WGS_bounds,initialize=2e-4)
+    block.Ke_WGS = pe.Var(within=pe.PositiveReals,bounds=Ke_WGS_bounds,initialize=3)
     block.r_WGS = pe.Var(within=pe.PositiveReals)
     block.r_WGS_comp = pe.Var(m.COMP_INORG,within=pe.Reals)         # kmol/s
 

@@ -4,6 +4,7 @@
 # this module define the rules for constructing a energy block in the master block
 # this is the global component set import, so that all modules uses the same set
 from global_sets.component import m
+from physics.bounds import energy_bounds
 
 # data import and pre-processing
 from data import thermal_data as h
@@ -31,14 +32,35 @@ def energy_block_rule(block):
     # print('\t'*2,block.parent_block().H_L.name)
     # print('\t'*2,'-'*36)
     # print('')
+    #-----------------------------VARIABLES Bounds------------------------------
+    def dH_V_bounds(model,i):
+        lower = min(energy_bounds['dH_V[{}]'.format(i)])
+        lower = lower - abs(lower)*0.1
+        upper = max(energy_bounds['dH_V[{}]'.format(i)])
+        upper = upper + abs(upper)*0.1
+        return (lower,upper)
+
+    def dH_L_bounds(model,i):
+        lower = min(energy_bounds['dH_L[{}]'.format(i)])
+        lower = lower - abs(lower)*0.1
+        upper = max(energy_bounds['dH_L[{}]'.format(i)])
+        upper = upper + abs(upper)*0.1
+        return (lower,upper)
+
+    def dH_vap_bounds(model,i):
+        lower = min(energy_bounds['dH_vap[{}]'.format(i)])
+        lower = lower - abs(lower)*0.1
+        upper = max(energy_bounds['dH_vap[{}]'.format(i)])
+        upper = upper + abs(upper)*0.1
+        return (lower,upper)
 
     #------------------------------LOCAL VARIABLES------------------------------
 
     # Molar Enthalpy for gas, liquid and vaporization at temperature
     block.dH_F = pe.Var(m.COMP_FEED,within=pe.Reals)  # kJ/mol
-    block.dH_V = pe.Var(m.COMP_TOTAL,within=pe.Reals)
-    block.dH_L = pe.Var(m.COMP_TOTAL,within=pe.Reals)
-    block.dH_vap = pe.Var(m.COMP_TOTAL,within=pe.Reals)
+    block.dH_V = pe.Var(m.COMP_TOTAL,within=pe.Reals,bounds=dH_V_bounds)
+    block.dH_L = pe.Var(m.COMP_TOTAL,within=pe.Reals,bounds=dH_L_bounds)
+    block.dH_vap = pe.Var(m.COMP_TOTAL,within=pe.Reals,bounds=dH_vap_bounds)
 
     print('>','Importing Energy Blocks......')
     print('>','Adding the following local variable:')
@@ -64,10 +86,8 @@ def energy_block_rule(block):
 
     # Liquid
     def dH_vap_rule(block,i):
-        if h.Tc[i] > block.parent_block().T.ub:
-            return block.dH_vap[i] * (h.Tc[i]-h.Tb[i])**0.38 == h.HV[i] * (h.Tc[i]-block.parent_block().T)**0.38
-        else:
-            return block.dH_vap[i] == h.HV[i]
+        tmp = (h.Tc[i]-block.parent_block().T)/(h.Tc[i]-h.Tb[i])
+        return block.dH_vap[i] == h.HV[i] * (0.5*tmp + 0.5*(tmp**2+1e-6)**0.5)**0.38
     block.dH_vap_con = pe.Constraint(m.COMP_TOTAL,rule=dH_vap_rule)
 
     def dH_L_rule(block,i):

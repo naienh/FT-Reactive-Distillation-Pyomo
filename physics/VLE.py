@@ -3,6 +3,7 @@
 # this module define the rules for constructing a VLE block in the master block
 # this is the global component set import, so that all modules uses the same set
 from global_sets.component import m
+from physics.bounds import VLE_bounds
 
 # data import and pre-processing
 from data import VLE_data as e
@@ -32,6 +33,70 @@ def VLE_block_rule(block):
     # print('\t'*2,'-'*36)
     # print('')
 
+    #-----------------------------VARIABLES Bounds------------------------------
+    def Hen_bounds(model,i):
+        lower = min(VLE_bounds['Hen[{}]'.format(i)])
+        lower = lower - abs(lower)*0.1
+        upper = max(VLE_bounds['Hen[{}]'.format(i)])
+        upper = upper + abs(upper)*0.1
+        return (lower,upper)
+
+    def Hen0_bounds(model,i):
+        lower = min(VLE_bounds['Hen0[{}]'.format(i)])
+        lower = lower - abs(lower)*0.1
+        upper = max(VLE_bounds['Hen0[{}]'.format(i)])
+        upper = upper + abs(upper)*0.1
+        return (lower,upper)
+
+    def gamma_bounds(model,i):
+        lower = min(VLE_bounds['gamma[{}]'.format(i)])
+        lower = lower - abs(lower)*0.1
+        upper = max(VLE_bounds['gamma[{}]'.format(i)])
+        upper = upper + abs(upper)*0.1
+        return (lower,upper)
+
+    def P_sat_bounds(model,i):
+        lower = min(VLE_bounds['P_sat[{}]'.format(i)])
+        lower = lower - abs(lower)*0.1
+        upper = max(VLE_bounds['P_sat[{}]'.format(i)])
+        upper = upper + abs(upper)*0.1
+        return (lower,upper)
+
+    def P_sat_dY_inf_bounds(model):
+        lower = min(VLE_bounds['P_sat_dY_inf'])
+        lower = lower - abs(lower)*0.1
+        upper = max(VLE_bounds['P_sat_dY_inf'])
+        upper = upper + abs(upper)*0.1
+        return (lower,upper)
+
+    def P_sat_dY0_bounds(model):
+        lower = min(VLE_bounds['P_sat_dY0'])
+        lower = lower - abs(lower)*0.1
+        upper = max(VLE_bounds['P_sat_dY0'])
+        upper = upper + abs(upper)*0.1
+        return (lower,upper)
+
+    def Hen_ref_bounds(model):
+        lower = min(VLE_bounds['Hen_ref'])
+        lower = lower - abs(lower)*0.01
+        upper = max(VLE_bounds['Hen_ref'])
+        upper = upper + abs(upper)*0.01
+        return (lower,upper)
+
+    def Hen0_ref_bounds(model):
+        lower = min(VLE_bounds['Hen0_ref'])
+        lower = lower - abs(lower)*0.01
+        upper = max(VLE_bounds['Hen0_ref'])
+        upper = upper + abs(upper)*0.01
+        return (lower,upper)
+
+    def gamma_ref_bounds(model):
+        lower = min(VLE_bounds['gamma_ref'])
+        lower = lower - abs(lower)*0.01
+        upper = max(VLE_bounds['gamma_ref'])
+        upper = upper + abs(upper)*0.01
+        return (lower,upper)
+
     #------------------------------LOCAL VARIABLES------------------------------
 
     # teared n_ave, initial guess try to converge to calculated average
@@ -39,16 +104,16 @@ def VLE_block_rule(block):
     block.n_ave_cal = pe.Var(within=pe.NonNegativeReals)
 
     # fugacity variable
-    block.Hen = pe.Var(block.COMP_HENRY,within=pe.NonNegativeReals)  # Bar
-    block.Hen0 = pe.Var(block.COMP_HENRY,within=pe.Reals,initialize=5)
-    block.gamma = pe.Var(block.COMP_NONHENRY,within=pe.PositiveReals,initialize=0.1)
-    block.P_sat = pe.Var(block.COMP_NONHENRY,within=pe.PositiveReals,initialize=1e-20)  # Bar
-    block.P_sat_dY_inf = pe.Var(within=pe.Reals)
-    block.P_sat_dY0 = pe.Var(within=pe.Reals)
+    block.Hen = pe.Var(block.COMP_HENRY,within=pe.NonNegativeReals,bounds=Hen_bounds)  # Bar
+    block.Hen0 = pe.Var(block.COMP_HENRY,within=pe.Reals,initialize=5,bounds=Hen0_bounds)
+    block.gamma = pe.Var(block.COMP_NONHENRY,within=pe.PositiveReals,initialize=0.1,bounds=gamma_bounds)
+    block.P_sat = pe.Var(block.COMP_NONHENRY,within=pe.PositiveReals,initialize=1e-10,bounds=P_sat_bounds)  # Bar
+    block.P_sat_dY_inf = pe.Var(within=pe.Reals,bounds=P_sat_dY_inf_bounds)
+    block.P_sat_dY0 = pe.Var(within=pe.Reals,bounds=P_sat_dY0_bounds)
 
-    block.Hen_ref = pe.Var(within=pe.NonNegativeReals,initialize=14)
-    block.Hen0_ref = pe.Var(within=pe.Reals,initialize=3.6)
-    block.gamma_ref = pe.Var(within=pe.PositiveReals,initialize=0.2)
+    block.Hen_ref = pe.Var(within=pe.NonNegativeReals,initialize=14,bounds=Hen_ref_bounds)
+    block.Hen0_ref = pe.Var(within=pe.Reals,initialize=3.6,bounds=Hen0_ref_bounds)
+    block.gamma_ref = pe.Var(within=pe.PositiveReals,initialize=0.2,bounds=gamma_ref_bounds)
 
     print('>','Importing VLE Blocks......')
     print('>','Adding the following local variable:')
