@@ -62,6 +62,13 @@ def VLE_block_rule(block):
         upper = upper + abs(upper)*0.1
         return (lower,upper)
 
+    def P_sat_Y_bounds(model,i):
+        lower = min(VLE_bounds['P_sat_Y[{}]'.format(i)])
+        lower = lower - abs(lower)*0.1
+        upper = max(VLE_bounds['P_sat_Y[{}]'.format(i)])
+        upper = upper + abs(upper)*0.1
+        return (lower,upper)
+
     def P_sat_dY_inf_bounds(model):
         lower = min(VLE_bounds['P_sat_dY_inf'])
         lower = lower - abs(lower)*0.1
@@ -78,29 +85,29 @@ def VLE_block_rule(block):
 
     def Hen_ref_bounds(model):
         lower = min(VLE_bounds['Hen_ref'])
-        lower = lower - abs(lower)*0.01
+        lower = lower - abs(lower)*1
         upper = max(VLE_bounds['Hen_ref'])
-        upper = upper + abs(upper)*0.01
+        upper = upper + abs(upper)*1
         return (lower,upper)
 
     def Hen0_ref_bounds(model):
         lower = min(VLE_bounds['Hen0_ref'])
-        lower = lower - abs(lower)*0.01
+        lower = lower - abs(lower)*1
         upper = max(VLE_bounds['Hen0_ref'])
-        upper = upper + abs(upper)*0.01
+        upper = upper + abs(upper)*1
         return (lower,upper)
 
     def gamma_ref_bounds(model):
         lower = min(VLE_bounds['gamma_ref'])
-        lower = lower - abs(lower)*0.01
+        lower = lower - abs(lower)*1
         upper = max(VLE_bounds['gamma_ref'])
-        upper = upper + abs(upper)*0.01
+        upper = upper + abs(upper)*1
         return (lower,upper)
 
     #------------------------------LOCAL VARIABLES------------------------------
 
     # teared n_ave, initial guess try to converge to calculated average
-    block.n_ave = pe.Var(within=pe.NonNegativeReals,bounds=(7,40))
+    block.n_ave = pe.Var(within=pe.NonNegativeReals,bounds=(7,58))
     block.n_ave_cal = pe.Var(within=pe.NonNegativeReals)
 
     # fugacity variable
@@ -108,6 +115,7 @@ def VLE_block_rule(block):
     block.Hen0 = pe.Var(block.COMP_HENRY,within=pe.Reals,initialize=5,bounds=Hen0_bounds)
     block.gamma = pe.Var(block.COMP_NONHENRY,within=pe.PositiveReals,initialize=0.1,bounds=gamma_bounds)
     block.P_sat = pe.Var(block.COMP_NONHENRY,within=pe.PositiveReals,initialize=1e-10,bounds=P_sat_bounds)  # Bar
+    block.P_sat_Y = pe.Var(block.COMP_NONHENRY,within=pe.Reals,bounds=P_sat_Y_bounds)
     block.P_sat_dY_inf = pe.Var(within=pe.Reals,bounds=P_sat_dY_inf_bounds)
     block.P_sat_dY0 = pe.Var(within=pe.Reals,bounds=P_sat_dY0_bounds)
 
@@ -172,14 +180,18 @@ def VLE_block_rule(block):
     block.n_ave_con = pe.Constraint(rule=n_ave_rule)
 
     # saturated pressure
-    def P_sat_rule(block,i):
+    def P_sat_rule1(block,i):
         if i in m.COMP_PARAFFIN:
             n_n0 = cal_cnumber(i)-e.nonhenry.n0_paraffin
         elif i in m.COMP_OLEFIN:
             n_n0 = cal_cnumber(i)-e.nonhenry.n0_olefin
-        return pe.log(block.P_sat[i]) == e.nonhenry.Y_inf_0 + block.P_sat_dY_inf*(n_n0) \
+        return block.P_sat_Y[i] == e.nonhenry.Y_inf_0 + block.P_sat_dY_inf*(n_n0) \
                     - block.P_sat_dY0*pe.exp(-e.nonhenry.beta*(n_n0)**e.nonhenry.gamma)
-    block.P_sat_con = pe.Constraint(block.COMP_NONHENRY,rule=P_sat_rule)
+    block.P_sat_con1 = pe.Constraint(block.COMP_NONHENRY,rule=P_sat_rule1)
+
+    def P_sat_rule2(block,i):
+        return block.P_sat[i] == pe.exp(block.P_sat_Y[i])
+    block.P_sat_con2 = pe.Constraint(block.COMP_NONHENRY,rule=P_sat_rule2)
 
     def P_sat_dY_inf_rule(block):
         return e.nonhenry.dY_inf.A + e.nonhenry.dY_inf.B/block.parent_block().T + e.nonhenry.dY_inf.C*pe.log(block.parent_block().T) + \

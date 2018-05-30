@@ -4,6 +4,7 @@
 # this module define the rules for constructing a energy block in the master block
 # this is the global component set import, so that all modules uses the same set
 from global_sets.component import m
+from physics.bounds import energy_bounds2 as energy_bounds
 
 # data import and pre-processing
 from data import thermal_data as h
@@ -32,34 +33,34 @@ def energy_block_rule(block):
     # print('\t'*2,'-'*36)
     # print('')
     #-----------------------------VARIABLES Bounds------------------------------
-    # def dH_V_bounds(model,i):
-    #     lower = min(energy_bounds['dH_V[{}]'.format(i)])
-    #     lower = lower - abs(lower)*0.1
-    #     upper = max(energy_bounds['dH_V[{}]'.format(i)])
-    #     upper = upper + abs(upper)*0.1
-    #     return (lower,upper)
-    #
-    # def dH_L_bounds(model,i):
-    #     lower = min(energy_bounds['dH_L[{}]'.format(i)])
-    #     lower = lower - abs(lower)*0.1
-    #     upper = max(energy_bounds['dH_L[{}]'.format(i)])
-    #     upper = upper + abs(upper)*0.1
-    #     return (lower,upper)
-    #
-    # def dH_vap_bounds(model,i):
-    #     lower = min(energy_bounds['dH_vap[{}]'.format(i)])
-    #     lower = lower - abs(lower)*0.1
-    #     upper = max(energy_bounds['dH_vap[{}]'.format(i)])
-    #     upper = upper + abs(upper)*0.1
-    #     return (lower,upper)
+    def dH_V_bounds(model,i):
+        lower = min(energy_bounds['dH_V[{}]'.format(i)])
+        lower = lower - abs(lower)*0.2
+        upper = max(energy_bounds['dH_V[{}]'.format(i)])
+        upper = upper + abs(upper)*0.2
+        return (lower,upper)
+
+    def dH_L_bounds(model,i):
+        lower = min(energy_bounds['dH_L[{}]'.format(i)])
+        lower = lower - abs(lower)*0.2
+        upper = max(energy_bounds['dH_L[{}]'.format(i)])
+        upper = upper + abs(upper)*0.2
+        return (lower,upper)
+
+    def dH_vap_bounds(model,i):
+        lower = min(energy_bounds['dH_vap[{}]'.format(i)])
+        lower = lower - abs(lower)*0.2
+        upper = max(energy_bounds['dH_vap[{}]'.format(i)])
+        upper = upper + abs(upper)*0.2
+        return (lower,upper)
 
     #------------------------------LOCAL VARIABLES------------------------------
 
     # Molar Enthalpy for gas, liquid and vaporization at temperature
     block.dH_F = pe.Var(m.COMP_FEED,within=pe.Reals)  # kJ/mol
-    block.dH_V = pe.Var(m.COMP_TOTAL,within=pe.Reals)
-    block.dH_L = pe.Var(m.COMP_TOTAL,within=pe.Reals)
-    block.dH_vap = pe.Var(m.COMP_TOTAL,within=pe.Reals)
+    block.dH_V = pe.Var(m.COMP_TOTAL,within=pe.Reals,bounds=dH_V_bounds)
+    block.dH_L = pe.Var(m.COMP_TOTAL,within=pe.Reals,bounds=dH_L_bounds)
+    block.dH_vap = pe.Var(m.COMP_TOTAL,within=pe.Reals,bounds=dH_vap_bounds)
 
     print('>','Importing Energy Blocks......')
     print('>','Adding the following local variable:')

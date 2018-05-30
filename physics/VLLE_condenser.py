@@ -63,6 +63,13 @@ def VLLE_block_rule(block):
         upper = upper + abs(upper)*0.2
         return (lower,upper)
 
+    def P_sat_Y_bounds(model,i):
+        lower = min(VLE_bounds['P_sat_Y[{}]'.format(i)])
+        lower = lower - abs(lower)*0.2
+        upper = max(VLE_bounds['P_sat_Y[{}]'.format(i)])
+        upper = upper + abs(upper)*0.2
+        return (lower,upper)
+
     def P_sat_dY_inf_bounds(model):
         lower = min(VLE_bounds['P_sat_dY_inf'])
         lower = lower - abs(lower)*0.2
@@ -109,6 +116,7 @@ def VLLE_block_rule(block):
     block.Hen0 = pe.Var(block.COMP_HENRY,within=pe.Reals,initialize=4, bounds=Hen0_bounds)
     block.gamma = pe.Var(block.COMP_NONHENRY,within=pe.NonNegativeReals,initialize=0.1, bounds=gamma_bounds)
     block.P_sat = pe.Var(block.COMP_NONHENRY,within=pe.NonNegativeReals,initialize=1e-13, bounds=P_sat_bounds)  # Bar
+    block.P_sat_Y = pe.Var(block.COMP_NONHENRY,within=pe.Reals,bounds=P_sat_Y_bounds)
     block.P_sat_dY_inf = pe.Var(within=pe.Reals, bounds=P_sat_dY_inf_bounds)
     block.P_sat_dY0 = pe.Var(within=pe.Reals, bounds=P_sat_dY0_bounds)
 
@@ -173,14 +181,18 @@ def VLLE_block_rule(block):
     block.n_ave_con = pe.Constraint(rule=n_ave_rule)
 
     # saturated pressure
-    def P_sat_rule(block,i):
+    def P_sat_rule1(block,i):
         if i in m.COMP_PARAFFIN:
             n_n0 = cal_cnumber(i)-e.nonhenry.n0_paraffin
         elif i in m.COMP_OLEFIN:
             n_n0 = cal_cnumber(i)-e.nonhenry.n0_olefin
-        return pe.log(block.P_sat[i]) == e.nonhenry.Y_inf_0 + block.P_sat_dY_inf*(n_n0) \
+        return block.P_sat_Y[i] == e.nonhenry.Y_inf_0 + block.P_sat_dY_inf*(n_n0) \
                     - block.P_sat_dY0*pe.exp(-e.nonhenry.beta*(n_n0)**e.nonhenry.gamma)
-    block.P_sat_con = pe.Constraint(block.COMP_NONHENRY,rule=P_sat_rule)
+    block.P_sat_con1 = pe.Constraint(block.COMP_NONHENRY,rule=P_sat_rule1)
+
+    def P_sat_rule2(block,i):
+        return block.P_sat[i] == pe.exp(block.P_sat_Y[i])
+    block.P_sat_con2 = pe.Constraint(block.COMP_NONHENRY,rule=P_sat_rule2)
 
     def P_sat_dY_inf_rule(block):
         return e.nonhenry.dY_inf.A + e.nonhenry.dY_inf.B/block.parent_block().T + e.nonhenry.dY_inf.C*pe.log(block.parent_block().T) + \
