@@ -3,7 +3,7 @@
 # this module define the rules for constructing a VLE block in the master block
 # this is the global component set import, so that all modules uses the same set
 from global_sets.component import m
-from physics.bounds import VLLE_bounds as VLE_bounds
+from physics.bounds import VLE_bounds
 
 # data import and pre-processing
 from data import VLE_data as e
@@ -11,13 +11,12 @@ from utility.data_utility import cal_cnumber
 from pyomo import environ as pe
 
 # defile knietic block rule
-def VLLE_block_rule(block):
+def VLE_block_rule(block):
     #-----------------------------------SETS-----------------------------------
 
     # local sets that will only be used in VLE block
     block.COMP_HENRY = pe.Set(initialize=['H2','CO','CO2','H2O','C1H4','C2H6','C3H8','C2H4','C3H6'])
-    block.COMP_WATER = pe.Set(initialize=['H2O'])
-    block.COMP_NONHENRY = m.COMP_TOTAL - block.COMP_HENRY - block.COMP_WATER
+    block.COMP_NONHENRY = m.COMP_TOTAL - block.COMP_HENRY
 
     #-----------------------------GLOBAL VARIABLES-----------------------------
 
@@ -63,13 +62,6 @@ def VLLE_block_rule(block):
         upper = upper + abs(upper)*0.2
         return (lower,upper)
 
-    def P_sat_Y_bounds(model,i):
-        lower = min(VLE_bounds['P_sat_Y[{}]'.format(i)])
-        lower = lower - abs(lower)*0.2
-        upper = max(VLE_bounds['P_sat_Y[{}]'.format(i)])
-        upper = upper + abs(upper)*0.2
-        return (lower,upper)
-
     def P_sat_dY_inf_bounds(model):
         lower = min(VLE_bounds['P_sat_dY_inf'])
         lower = lower - abs(lower)*0.2
@@ -112,17 +104,16 @@ def VLLE_block_rule(block):
     block.n_ave_cal = pe.Var(within=pe.NonNegativeReals)
 
     # fugacity variable
-    block.Hen = pe.Var(block.COMP_HENRY,within=pe.NonNegativeReals, bounds=Hen_bounds)  # Bar
-    block.Hen0 = pe.Var(block.COMP_HENRY,within=pe.Reals,initialize=4, bounds=Hen0_bounds)
-    block.gamma = pe.Var(block.COMP_NONHENRY,within=pe.NonNegativeReals,initialize=0.1, bounds=gamma_bounds)
-    block.P_sat = pe.Var(block.COMP_NONHENRY,within=pe.NonNegativeReals,initialize=1e-13, bounds=P_sat_bounds)  # Bar
-    block.P_sat_Y = pe.Var(block.COMP_NONHENRY,within=pe.Reals,bounds=P_sat_Y_bounds)
-    block.P_sat_dY_inf = pe.Var(within=pe.Reals, bounds=P_sat_dY_inf_bounds)
-    block.P_sat_dY0 = pe.Var(within=pe.Reals, bounds=P_sat_dY0_bounds)
+    block.Hen = pe.Var(block.COMP_HENRY,within=pe.NonNegativeReals,bounds=Hen_bounds)  # Bar
+    block.Hen0 = pe.Var(block.COMP_HENRY,within=pe.Reals,initialize=5,bounds=Hen0_bounds)
+    block.gamma = pe.Var(block.COMP_NONHENRY,within=pe.NonNegativeReals,initialize=0.1,bounds=gamma_bounds)
+    block.P_sat = pe.Var(block.COMP_NONHENRY,within=pe.NonNegativeReals,initialize=1e-10,bounds=P_sat_bounds)  # Bar
+    block.P_sat_dY_inf = pe.Var(within=pe.Reals,bounds=P_sat_dY_inf_bounds)
+    block.P_sat_dY0 = pe.Var(within=pe.Reals,bounds=P_sat_dY0_bounds)
 
-    block.Hen_ref = pe.Var(within=pe.NonNegativeReals,initialize=0.1, bounds=Hen_ref_bounds)
-    block.Hen0_ref = pe.Var(within=pe.Reals,initialize=-1.2, bounds=Hen0_ref_bounds)
-    block.gamma_ref = pe.Var(within=pe.NonNegativeReals,initialize=0.3, bounds=gamma_ref_bounds)
+    block.Hen_ref = pe.Var(within=pe.NonNegativeReals,initialize=14,bounds=Hen_ref_bounds)
+    block.Hen0_ref = pe.Var(within=pe.Reals,initialize=3.6,bounds=Hen0_ref_bounds)
+    block.gamma_ref = pe.Var(within=pe.PositiveReals,initialize=0.2,bounds=gamma_ref_bounds)
 
     print('>','Importing VLE Blocks......')
     print('>','Adding the following local variable:')
@@ -186,13 +177,9 @@ def VLLE_block_rule(block):
             n_n0 = cal_cnumber(i)-e.nonhenry.n0_paraffin
         elif i in m.COMP_OLEFIN:
             n_n0 = cal_cnumber(i)-e.nonhenry.n0_olefin
-        return block.P_sat_Y[i] == e.nonhenry.Y_inf_0 + block.P_sat_dY_inf*(n_n0) \
+        return pe.log(block.P_sat[i]) == e.nonhenry.Y_inf_0 + block.P_sat_dY_inf*(n_n0) \
                     - block.P_sat_dY0*pe.exp(-e.nonhenry.beta*(n_n0)**e.nonhenry.gamma)
     block.P_sat_con = pe.Constraint(block.COMP_NONHENRY,rule=P_sat_rule1)
-
-    def P_sat_rule2(block,i):
-        return block.P_sat[i] == pe.exp(block.P_sat_Y[i])
-    block.P_sat_con2 = pe.Constraint(block.COMP_NONHENRY,rule=P_sat_rule2)
 
     def P_sat_dY_inf_rule(block):
         return e.nonhenry.dY_inf.A + e.nonhenry.dY_inf.B/block.parent_block().T + e.nonhenry.dY_inf.C*pe.log(block.parent_block().T) + \
@@ -207,4 +194,4 @@ def VLLE_block_rule(block):
     # gas phase assume ideal
     def f_V_rule(block,i):
         return block.parent_block().P*block.parent_block().y[i] == block.parent_block().f_V[i]
-    block.f_V_con = pe.Constraint(block.COMP_HENRY | block.COMP_NONHENRY,rule=f_V_rule)
+    block.f_V_con = pe.Constraint(m.COMP_TOTAL,rule=f_V_rule)

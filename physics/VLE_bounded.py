@@ -187,7 +187,7 @@ def VLE_block_rule(block):
             n_n0 = cal_cnumber(i)-e.nonhenry.n0_olefin
         return block.P_sat_Y[i] == e.nonhenry.Y_inf_0 + block.P_sat_dY_inf*(n_n0) \
                     - block.P_sat_dY0*pe.exp(-e.nonhenry.beta*(n_n0)**e.nonhenry.gamma)
-    block.P_sat_con1 = pe.Constraint(block.COMP_NONHENRY,rule=P_sat_rule1)
+    block.P_sat_con = pe.Constraint(block.COMP_NONHENRY,rule=P_sat_rule1)
 
     def P_sat_rule2(block,i):
         return block.P_sat[i] == pe.exp(block.P_sat_Y[i])
