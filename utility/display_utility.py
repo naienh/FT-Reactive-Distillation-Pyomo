@@ -107,14 +107,14 @@ def beautify2(pe,model):
         print('{:20.2f}'.format(model.reactive[j].T.value - 273.15),'\t','{:20.10f}'.format(model.reactive[j].Q_main.value),'\t','{:20.10f}'.format(model.reactive[j].V['out'].value),'\t','{:20.10f}'.format(model.reactive[j].L['out'].value))
     print('-'*100)
 
-    print('Top Product')
+    print('Top')
     print('V\t',model.condenser.V['out'].value)
     print('L\t',model.condenser.L['P'].value)
     print('W\t',model.condenser.W.value)
     print('-'*100)
 
-    print('Bottom Product L')
-    print(model.reactive[model.TRAY.last()].L['out'].value)
+    print('Bottom')
+    print('L\t',model.reactive[model.TRAY.last()].L['out'].value)
     print('-'*100)
 
     print('Condenser:\tVapor\t\tLiquid\t\tLast Stage\tVapor\t\tLiquid')
