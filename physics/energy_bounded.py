@@ -10,6 +10,10 @@ from physics.bounds import energy_bounds
 from data import thermal_data as h
 from pyomo import environ as pe
 
+# 
+、
+
+
 # import mean
 from statistics import mean
 
