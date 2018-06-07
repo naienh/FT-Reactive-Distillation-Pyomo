@@ -10,6 +10,9 @@ from data import kinetic_data as k
 from utility.data_utility import cal_op
 from pyomo import environ as pe
 
+# import mean
+from statistics import mean
+
 # pre-processing
 op_ratio = cal_op(k.op_ratio)
 h2_consumption = [(2*(i+1)+2)/2*op_ratio[i] + (2*(i+1))/2*(1-op_ratio[i]) for i in range(len(op_ratio))]
@@ -86,6 +89,13 @@ def kinetic_block_rule(block):
     block.Ke_WGS = pe.Var(within=pe.PositiveReals,bounds=Ke_WGS_bounds,initialize=3)
     block.r_WGS = pe.Var(within=pe.PositiveReals)
     block.r_WGS_comp = pe.Var(m.COMP_INORG,within=pe.Reals)         # kmol/s
+
+    # initialize these variable: 1/2(ub+lb)
+    block.k_FT = mean(kinetic_bounds['k_FT'])
+    block.g0_FT = mean(kinetic_bounds['g0_FT'])
+    block.alpha = mean(kinetic_bounds['alpha'])
+    block.k_WGS = mean(kinetic_bounds['k_WGS'])
+    block.Ke_WGS = mean(kinetic_bounds['Ke_WGS'])
 
     print('>','Importing Kinetics Blocks......')
     print('>','Adding the following local variable:')

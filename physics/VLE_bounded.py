@@ -10,6 +10,9 @@ from data import VLE_data as e
 from utility.data_utility import cal_cnumber
 from pyomo import environ as pe
 
+# import mean
+from statistics import mean
+
 # defile knietic block rule
 def VLE_block_rule(block):
     #-----------------------------------SETS-----------------------------------
@@ -119,9 +122,29 @@ def VLE_block_rule(block):
     block.P_sat_dY_inf = pe.Var(within=pe.Reals,bounds=P_sat_dY_inf_bounds)
     block.P_sat_dY0 = pe.Var(within=pe.Reals,bounds=P_sat_dY0_bounds)
 
-    block.Hen_ref = pe.Var(within=pe.NonNegativeReals,initialize=14,bounds=Hen_ref_bounds)
-    block.Hen0_ref = pe.Var(within=pe.Reals,initialize=3.6,bounds=Hen0_ref_bounds)
-    block.gamma_ref = pe.Var(within=pe.PositiveReals,initialize=0.2,bounds=gamma_ref_bounds)
+    # block.Hen_ref = pe.Var(within=pe.NonNegativeReals,initialize=14,bounds=Hen_ref_bounds)
+    # block.Hen0_ref = pe.Var(within=pe.Reals,initialize=3.6,bounds=Hen0_ref_bounds)
+    # block.gamma_ref = pe.Var(within=pe.PositiveReals,initialize=0.2,bounds=gamma_ref_bounds)
+
+    block.Hen_ref = pe.Var(within=pe.NonNegativeReals,initialize=14)
+    block.Hen0_ref = pe.Var(within=pe.Reals,initialize=3.6)
+    block.gamma_ref = pe.Var(within=pe.PositiveReals,initialize=0.2)
+
+    # initialize these variable: 1/2(ub+lb)
+    for i in block.COMP_HENRY:
+        block.Hen[i] = mean(VLE_bounds['Hen[{}]'.format(i)])
+        block.Hen0[i] = mean(VLE_bounds['Hen0[{}]'.format(i)])
+
+    for i in block.COMP_NONHENRY:
+        block.gamma[i] = mean(VLE_bounds['gamma[{}]'.format(i)])
+        block.P_sat[i] = mean(VLE_bounds['P_sat[{}]'.format(i)])
+        block.P_sat_Y[i] = mean(VLE_bounds['P_sat_Y[{}]'.format(i)])
+    #
+    block.P_sat_dY_inf = mean(VLE_bounds['P_sat_dY_inf'])
+    block.P_sat_dY0 = mean(VLE_bounds['P_sat_dY0'])
+    # block.Hen_ref = mean(VLE_bounds['Hen_ref'])
+    # block.Hen0_ref = mean(VLE_bounds['Hen0_ref'])
+    # block.gamma_ref = mean(VLE_bounds['gamma_ref'])
 
     print('>','Importing VLE Blocks......')
     print('>','Adding the following local variable:')

@@ -10,6 +10,9 @@ from physics.bounds import energy_bounds2 as energy_bounds
 from data import thermal_data as h
 from pyomo import environ as pe
 
+# import mean
+from statistics import mean
+
 # defile knietic block rule
 def energy_block_rule(block):
     #-----------------------------------SETS-----------------------------------
@@ -35,23 +38,23 @@ def energy_block_rule(block):
     #-----------------------------VARIABLES Bounds------------------------------
     def dH_V_bounds(model,i):
         lower = min(energy_bounds['dH_V[{}]'.format(i)])
-        lower = lower - abs(lower)*0.2
+        lower = lower - abs(lower)*0.1
         upper = max(energy_bounds['dH_V[{}]'.format(i)])
-        upper = upper + abs(upper)*0.2
+        upper = upper + abs(upper)*0.1
         return (lower,upper)
 
     def dH_L_bounds(model,i):
         lower = min(energy_bounds['dH_L[{}]'.format(i)])
-        lower = lower - abs(lower)*0.2
+        lower = lower - abs(lower)*0.1
         upper = max(energy_bounds['dH_L[{}]'.format(i)])
-        upper = upper + abs(upper)*0.2
+        upper = upper + abs(upper)*0.1
         return (lower,upper)
 
     def dH_vap_bounds(model,i):
         lower = min(energy_bounds['dH_vap[{}]'.format(i)])
-        lower = lower - abs(lower)*0.2
+        lower = lower - abs(lower)*0.1
         upper = max(energy_bounds['dH_vap[{}]'.format(i)])
-        upper = upper + abs(upper)*0.2
+        upper = upper + abs(upper)*0.1
         return (lower,upper)
 
     #------------------------------LOCAL VARIABLES------------------------------
@@ -61,6 +64,12 @@ def energy_block_rule(block):
     block.dH_V = pe.Var(m.COMP_TOTAL,within=pe.Reals,bounds=dH_V_bounds)
     block.dH_L = pe.Var(m.COMP_TOTAL,within=pe.Reals,bounds=dH_L_bounds)
     block.dH_vap = pe.Var(m.COMP_TOTAL,within=pe.Reals,bounds=dH_vap_bounds)
+
+    # initialize these variable: 1/2(ub+lb)
+    for i in m.COMP_TOTAL:
+        block.dH_V[i] = mean(energy_bounds['dH_V[{}]'.format(i)])
+        block.dH_L[i] = mean(energy_bounds['dH_L[{}]'.format(i)])
+        block.dH_vap[i] = mean(energy_bounds['dH_vap[{}]'.format(i)])
 
     print('>','Importing Energy Blocks......')
     print('>','Adding the following local variable:')
