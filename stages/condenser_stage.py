@@ -87,15 +87,15 @@ def condenser_stage_rule(block):
     block.L_water_con = pe.Constraint(block.COMP_WATER,rule=L_water_rule)
 
     def V_water_rule(block,i):
-        return block.y[i]*block.P == pe.exp(5.11564 - 1687.537/(block.T+230.17-273.15))
+        return block.y[i]*block.P == pe.exp(2.30258509299*(5.20389 - 1733.926/(block.T-39.485)))
     block.V_water_con = pe.Constraint(block.COMP_WATER,rule=V_water_rule)
 
     # add bounds specifically for water
-    # block.x['H2O'].setub(water_x[1]+abs(water_x[1])*0.1)
-    # block.x['H2O'].setlb(water_x[0]-abs(water_x[0])*0.1)
-    #
-    # block.y['H2O'].setub(water_yp[1]/block.P.lb)
-    # block.y['H2O'].setlb(water_yp[0]/block.P.ub)
+    block.x['H2O'].setub(water_x[1]+abs(water_x[1])*0.1)
+    block.x['H2O'].setlb(water_x[0]-abs(water_x[0])*0.1)
+
+    block.y['H2O'].setub(water_yp[1]/block.P.lb)
+    block.y['H2O'].setlb(water_yp[0]/block.P.ub)
 
     # Summation
     def summation_x_main_rule(block):

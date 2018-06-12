@@ -4,14 +4,19 @@ import pickle
 This is used to collect data from solved example to set up variable bounds
 A lot of local variables are temperature dependent, so can be safely bounded
 -----------------------------------------------------------------------------'''
-with open('../saved_solutions/reactive_flash_200C.pickle', 'rb') as f:
-    C200 = pickle.load(f)
-with open('../saved_solutions/reactive_flash_300C.pickle', 'rb') as f:
-    C300 = pickle.load(f)
+with open('../saved_solutions/reactive_flash_200C_n58.pickle', 'rb') as f:
+    C200_n58 = pickle.load(f)
+with open('../saved_solutions/reactive_flash_300C_n58.pickle', 'rb') as f:
+    C300_n58 = pickle.load(f)
+with open('../saved_solutions/reactive_flash_200C_n20.pickle', 'rb') as f:
+    C200_n20 = pickle.load(f)
+with open('../saved_solutions/reactive_flash_300C_n20.pickle', 'rb') as f:
+    C300_n20 = pickle.load(f)
 
 def collect_bounds1(name):
-    return {i.replace(name,''):[C200.solution.Variable[i]['Value'],C300.solution.Variable[i]['Value']]\
-     for i in C200.solution.Variable.keys() if i.startswith(name)}
+    return {i.replace(name,''):[C200_n58.solution.Variable[i]['Value'],C300_n58.solution.Variable[i]['Value'],\
+    C200_n20.solution.Variable[i]['Value'],C300_n20.solution.Variable[i]['Value']]\
+     for i in C200_n58.solution.Variable.keys() if i.startswith(name)}
 
 kinetic_bounds = collect_bounds1('kinetics_block.')
 energy_bounds = collect_bounds1('energy_block.')

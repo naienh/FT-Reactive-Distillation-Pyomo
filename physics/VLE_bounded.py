@@ -107,6 +107,34 @@ def VLE_block_rule(block):
         upper = upper + abs(upper)*1
         return (lower,upper)
 
+    def V_L_bounds(model,i):
+        lower = min(VLE_bounds['V_L[{}]'.format(i)])
+        lower = lower - abs(lower)*0.1
+        upper = max(VLE_bounds['V_L[{}]'.format(i)])
+        upper = upper + abs(upper)*0.1
+        return (lower,upper)
+
+    def V_L_dY_inf_bounds(model):
+        lower = min(VLE_bounds['V_L_dY_inf'])
+        lower = lower - abs(lower)*1
+        upper = max(VLE_bounds['V_L_dY_inf'])
+        upper = upper + abs(upper)*1
+        return (lower,upper)
+
+    def V_L_dY0_bounds(model):
+        lower = min(VLE_bounds['V_L_dY0'])
+        lower = lower - abs(lower)*1
+        upper = max(VLE_bounds['V_L_dY0'])
+        upper = upper + abs(upper)*1
+        return (lower,upper)
+
+    def poynting_bounds(model,i):
+        lower = min(VLE_bounds['poynting[{}]'.format(i)])
+        lower = lower - abs(lower)*0.1
+        upper = max(VLE_bounds['poynting[{}]'.format(i)])
+        upper = upper + abs(upper)*0.1
+        return (lower,upper)
+
     #------------------------------LOCAL VARIABLES------------------------------
 
     # teared n_ave, initial guess try to converge to calculated average
@@ -130,18 +158,29 @@ def VLE_block_rule(block):
     block.Hen0_ref = pe.Var(within=pe.Reals,initialize=3.6)
     block.gamma_ref = pe.Var(within=pe.PositiveReals,initialize=0.2)
 
+    # molar volume variable
+    block.V_L = pe.Var(m.COMP_TOTAL,within=pe.Reals,bounds=V_L_bounds) # cm3/mole
+    block.V_L_dY_inf = pe.Var(within=pe.Reals,bounds=V_L_dY_inf_bounds)
+    block.V_L_dY0 = pe.Var(within=pe.Reals,bounds=V_L_dY0_bounds)
+
+    # poynting facotor variable
+    block.poynting = pe.Var(m.COMP_TOTAL,within=pe.Reals,bounds=poynting_bounds)
+
     # initialize these variable: 1/2(ub+lb)
     for i in block.COMP_HENRY:
         block.Hen[i] = mean(VLE_bounds['Hen[{}]'.format(i)])
         block.Hen0[i] = mean(VLE_bounds['Hen0[{}]'.format(i)])
 
-    for i in block.COMP_NONHENRY:
-        block.gamma[i] = mean(VLE_bounds['gamma[{}]'.format(i)])
-        block.P_sat[i] = mean(VLE_bounds['P_sat[{}]'.format(i)])
-        block.P_sat_Y[i] = mean(VLE_bounds['P_sat_Y[{}]'.format(i)])
+    # for i in block.COMP_NONHENRY:
+        # block.gamma[i] = mean(VLE_bounds['gamma[{}]'.format(i)])
+        # block.P_sat[i] = mean(VLE_bounds['P_sat[{}]'.format(i)])
+        # block.P_sat_Y[i] = mean(VLE_bounds['P_sat_Y[{}]'.format(i)])
     #
     block.P_sat_dY_inf = mean(VLE_bounds['P_sat_dY_inf'])
     block.P_sat_dY0 = mean(VLE_bounds['P_sat_dY0'])
+    block.V_L_dY_inf = mean(VLE_bounds['V_L_dY_inf'])
+    block.V_L_dY0 = mean(VLE_bounds['V_L_dY0'])
+
     # block.Hen_ref = mean(VLE_bounds['Hen_ref'])
     # block.Hen0_ref = mean(VLE_bounds['Hen0_ref'])
     # block.gamma_ref = mean(VLE_bounds['gamma_ref'])
@@ -160,7 +199,7 @@ def VLE_block_rule(block):
 
     # henry component
     def f_L_HENRY_rule(block,i):
-        return block.parent_block().f_L[i] == block.Hen[i]*block.parent_block().x[i]
+        return block.parent_block().f_L[i] == block.Hen[i]*block.parent_block().x[i]*block.poynting[i]
     block.f_L_HENRY_con = pe.Constraint(block.COMP_HENRY,rule=f_L_HENRY_rule)
 
     # henry's constant
@@ -184,7 +223,7 @@ def VLE_block_rule(block):
 
     # non-henry component
     def f_L_NONHENRY_rule(block,i):
-        return block.parent_block().f_L[i] == block.gamma[i]*block.P_sat[i]*block.parent_block().x[i]
+        return block.parent_block().f_L[i] == block.gamma[i]*block.P_sat[i]*block.parent_block().x[i]*block.poynting[i]
     block.f_L_NONHENRY_con = pe.Constraint(block.COMP_NONHENRY,rule=f_L_NONHENRY_rule)
 
     # acticity coefficient gamma
@@ -230,3 +269,39 @@ def VLE_block_rule(block):
     def f_V_rule(block,i):
         return block.parent_block().P*block.parent_block().y[i] == block.parent_block().f_V[i]
     block.f_V_con = pe.Constraint(m.COMP_TOTAL,rule=f_V_rule)
+
+    # molar volume Equation
+    def V_L_nonHen_rule(block,i):
+        if i in m.COMP_PARAFFIN:
+            n_n0 = cal_cnumber(i)-e.V_L_nonhenry.n0_paraffin
+            n_n0_ = cal_cnumber(i)+e.V_L_nonhenry.n0_paraffin
+        elif i in m.COMP_OLEFIN:
+            n_n0 = cal_cnumber(i)-e.V_L_nonhenry.n0_olefin
+            n_n0_ = cal_cnumber(i)+e.V_L_nonhenry.n0_olefin
+        return block.V_L[i] == e.V_L_nonhenry.Y_inf_0 + block.V_L_dY_inf*(n_n0) \
+                    - block.V_L_dY0*pe.exp(-e.V_L_nonhenry.beta*(n_n0_)**e.V_L_nonhenry.gamma)
+    block.V_L_nonHen_con = pe.Constraint(block.COMP_NONHENRY | {'C3H8','C3H6'},rule=V_L_nonHen_rule)
+
+    def V_L_dY_inf_rule(block):
+        return e.V_L_nonhenry.dY_inf.A + e.V_L_nonhenry.dY_inf.B*block.parent_block().T + e.V_L_nonhenry.dY_inf.C*(block.parent_block().T)**2 + \
+                e.V_L_nonhenry.dY_inf.D*(block.parent_block().T)**3 == block.V_L_dY_inf
+    block.V_L_dY_inf_con = pe.Constraint(rule=V_L_dY_inf_rule)
+
+    def V_L_dY0_rule(block):
+        return e.V_L_nonhenry.dY0.A + e.V_L_nonhenry.dY0.B*block.parent_block().T + e.V_L_nonhenry.dY0.C*(block.parent_block().T)**2 + \
+                e.V_L_nonhenry.dY0.D*(block.parent_block().T)**3 == block.V_L_dY0
+    block.V_L_dY0_con = pe.Constraint(rule=V_L_dY0_rule)
+
+    def V_L_Hen_rule(block,i):
+        return block.V_L[i] == e.V_L_henry.A[i] + e.V_L_henry.B[i]*block.parent_block().T + block.n_ave*e.V_L_henry.dV[i]
+    block.V_L_Hen_con = pe.Constraint(block.COMP_HENRY - {'C3H8','C3H6','H2O'},rule=V_L_Hen_rule)
+
+    def V_L_H2O_rule(block):
+        return block.V_L['H2O'] == e.V_L_water.A + e.V_L_water.B*block.parent_block().T + e.V_L_water.C*(block.parent_block().T)**2 \
+                    + e.V_L_water.D*(block.parent_block().T)**3
+    block.V_L_H2O_con = pe.Constraint(rule=V_L_H2O_rule)
+
+    # poynting factor equation
+    def poynting_rule(block,i):
+        return block.poynting[i] == pe.exp(0.1*block.V_L[i]*(block.parent_block().P)/(e.R*block.parent_block().T))
+    block.poynting_con = pe.Constraint(m.COMP_TOTAL,rule=poynting_rule)

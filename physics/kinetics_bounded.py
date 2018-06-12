@@ -160,7 +160,7 @@ def kinetic_block_rule(block):
 
     # WGS Reaction
     def r_WGS_rule(block):
-        return block.r_WGS * (block.Ke_WGS*block.parent_block().f_V['H2O']) == block.parent_block().cat*block.k_WGS*block.parent_block().P**0.75*(block.parent_block().f_V['CO']* \
+        return block.r_WGS * (block.Ke_WGS*block.parent_block().f_V['H2O']) == 0.5*block.parent_block().cat*block.k_WGS*block.parent_block().P**0.75*(block.parent_block().f_V['CO']* \
                     (block.Ke_WGS*block.parent_block().f_V['H2O']) - (block.parent_block().f_V['H2']*block.parent_block().f_V['CO2']) )
     block.r_WGS_con = pe.Constraint(rule=r_WGS_rule)
 
@@ -169,7 +169,7 @@ def kinetic_block_rule(block):
     block.k_WGS_con = pe.Constraint(rule=k_WGS_rule)
 
     def Ke_WGS_rule(block):
-        return block.Ke_WGS == pe.exp((k.s1_WGS/block.parent_block().T + k.s2_WGS + k.s3_WGS*block.parent_block().T + k.s4_WGS*(block.parent_block().T**2))/k.R) * \
+        return block.Ke_WGS == 5*pe.exp((k.s1_WGS/block.parent_block().T + k.s2_WGS + k.s3_WGS*block.parent_block().T + k.s4_WGS*(block.parent_block().T**2))/k.R) * \
                                           block.parent_block().T**(k.s5_WGS/k.R)
     block.Ke_WGS_con = pe.Constraint(rule=Ke_WGS_rule)
 
