@@ -122,3 +122,30 @@ def beautify2(pe,model):
         if model.condenser.y[i].value > 1e-5 or model.condenser.x[i].value > 1e-5:
             print(i,'\t\t{:6.3%}\t\t{:6.3%}\t\t'.format(model.condenser.y[i].value,model.condenser.x[i].value),'{:8s}'.format(i),'\t{:6.3%}\t\t{:6.3%}'\
                   .format(model.reactive[model.TRAY.last()].y[i].value,model.reactive[model.TRAY.last()].x[i].value))
+
+'''-----------------------------------------------------------------------------
+This is used to group component (C10H22) data into carbon number data
+1. trans_cnumber: mole, mole%
+Usage:
+1. Prepare the dictionary into the following shape:
+    dic = {'C10H20':[...],'C5H12':[...],...}
+2. Use the function:
+    phase_data = trans_cnumber(dic)
+3. Retuen dictionary:
+    phase_datav= {'1':[...]}
+-----------------------------------------------------------------------------'''
+def trans_cnumber(dic):
+    molefraction = {}
+    for i in range(1,57):
+        molefraction[i] = []
+    for i in m.COMP_ORG:
+        molefraction[cal_cnumber(i)].append(np.array(dic[i]))
+    for i in range(1,57):
+        molefraction[i] = np.sum(molefraction[i],0)
+    length = len(molefraction[1])
+    tmp = {}
+    for j in range(length):
+        tmp[j] = []
+        for i in range(1,57):
+            tmp[j].append(molefraction[i][j])
+    return tmp
