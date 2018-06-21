@@ -5,7 +5,7 @@ from pyomo import environ as pe
 # stage construction rules
 from physics.kinetics_bounded import kinetic_block_rule
 from physics.energy_bounded import energy_block_rule
-from physics.VLE_bounded import VLE_block_rule
+from physics.VLE_bounded_MPCC_P import VLE_block_rule
 
 def reactive_stage_rule(block,j):
     #-----------------------------------SETS-----------------------------------
