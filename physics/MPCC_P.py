@@ -17,7 +17,7 @@ def P_NCP_block_rule(block):
     #-----------------------------LOCAL parameters------------------------------
     block.epi = pe.Param(initialize=1e-4,mutable=True)
 
-    print('>','Importing MPCC_beta_NCP Blocks......')
+    print('>','Importing MPCC_P_NCP Blocks......')
     print('>','Adding the following local variable:')
     print('-'*50)
 
@@ -58,7 +58,7 @@ def P_Reg_block_rule(block):
     #-----------------------------LOCAL parameters------------------------------
     block.epi = pe.Param(initialize=1e-4,mutable=True)
 
-    print('>','Importing MPCC_beta_Reg Blocks......')
+    print('>','Importing MPCC_P_Reg Blocks......')
     print('>','Adding the following local variable:')
     print('-'*50)
 
@@ -74,7 +74,8 @@ def P_Reg_block_rule(block):
 
     #------------------------------MPCC equations-------------------------------
     def s_L_complementarity_rule(block):
-        return sum(block.parent_block().L[s] for s in block.parent_block().outlet) * block.s_L <= block.epi
+        return sum(block.parent_block().L[s] for s in block.parent_block().outlet) * block.s_L \
+        <= block.epi
     block.s_L_complementarity_con = pe.Constraint(rule=s_L_complementarity_rule)
 
     def s_V_complementarity_rule(block):
@@ -98,7 +99,7 @@ def P_pf_block_rule(block):
     #-----------------------------LOCAL parameters------------------------------
     block.rho = pe.Param(initialize=1,mutable=True)
 
-    print('>','Importing MPCC_beta_Reg Blocks......')
+    print('>','Importing MPCC_P_Reg Blocks......')
     print('>','Adding the following local variable:')
     print('-'*50)
 

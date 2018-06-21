@@ -131,8 +131,8 @@ Usage:
     dic = {'C10H20':[...],'C5H12':[...],...}
 2. Use the function:
     phase_data = trans_cnumber(dic)
-3. Retuen dictionary:
-    phase_datav= {'1':[...]}
+3. Return dictionary:
+    phase_data= {'1':[...]}
 -----------------------------------------------------------------------------'''
 def trans_cnumber(dic):
     molefraction = {}
