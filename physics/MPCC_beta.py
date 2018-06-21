@@ -119,6 +119,8 @@ def beta_pf_block_rule(block):
         print('|',i)
 
     print('-'*50)
+    print('>','Adjusting the f_V = f_L bounds to f_V = beta * f_L')
+
     print('')
 
     #------------------------------MPCC equations-------------------------------

@@ -28,7 +28,7 @@ def P_NCP_block_rule(block):
 
     print('-'*50)
 
-    print('>','Adding complementarity constraint')
+    print('>','Adding complementarity constraint, spliting pressure used in VLE')
     print('')
 
     #------------------------------MPCC equations-------------------------------
@@ -49,15 +49,14 @@ def P_NCP_block_rule(block):
     block.pressure_equal_con = pe.Constraint(rule=pressure_equal_rule)
 
 # define MPCC_beta_Reg rule
-def beta_Reg_block_rule(block):
+def P_Reg_block_rule(block):
 
     #------------------------------LOCAL VARIABLES------------------------------
-    block.beta = pe.Var(within=pe.NonNegativeReals,initialize=1,bounds=(1e-3,None))
     block.s_L = pe.Var(within=pe.NonNegativeReals,initialize=0)#,bounds=(0,1))
     block.s_V = pe.Var(within=pe.NonNegativeReals,initialize=0)
 
     #-----------------------------LOCAL parameters------------------------------
-    block.epi = pe.Param(initialize=1e-6,mutable=True)
+    block.epi = pe.Param(initialize=1e-4,mutable=True)
 
     print('>','Importing MPCC_beta_Reg Blocks......')
     print('>','Adding the following local variable:')
@@ -70,7 +69,7 @@ def beta_Reg_block_rule(block):
 
     print('-'*50)
 
-    print('>','Adjusting the f_V = f_L bounds to f_V = beta * f_L')
+    print('>','Adding complementarity constraint, spliting pressure used in VLE')
     print('')
 
     #------------------------------MPCC equations-------------------------------
@@ -82,21 +81,16 @@ def beta_Reg_block_rule(block):
         return sum(block.parent_block().V[s] for s in block.parent_block().outlet) * block.s_V <= block.epi
     block.s_V_complementarity_con = pe.Constraint(rule=s_V_complementarity_rule)
 
-    def beta_rule(block):
-        return block.beta == 1 - block.s_L + block.s_V
-    block.beta_con = pe.Constraint(rule=beta_rule)
-
     #-----------------------------Global equations------------------------------
-    block.parent_block().del_component(block.parent_block().VL_equil_con)
-    def VL_equil_rule(model,i):
-        return model.f_V[i] == block.beta * model.f_L[i]
-    block.parent_block().VL_equil_con = pe.Constraint(m.COMP_TOTAL,rule=VL_equil_rule)
+    block.parent_block().VLE_block.del_component(block.parent_block().VLE_block.pressure_equal_con)
+    def pressure_equal_rule(block):
+        return block.parent_block().VLE_block.P_VLE - block.parent_block().P == block.s_L - block.s_V
+    block.pressure_equal_con = pe.Constraint(rule=pressure_equal_rule)
 
 # define MPCC_beta_penalty_function rule
-def beta_pf_block_rule(block):
+def P_pf_block_rule(block):
 
     #------------------------------LOCAL VARIABLES------------------------------
-    block.beta = pe.Var(within=pe.NonNegativeReals,initialize=1)#,bounds=(1e-3,None))
     block.s_L = pe.Var(within=pe.NonNegativeReals,initialize=0)#,bounds=(0,1))
     block.s_V = pe.Var(within=pe.NonNegativeReals,initialize=0)
     block.pf = pe.Var(within=pe.NonNegativeReals,initialize=0)
@@ -114,6 +108,7 @@ def beta_pf_block_rule(block):
         print('|',i)
 
     print('-'*50)
+    print('>','Spliting pressure used in VLE')
     print('')
 
     #------------------------------MPCC equations-------------------------------
@@ -122,12 +117,8 @@ def beta_pf_block_rule(block):
         + sum(block.parent_block().V[s] for s in block.parent_block().outlet)*block.s_V)
     block.penalty_con = pe.Constraint(rule=penalty_rule)
 
-    def beta_rule(block):
-        return block.beta == 1 - block.s_L + block.s_V
-    block.beta_con = pe.Constraint(rule=beta_rule)
-
     #-----------------------------Global equations------------------------------
-    block.parent_block().del_component(block.parent_block().VL_equil_con)
-    def VL_equil_rule(model,i):
-        return model.f_V[i] == block.beta * model.f_L[i]
-    block.parent_block().VL_equil_con = pe.Constraint(m.COMP_TOTAL,rule=VL_equil_rule)
+    block.parent_block().VLE_block.del_component(block.parent_block().VLE_block.pressure_equal_con)
+    def pressure_equal_rule(block):
+        return block.parent_block().VLE_block.P_VLE - block.parent_block().P == block.s_L - block.s_V
+    block.pressure_equal_con = pe.Constraint(rule=pressure_equal_rule)
