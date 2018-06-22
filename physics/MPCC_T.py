@@ -16,7 +16,7 @@ def dew_block_rule(block):
 
     block.x = pe.Var(m.COMP_TOTAL,within=pe.NonNegativeReals)
     block.y = pe.Var(m.COMP_TOTAL,within=pe.NonNegativeReals)
-    block.T = pe.Var(within=pe.NonNegativeReals,bounds=(200+273.15,300+273.15)) # K
+    block.T = pe.Var(within=pe.NonNegativeReals,initialize=240+273.15,bounds=(200+273.15,300+273.15)) # K
     block.P = pe.Var(within=pe.NonNegativeReals,bounds=(10,30)) # Bar
     block.f_V = pe.Var(m.COMP_TOTAL,within=pe.NonNegativeReals,initialize=1e-20)
     block.f_L = pe.Var(m.COMP_TOTAL,within=pe.NonNegativeReals,initialize=1e-20)
@@ -42,11 +42,10 @@ def dew_block_rule(block):
 
     # calculate the pre-separation mixture
     def mixing_rule(block,i):
-        return sum(block.parent_block().V[s] for s in block.parent_block().outlet)\
-         * block.parent_block().y[i] + sum(block.parent_block().L[s] \
-         for s in block.parent_block().outlet) * block.parent_block().x[i] == \
-         block.y[i] * (sum(block.parent_block().V[s] for s in block.parent_block().outlet)\
-         + sum(block.parent_block().L[s] for s in block.parent_block().outlet))
+        return sum(block.parent_block().L[s]*block.parent_block().x[i] + \
+            block.parent_block().V[s]*block.parent_block().y[i] for s in block.parent_block().outlet) == \
+            block.y[i] * sum(block.parent_block().V[s] + block.parent_block().L[s] for s in block.parent_block().outlet)
+        # return block.y[i] == block.parent_block().y[i]
     block.mixing_con = pe.Constraint(m.COMP_TOTAL,rule=mixing_rule)
 
     # Phase Equilibrium
@@ -56,5 +55,5 @@ def dew_block_rule(block):
 
     # summation
     def summation_rule(block):
-        return sum(block.x[i] for i in m.COMP_TOTAL) == sum(block.y[i] for i in m.COMP_TOTAL)
+        return sum(block.x[i] for i in m.COMP_TOTAL) == 1
     block.summation_con = pe.Constraint(rule=summation_rule)
