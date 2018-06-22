@@ -211,8 +211,8 @@ def VLE_block_rule(block):
     block.Hen_con = pe.Constraint(block.COMP_HENRY,rule=Hen_rule)
 
     def Hen0_rule(block,i):
-        return block.Hen0[i] == e.henry.A[i] + e.henry.B[i]/block.parent_block().T + e.henry.C[i]*pe.log(block.parent_block().T) + \
-                    e.henry.D[i]*(block.parent_block().T**2) + e.henry.E[i]/(block.parent_block().T**2)
+        return block.Hen0[i] == e.henry.A[i] + e.henry.B[i]/block.T_VLE + e.henry.C[i]*pe.log(block.T_VLE) + \
+                    e.henry.D[i]*(block.T_VLE**2) + e.henry.E[i]/(block.T_VLE**2)
     block.Hen0_con = pe.Constraint(block.COMP_HENRY,rule=Hen0_rule)
 
     def Hen_ref_rule(block):
@@ -220,8 +220,8 @@ def VLE_block_rule(block):
     block.Hen_ref_con = pe.Constraint(rule=Hen_ref_rule)
 
     def Hen0_ref_rule(block):
-        return block.Hen0_ref == e.henry.A['C6H14'] + e.henry.B['C6H14']/block.parent_block().T + e.henry.C['C6H14']*pe.log(block.parent_block().T) + \
-                    e.henry.D['C6H14']*(block.parent_block().T**2) + e.henry.E['C6H14']/(block.parent_block().T**2)
+        return block.Hen0_ref == e.henry.A['C6H14'] + e.henry.B['C6H14']/block.T_VLE + e.henry.C['C6H14']*pe.log(block.T_VLE) + \
+                    e.henry.D['C6H14']*(block.T_VLE**2) + e.henry.E['C6H14']/(block.T_VLE**2)
     block.Hen0_ref_con = pe.Constraint(rule=Hen0_ref_rule)
 
     # non-henry component
@@ -259,13 +259,13 @@ def VLE_block_rule(block):
     block.P_sat_con2 = pe.Constraint(block.COMP_NONHENRY,rule=P_sat_rule2)
 
     def P_sat_dY_inf_rule(block):
-        return e.nonhenry.dY_inf.A + e.nonhenry.dY_inf.B/block.parent_block().T + e.nonhenry.dY_inf.C*pe.log(block.parent_block().T) + \
-                e.nonhenry.dY_inf.D*(block.parent_block().T)**2 + e.nonhenry.dY_inf.E/(block.parent_block().T)**2 == block.P_sat_dY_inf
+        return e.nonhenry.dY_inf.A + e.nonhenry.dY_inf.B/block.T_VLE + e.nonhenry.dY_inf.C*pe.log(block.T_VLE) + \
+                e.nonhenry.dY_inf.D*(block.T_VLE)**2 + e.nonhenry.dY_inf.E/(block.T_VLE)**2 == block.P_sat_dY_inf
     block.P_sat_dY_inf_con = pe.Constraint(rule=P_sat_dY_inf_rule)
 
     def P_sat_dY0_rule(block):
-        return e.nonhenry.dY0.A + e.nonhenry.dY0.B/block.parent_block().T + e.nonhenry.dY0.C*pe.log(block.parent_block().T) + \
-                e.nonhenry.dY0.D*(block.parent_block().T)**2 + e.nonhenry.dY0.E/(block.parent_block().T)**2 == block.P_sat_dY0
+        return e.nonhenry.dY0.A + e.nonhenry.dY0.B/block.T_VLE + e.nonhenry.dY0.C*pe.log(block.T_VLE) + \
+                e.nonhenry.dY0.D*(block.T_VLE)**2 + e.nonhenry.dY0.E/(block.T_VLE)**2 == block.P_sat_dY0
     block.P_sat_dY0_con = pe.Constraint(rule=P_sat_dY0_rule)
 
     # gas phase assume ideal
@@ -286,27 +286,27 @@ def VLE_block_rule(block):
     block.V_L_nonHen_con = pe.Constraint(block.COMP_NONHENRY | {'C3H8','C3H6'},rule=V_L_nonHen_rule)
 
     def V_L_dY_inf_rule(block):
-        return e.V_L_nonhenry.dY_inf.A + e.V_L_nonhenry.dY_inf.B*block.parent_block().T + e.V_L_nonhenry.dY_inf.C*(block.parent_block().T)**2 + \
-                e.V_L_nonhenry.dY_inf.D*(block.parent_block().T)**3 == block.V_L_dY_inf
+        return e.V_L_nonhenry.dY_inf.A + e.V_L_nonhenry.dY_inf.B*block.T_VLE + e.V_L_nonhenry.dY_inf.C*(block.T_VLE)**2 + \
+                e.V_L_nonhenry.dY_inf.D*(block.T_VLE)**3 == block.V_L_dY_inf
     block.V_L_dY_inf_con = pe.Constraint(rule=V_L_dY_inf_rule)
 
     def V_L_dY0_rule(block):
-        return e.V_L_nonhenry.dY0.A + e.V_L_nonhenry.dY0.B*block.parent_block().T + e.V_L_nonhenry.dY0.C*(block.parent_block().T)**2 + \
-                e.V_L_nonhenry.dY0.D*(block.parent_block().T)**3 == block.V_L_dY0
+        return e.V_L_nonhenry.dY0.A + e.V_L_nonhenry.dY0.B*block.T_VLE + e.V_L_nonhenry.dY0.C*(block.T_VLE)**2 + \
+                e.V_L_nonhenry.dY0.D*(block.T_VLE)**3 == block.V_L_dY0
     block.V_L_dY0_con = pe.Constraint(rule=V_L_dY0_rule)
 
     def V_L_Hen_rule(block,i):
-        return block.V_L[i] == e.V_L_henry.A[i] + e.V_L_henry.B[i]*block.parent_block().T + block.n_ave*e.V_L_henry.dV[i]
+        return block.V_L[i] == e.V_L_henry.A[i] + e.V_L_henry.B[i]*block.T_VLE + block.n_ave*e.V_L_henry.dV[i]
     block.V_L_Hen_con = pe.Constraint(block.COMP_HENRY - {'C3H8','C3H6','H2O'},rule=V_L_Hen_rule)
 
     def V_L_H2O_rule(block):
-        return block.V_L['H2O'] == e.V_L_water.A + e.V_L_water.B*block.parent_block().T + e.V_L_water.C*(block.parent_block().T)**2 \
-                    + e.V_L_water.D*(block.parent_block().T)**3
+        return block.V_L['H2O'] == e.V_L_water.A + e.V_L_water.B*block.T_VLE + e.V_L_water.C*(block.T_VLE)**2 \
+                    + e.V_L_water.D*(block.T_VLE)**3
     block.V_L_H2O_con = pe.Constraint(rule=V_L_H2O_rule)
 
     # poynting factor equation
     def poynting_rule(block,i):
-        return block.poynting[i] == pe.exp(0.1*block.V_L[i]*(block.parent_block().P)/(e.R*block.parent_block().T))
+        return block.poynting[i] == pe.exp(0.1*block.V_L[i]*(block.parent_block().P)/(e.R*block.T_VLE))
     block.poynting_con = pe.Constraint(m.COMP_TOTAL,rule=poynting_rule)
 
     # block temperature equal to outside temperature

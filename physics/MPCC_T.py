@@ -82,5 +82,5 @@ def dew_block_rule(block):
     #-----------------------------Global equations------------------------------
     block.parent_block().VLE_block.del_component(block.parent_block().VLE_block.temperature_equal_con)
     def temperature_equal_rule(block):
-        return block.parent_block().VLE_block.T_VLE == 0.5*(block.parent_block().T + block.T - ((block.parent_block().T - block.T)**2 + block.epi)**0.5)
+        return block.parent_block().VLE_block.T_VLE == 0.5*(block.parent_block().T + block.T - ((block.parent_block().T - block.T)**2 + 100*block.epi)**0.5)
     block.temperature_equal_con = pe.Constraint(rule=temperature_equal_rule)
