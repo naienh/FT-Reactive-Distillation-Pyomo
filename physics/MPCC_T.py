@@ -20,12 +20,20 @@ def dew_block_rule(block):
     block.P = pe.Var(within=pe.NonNegativeReals,bounds=(10,30)) # Bar
     block.f_V = pe.Var(m.COMP_TOTAL,within=pe.NonNegativeReals,initialize=1e-20)
     block.f_L = pe.Var(m.COMP_TOTAL,within=pe.NonNegativeReals,initialize=1e-20)
+    block.beta = pe.Var(within=pe.NonNegativeReals,initialize=1)
+    block.s_L = pe.Var(within=pe.NonNegativeReals,initialize=0)
+    block.s_V = pe.Var(within=pe.NonNegativeReals,initialize=0)
+
+    #-----------------------------LOCAL parameters------------------------------
+    block.epi = pe.Param(initialize=1e-3,mutable=True)
 
     print('>','Importing dew Blocks......')
     print('>','Adding the following local variable:')
     print('-'*36)
 
     for i in block.component_objects(pe.Var,active=True):
+        print('|',i)
+    for i in block.component_objects(pe.Param,active=True):
         print('|',i)
 
     print('-'*36)
@@ -50,10 +58,29 @@ def dew_block_rule(block):
 
     # Phase Equilibrium
     def VL_rule(block,i):
-        return block.f_V[i] == block.f_L[i]
+        return block.f_V[i] == block.beta * block.f_L[i]
     block.VL_con = pe.Constraint(m.COMP_TOTAL,rule=VL_rule)
 
     # summation
     def summation_rule(block):
         return sum(block.x[i] for i in m.COMP_TOTAL) == 1
     block.summation_con = pe.Constraint(rule=summation_rule)
+
+    #------------------------------MPCC equations-------------------------------
+    def s_L_complementarity_rule(block):
+        return (300+273.15 - block.T)*block.s_V <= block.epi
+    block.s_L_complementarity_con = pe.Constraint(rule=s_L_complementarity_rule)
+
+    # def s_V_complementarity_rule(block):
+    #     return (block.T - 200-273.15)*block.s_L <= block.epi
+    # block.s_V_complementarity_con = pe.Constraint(rule=s_V_complementarity_rule)
+
+    def beta_rule(block):
+        return block.beta == 1 + block.s_V #- block.s_L
+    block.beta_con = pe.Constraint(rule=beta_rule)
+
+    #-----------------------------Global equations------------------------------
+    block.parent_block().VLE_block.del_component(block.parent_block().VLE_block.temperature_equal_con)
+    def temperature_equal_rule(block):
+        return block.parent_block().VLE_block.T_VLE == 0.5*(block.parent_block().T + block.T - ((block.parent_block().T - block.T)**2 + block.epi)**0.5)
+    block.temperature_equal_con = pe.Constraint(rule=temperature_equal_rule)

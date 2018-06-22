@@ -14,7 +14,7 @@ with open('../saved_solutions/reactive_flash_300C_n20.pickle', 'rb') as f:
     C300_n20 = pickle.load(f)
 
 def collect_bounds1(name):
-    return {i.replace(name,''):[C200_n58.solution.Variable[i]['Value'],C300_n58.solution.Variable[i]['Value'],\
+    return {i.replace(name,''):[\
     C200_n20.solution.Variable[i]['Value'],C300_n20.solution.Variable[i]['Value']]\
      for i in C200_n58.solution.Variable.keys() if i.startswith(name)}
 
@@ -36,3 +36,15 @@ VLLE_bounds = collect_bounds2('VLE_block.')
 water_x = [C20.solution.Variable['x[H2O]']['Value'],C40.solution.Variable['x[H2O]']['Value']]
 water_yp = [C20.solution.Variable['y[H2O]']['Value']*21,\
             C40.solution.Variable['y[H2O]']['Value']*21]
+
+with open('../saved_solutions/VLE_700C_n20.pickle', 'rb') as f:
+    C700 = pickle.load(f)
+with open('../saved_solutions/VLE_130K_n20.pickle', 'rb') as f:
+    K130 = pickle.load(f)
+
+def collect_bounds3(name):
+    return {i.replace(name,''):[\
+    C700.solution.Variable[i]['Value'],K130.solution.Variable[i]['Value']]\
+     for i in C700.solution.Variable.keys() if i.startswith(name)}
+
+VLE_bounds_unbounded = collect_bounds1('VLE_block.')
