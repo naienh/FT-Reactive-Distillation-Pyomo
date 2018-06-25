@@ -80,7 +80,7 @@ def reactive_stage_rule(block,j):
     block.VL_equil_con = pe.Constraint(m.COMP_TOTAL,rule=VL_equil_rule)
 
     # MPCC formation
-    block.MPCC = pe.Block(rule = P_NCP_block_rule)
+    block.MPCC = pe.Block(rule = P_pf_block_rule)
 
     # Summation
     def summation_x_y_rule(block):
