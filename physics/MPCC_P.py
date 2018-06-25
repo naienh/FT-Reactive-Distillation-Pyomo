@@ -56,7 +56,7 @@ def P_Reg_block_rule(block):
     block.s_V = pe.Var(within=pe.NonNegativeReals,initialize=0)
 
     #-----------------------------LOCAL parameters------------------------------
-    block.epi = pe.Param(initialize=1e-3,mutable=True)
+    block.epi = pe.Param(initialize=1e-4,mutable=True)
 
     print('>','Importing MPCC_P_Reg Blocks......')
     print('>','Adding the following local variable:')
