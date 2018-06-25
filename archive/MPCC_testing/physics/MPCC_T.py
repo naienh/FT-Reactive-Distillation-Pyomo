@@ -16,7 +16,7 @@ def dew_block_rule(block):
 
     block.x = pe.Var(m.COMP_TOTAL,within=pe.NonNegativeReals)
     block.y = pe.Var(m.COMP_TOTAL,within=pe.NonNegativeReals)
-    block.T = pe.Var(within=pe.NonNegativeReals,initialize=240+273.15,bounds=(170,500+273.15)) # K
+    block.T = pe.Var(within=pe.NonNegativeReals,initialize=240+273.15,bounds=(170,700+273.15)) # K
     block.P = pe.Var(within=pe.NonNegativeReals,bounds=(10,30)) # Bar
     block.f_V = pe.Var(m.COMP_TOTAL,within=pe.NonNegativeReals,initialize=1e-20)
     block.f_L = pe.Var(m.COMP_TOTAL,within=pe.NonNegativeReals,initialize=1e-20)

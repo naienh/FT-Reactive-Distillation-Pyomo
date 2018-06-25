@@ -3,7 +3,7 @@
 # this module define the rules for constructing a VLE block in the master block
 # this is the global component set import, so that all modules uses the same set
 from global_sets.component import m
-from physics.bounds import VLE_bounds_unbounded as VLE_bounds
+from physics.bounds import VLE_bounds
 
 # data import and pre-processing
 from data import VLE_data as e
@@ -142,13 +142,13 @@ def VLE_block_rule(block):
     block.n_ave_cal = pe.Var(within=pe.NonNegativeReals)
 
     # fugacity variable
-    block.Hen = pe.Var(block.COMP_HENRY,within=pe.NonNegativeReals)#,bounds=Hen_bounds)  # Bar
-    block.Hen0 = pe.Var(block.COMP_HENRY,within=pe.Reals,initialize=5)#,bounds=Hen0_bounds)
-    block.gamma = pe.Var(block.COMP_NONHENRY,within=pe.PositiveReals,initialize=0.1)#,bounds=gamma_bounds)
-    block.P_sat = pe.Var(block.COMP_NONHENRY,within=pe.PositiveReals,initialize=1e-10)#,bounds=P_sat_bounds)  # Bar
-    block.P_sat_Y = pe.Var(block.COMP_NONHENRY,within=pe.Reals)#,bounds=P_sat_Y_bounds)
-    block.P_sat_dY_inf = pe.Var(within=pe.Reals)#,bounds=P_sat_dY_inf_bounds)
-    block.P_sat_dY0 = pe.Var(within=pe.Reals)#,bounds=P_sat_dY0_bounds)
+    block.Hen = pe.Var(block.COMP_HENRY,within=pe.NonNegativeReals,bounds=Hen_bounds)  # Bar
+    block.Hen0 = pe.Var(block.COMP_HENRY,within=pe.Reals,initialize=5,bounds=Hen0_bounds)
+    block.gamma = pe.Var(block.COMP_NONHENRY,within=pe.PositiveReals,initialize=0.1,bounds=gamma_bounds)
+    block.P_sat = pe.Var(block.COMP_NONHENRY,within=pe.PositiveReals,initialize=1e-10,bounds=P_sat_bounds)  # Bar
+    block.P_sat_Y = pe.Var(block.COMP_NONHENRY,within=pe.Reals,bounds=P_sat_Y_bounds)
+    block.P_sat_dY_inf = pe.Var(within=pe.Reals,bounds=P_sat_dY_inf_bounds)
+    block.P_sat_dY0 = pe.Var(within=pe.Reals,bounds=P_sat_dY0_bounds)
 
     # block.Hen_ref = pe.Var(within=pe.NonNegativeReals,initialize=14,bounds=Hen_ref_bounds)
     # block.Hen0_ref = pe.Var(within=pe.Reals,initialize=3.6,bounds=Hen0_ref_bounds)
@@ -159,12 +159,12 @@ def VLE_block_rule(block):
     block.gamma_ref = pe.Var(within=pe.PositiveReals,initialize=0.2)
 
     # molar volume variable
-    block.V_L = pe.Var(m.COMP_TOTAL,within=pe.Reals)#,bounds=V_L_bounds) # cm3/mole
-    block.V_L_dY_inf = pe.Var(within=pe.Reals)#,bounds=V_L_dY_inf_bounds)
-    block.V_L_dY0 = pe.Var(within=pe.Reals)#,bounds=V_L_dY0_bounds)
+    block.V_L = pe.Var(m.COMP_TOTAL,within=pe.Reals,bounds=V_L_bounds) # cm3/mole
+    block.V_L_dY_inf = pe.Var(within=pe.Reals,bounds=V_L_dY_inf_bounds)
+    block.V_L_dY0 = pe.Var(within=pe.Reals,bounds=V_L_dY0_bounds)
 
     # poynting facotor variable
-    block.poynting = pe.Var(m.COMP_TOTAL,within=pe.Reals)#,bounds=poynting_bounds)
+    block.poynting = pe.Var(m.COMP_TOTAL,within=pe.Reals,bounds=poynting_bounds)
 
     # initialize these variable: 1/2(ub+lb)
     for i in block.COMP_HENRY:

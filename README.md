@@ -5,8 +5,9 @@ In this project, our goal is to build a **Fischer–Tropsch reactive distillatio
 
 ## Model Navigation
 **Code Map:**
+* **archive:** Model archives, completed with all necessary files to guarantee compatibility. Might not always reflect the latest changes.
 * **global_sets:** A place for global sets (e.g `COMP_TOTAL`). Each sub-module in this project will be referencing the same sets of components and universal parameters.
-* **saved_states:** A place for .json or .pickle files, usually saved after certain pyomo solve, will be used either as a quick access archive or simply a temporary file.
+* **saved_solutions:** A place for .json or .pickle files, usually saved after certain pyomo solve, will be used either as a quick access archive or simply a temporary file.
 * **utility:** A place for helper functions we wrote to assist data gathering, model construction, debugging, analysis and data visulization.
 * **data:** This module contains all the `physical` parameters for the model. For each of the pyomo blocks, we recommend writing only `one python script`. This way each pyomo blocks only need to import once from the data module. For large sets of data, use of excel files are recommended by using `xlrd` inside corresponding data python script.
 

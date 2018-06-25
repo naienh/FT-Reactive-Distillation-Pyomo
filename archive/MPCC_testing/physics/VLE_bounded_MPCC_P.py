@@ -3,7 +3,7 @@
 # this module define the rules for constructing a VLE block in the master block
 # this is the global component set import, so that all modules uses the same set
 from global_sets.component import m
-from physics.bounds import VLE_bounds_unbounded as VLE_bounds
+from physics.bounds import VLE_bounds
 
 # data import and pre-processing
 from data import VLE_data as e
@@ -137,18 +137,21 @@ def VLE_block_rule(block):
 
     #------------------------------LOCAL VARIABLES------------------------------
 
+    # pseudo pressure Value
+    block.P_VLE = pe.Var(within=pe.NonNegativeReals) # Bar
+
     # teared n_ave, initial guess try to converge to calculated average
     block.n_ave = pe.Var(within=pe.NonNegativeReals,bounds=(7,58))
     block.n_ave_cal = pe.Var(within=pe.NonNegativeReals)
 
     # fugacity variable
-    block.Hen = pe.Var(block.COMP_HENRY,within=pe.NonNegativeReals)#,bounds=Hen_bounds)  # Bar
-    block.Hen0 = pe.Var(block.COMP_HENRY,within=pe.Reals,initialize=5)#,bounds=Hen0_bounds)
-    block.gamma = pe.Var(block.COMP_NONHENRY,within=pe.PositiveReals,initialize=0.1)#,bounds=gamma_bounds)
-    block.P_sat = pe.Var(block.COMP_NONHENRY,within=pe.PositiveReals,initialize=1e-10)#,bounds=P_sat_bounds)  # Bar
-    block.P_sat_Y = pe.Var(block.COMP_NONHENRY,within=pe.Reals)#,bounds=P_sat_Y_bounds)
-    block.P_sat_dY_inf = pe.Var(within=pe.Reals)#,bounds=P_sat_dY_inf_bounds)
-    block.P_sat_dY0 = pe.Var(within=pe.Reals)#,bounds=P_sat_dY0_bounds)
+    block.Hen = pe.Var(block.COMP_HENRY,within=pe.NonNegativeReals,bounds=Hen_bounds)  # Bar
+    block.Hen0 = pe.Var(block.COMP_HENRY,within=pe.Reals,initialize=5,bounds=Hen0_bounds)
+    block.gamma = pe.Var(block.COMP_NONHENRY,within=pe.PositiveReals,initialize=0.1,bounds=gamma_bounds)
+    block.P_sat = pe.Var(block.COMP_NONHENRY,within=pe.PositiveReals,initialize=1e-10,bounds=P_sat_bounds)  # Bar
+    block.P_sat_Y = pe.Var(block.COMP_NONHENRY,within=pe.Reals,bounds=P_sat_Y_bounds)
+    block.P_sat_dY_inf = pe.Var(within=pe.Reals,bounds=P_sat_dY_inf_bounds)
+    block.P_sat_dY0 = pe.Var(within=pe.Reals,bounds=P_sat_dY0_bounds)
 
     # block.Hen_ref = pe.Var(within=pe.NonNegativeReals,initialize=14,bounds=Hen_ref_bounds)
     # block.Hen0_ref = pe.Var(within=pe.Reals,initialize=3.6,bounds=Hen0_ref_bounds)
@@ -159,12 +162,12 @@ def VLE_block_rule(block):
     block.gamma_ref = pe.Var(within=pe.PositiveReals,initialize=0.2)
 
     # molar volume variable
-    block.V_L = pe.Var(m.COMP_TOTAL,within=pe.Reals)#,bounds=V_L_bounds) # cm3/mole
-    block.V_L_dY_inf = pe.Var(within=pe.Reals)#,bounds=V_L_dY_inf_bounds)
-    block.V_L_dY0 = pe.Var(within=pe.Reals)#,bounds=V_L_dY0_bounds)
+    block.V_L = pe.Var(m.COMP_TOTAL,within=pe.Reals,bounds=V_L_bounds) # cm3/mole
+    block.V_L_dY_inf = pe.Var(within=pe.Reals,bounds=V_L_dY_inf_bounds)
+    block.V_L_dY0 = pe.Var(within=pe.Reals,bounds=V_L_dY0_bounds)
 
     # poynting facotor variable
-    block.poynting = pe.Var(m.COMP_TOTAL,within=pe.Reals)#,bounds=poynting_bounds)
+    block.poynting = pe.Var(m.COMP_TOTAL,within=pe.Reals,bounds=poynting_bounds)
 
     # initialize these variable: 1/2(ub+lb)
     for i in block.COMP_HENRY:
@@ -267,7 +270,7 @@ def VLE_block_rule(block):
 
     # gas phase assume ideal
     def f_V_rule(block,i):
-        return block.parent_block().P*block.parent_block().y[i] == block.parent_block().f_V[i]
+        return block.P_VLE*block.parent_block().y[i] == block.parent_block().f_V[i]
     block.f_V_con = pe.Constraint(m.COMP_TOTAL,rule=f_V_rule)
 
     # molar volume Equation
@@ -305,3 +308,8 @@ def VLE_block_rule(block):
     def poynting_rule(block,i):
         return block.poynting[i] == pe.exp(0.1*block.V_L[i]*(block.parent_block().P)/(e.R*block.parent_block().T))
     block.poynting_con = pe.Constraint(m.COMP_TOTAL,rule=poynting_rule)
+
+    # block pressure equal to outside pressure
+    def pressure_equal_rule(block):
+        return block.P_VLE == block.parent_block().P
+    block.pressure_equal_con = pe.Constraint(rule=pressure_equal_rule)
