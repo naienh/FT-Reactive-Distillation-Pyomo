@@ -1,11 +1,11 @@
 # 2nd level block Structure: Stage Block
-from modules.global_set import m
+from global_sets.component import m
 from pyomo import environ as pe
 
 # stage construction rules
-from modules.kinetics import kinetic_block_rule
-from modules.energy import energy_block_rule
-from modules.VLE import VLE_block_rule
+from physics.kinetics_bounded import kinetic_block_rule
+from physics.energy_bounded import energy_block_rule
+from physics.VLE_bounded import VLE_block_rule
 
 def reactive_stage_rule(block,j):
     #-----------------------------------SETS-----------------------------------
@@ -39,8 +39,8 @@ def reactive_stage_rule(block,j):
 
     block.T = pe.Var(within=pe.NonNegativeReals,bounds=(200+273.15,300+273.15)) # K
     block.H_F = pe.Var(within=pe.Reals)
-    block.f_V = pe.Var(m.COMP_TOTAL,within=pe.NonNegativeReals)
-    block.f_L = pe.Var(m.COMP_TOTAL,within=pe.NonNegativeReals)
+    block.f_V = pe.Var(m.COMP_TOTAL,within=pe.NonNegativeReals,initialize=1e-20)
+    block.f_L = pe.Var(m.COMP_TOTAL,within=pe.NonNegativeReals,initialize=1e-20)
     block.r_total_comp = pe.Var(m.COMP_TOTAL,within=pe.Reals) # kmol/s
 
     print('>','Importing Reactive Stage......')
@@ -94,8 +94,8 @@ def reactive_stage_rule(block,j):
     block.heat_balance_main_con = pe.Constraint(rule=heat_balance_main_rule)
 
     # Total mass balance (total flow balance, redundent)
-    def total_mass_balance_rule(block):
-        return block.F + sum(block.V[s] + block.L[s] for s in block.inlet) + \
-        sum(block.r_total_comp[i] for i in m.COMP_TOTAL) == sum(block.V[s] + block.L[s] for s in block.outlet)
-    block.total_mass_balance_con = pe.Constraint(rule=total_mass_balance_rule)
-    block.total_mass_balance_con.deactivate()
+    # def total_mass_balance_rule(block):
+    #     return block.F + sum(block.V[s] + block.L[s] for s in block.inlet) + \
+    #     sum(block.r_total_comp[i] for i in m.COMP_TOTAL) == sum(block.V[s] + block.L[s] for s in block.outlet)
+    # block.total_mass_balance_con = pe.Constraint(rule=total_mass_balance_rule)
+    # block.total_mass_balance_con.deactivate()
