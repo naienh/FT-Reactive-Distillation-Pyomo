@@ -6,6 +6,7 @@ from pyomo import environ as pe
 from physics.kinetics_bounded import kinetic_block_rule
 from physics.energy_bounded import energy_block_rule
 from physics.VLE_bounded_MPCC_P import VLE_block_rule
+from physics.MPCC_P import P_NCP_block_rule, P_Reg_block_rule, P_pf_block_rule
 
 def reactive_stage_rule(block,j):
     #-----------------------------------SETS-----------------------------------
@@ -78,24 +79,21 @@ def reactive_stage_rule(block,j):
         return block.f_V[i] == block.f_L[i]
     block.VL_equil_con = pe.Constraint(m.COMP_TOTAL,rule=VL_equil_rule)
 
-    # Summation
-    def summation_x_main_rule(block):
-        return sum(block.x[i] for i in m.COMP_TOTAL) == 1
-    block.summation_x_main_con = pe.Constraint(rule=summation_x_main_rule)
+    # MPCC formation
+    block.MPCC = pe.Block(rule = P_pf_block_rule)
 
-    def summation_y_main_rule(block):
-        return sum(block.y[i] for i in m.COMP_TOTAL) == 1
-    block.summation_y_main_con = pe.Constraint(rule=summation_y_main_rule)
+    # Summation
+    def summation_x_y_rule(block):
+        return sum(block.x[i] for i in m.COMP_TOTAL) == sum(block.y[i] for i in m.COMP_TOTAL)
+    block.summation_x_y_con = pe.Constraint(rule=summation_x_y_rule)
+
+    def summation_total_mass_rule(block):
+        return block.F + sum(block.L[s] + block.V[s] for s in block.inlet) + sum(block.r_total_comp[i] for i in m.COMP_TOTAL)\
+                - sum(block.L[s] + block.V[s] for s in block.outlet) == 0
+    block.summation_total_mass_con = pe.Constraint(rule=summation_total_mass_rule)
 
     # Heat Balance
     def heat_balance_main_rule(block):
         return block.F*block.H_F + sum(block.L[s]*block.H_L_[s] + block.V[s]*block.H_V_[s] for s in block.inlet) \
                 + block.Q_main - sum(block.L[s]*block.H_L + block.V[s]*block.H_V for s in block.outlet) == 0
     block.heat_balance_main_con = pe.Constraint(rule=heat_balance_main_rule)
-
-    # Total mass balance (total flow balance, redundent)
-    # def total_mass_balance_rule(block):
-    #     return block.F + sum(block.V[s] + block.L[s] for s in block.inlet) + \
-    #     sum(block.r_total_comp[i] for i in m.COMP_TOTAL) == sum(block.V[s] + block.L[s] for s in block.outlet)
-    # block.total_mass_balance_con = pe.Constraint(rule=total_mass_balance_rule)
-    # block.total_mass_balance_con.deactivate()
