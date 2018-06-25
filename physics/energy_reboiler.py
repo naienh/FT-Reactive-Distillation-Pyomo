@@ -61,9 +61,9 @@ def energy_block_rule(block):
 
     # Molar Enthalpy for gas, liquid and vaporization at temperature
     block.dH_F = pe.Var(m.COMP_FEED,within=pe.Reals)  # kJ/mol
-    block.dH_V = pe.Var(m.COMP_TOTAL,within=pe.Reals)#,bounds=dH_V_bounds)
-    block.dH_L = pe.Var(m.COMP_TOTAL,within=pe.Reals)#,bounds=dH_L_bounds)
-    block.dH_vap = pe.Var(m.COMP_TOTAL,within=pe.Reals)#,bounds=dH_vap_bounds)
+    block.dH_V = pe.Var(m.COMP_TOTAL,within=pe.Reals,bounds=dH_V_bounds)
+    block.dH_L = pe.Var(m.COMP_TOTAL,within=pe.Reals,bounds=dH_L_bounds)
+    block.dH_vap = pe.Var(m.COMP_TOTAL,within=pe.Reals,bounds=dH_vap_bounds)
 
     # initialize these variable: 1/2(ub+lb)
     for i in m.COMP_TOTAL:

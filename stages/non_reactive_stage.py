@@ -36,7 +36,7 @@ def non_reactive_stage_rule(block):
     block.H_L = pe.Var(within=pe.Reals)
     block.H_V = pe.Var(within=pe.Reals)
 
-    block.T = pe.Var(within=pe.NonNegativeReals,bounds=(200+273.15,300+273.15)) # K
+    block.T = pe.Var(within=pe.NonNegativeReals,bounds=(200+273.15,350+273.15)) # K
     block.H_F = pe.Var(within=pe.Reals)
     block.f_V = pe.Var(m.COMP_TOTAL,within=pe.PositiveReals,initialize=1e-20)
     block.f_L = pe.Var(m.COMP_TOTAL,within=pe.PositiveReals,initialize=1e-20)
@@ -75,7 +75,7 @@ def non_reactive_stage_rule(block):
     block.VL_equil_con = pe.Constraint(m.COMP_TOTAL,rule=VL_equil_rule)
 
     # MPCC formation
-    block.MPCC = pe.Block(rule = P_pf_block_rule)
+    block.MPCC = pe.Block(rule = P_NCP_block_rule)
 
     # Summation
     def summation_x_y_rule(block):
