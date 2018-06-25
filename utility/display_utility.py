@@ -132,7 +132,7 @@ Usage:
 2. Use the function:
     phase_data = trans_cnumber(dic)
 3. Return dictionary:
-    phase_data= {'1':[...]}
+    phase_data= {'original index':[c1-c56...]}
 -----------------------------------------------------------------------------'''
 def trans_cnumber(dic):
     molefraction = {}

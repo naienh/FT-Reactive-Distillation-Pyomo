@@ -39,12 +39,13 @@ water_yp = [C20.solution.Variable['y[H2O]']['Value']*21,\
 
 # with open('../saved_solutions/VLE_700C_n20.pickle', 'rb') as f:
 #     C700 = pickle.load(f)
-# with open('../saved_solutions/VLE_130K_n20.pickle', 'rb') as f:
-#     K130 = pickle.load(f)
-#
-# def collect_bounds3(name):
-#     return {i.replace(name,''):[\
-#     C300_n20.solution.Variable[i]['Value'],K130.solution.Variable[i]['Value']]\
-#      for i in C300_n20.solution.Variable.keys() if i.startswith(name)}
-#
-# VLE_bounds_unbounded = collect_bounds3('VLE_block.')
+with open('../saved_solutions/reboiler_350C.pickle', 'rb') as f:
+    C350 = pickle.load(f)
+
+def collect_bounds3(name):
+    return {i.replace(name,''):[\
+    C200_n20.solution.Variable[i]['Value'],C350.solution.Variable[i]['Value']]\
+     for i in C200_n20.solution.Variable.keys() if i.startswith(name)}
+
+energy_bounds3 = collect_bounds3('energy_block.')
+VLE_bounds3 = collect_bounds3('VLE_block.')
