@@ -72,29 +72,24 @@ This section updates regularly to reflect the latest need to print solution
 -----------------------------------------------------------------------------'''
 def beautify(pe,model):
     print('Here comes the result:')
-    print('-'*100)
+    print('-'*108)
 
-    print('T\t\t\t Q\t\t\t V\t\t\t L')
-    print(model.condenser.T.value - 273.15,'\t',model.condenser.Q_main.value,'\t',model.condenser.V['out'].value,'\t',model.condenser.L['out'].value)
+    print('stages\t\tT\t\tQ\t\tV_out\t\tL_out\t\tL_P\t\tW')
+    print('Condenser\t{:.2f}\t\t{:.2f}\t\t{:.8f}\t{:.8f}\t{:.8f}\t{:.8f}'.format(model.condenser.T.value - 273.15,\
+        model.condenser.Q_main.value,model.condenser.V['out'].value,model.condenser.L['out'].value,model.condenser.L['P'].value,model.condenser.W.value))
+    print('')
+    print('stages\t\tT\t\tQ\t\tV_out\t\tL_out\t\tL_P\t\tP_VLE')
     for j in model.TRAY:
-        print(model.reactive[j].T.value - 273.15,'\t',model.reactive[j].Q_main.value,'\t',model.reactive[j].V['out'].value,'\t',model.reactive[j].L['out'].value)
-    print(model.reboiler.T.value - 273.15,'\t',model.reboiler.Q_main.value,'\t',model.reboiler.V['out'].value,'\t',model.reboiler.L['out'].value)
-    print('-'*100)
+        print('Reactive[{}]\t{:.2f}\t\t{:.2f}\t\t{:.8f}\t{:.8f}\t{:.8f}\t{:.8f}'.format(j,model.reactive[j].T.value - 273.15,\
+            model.reactive[j].Q_main.value,model.reactive[j].V['out'].value,model.reactive[j].L['out'].value,model.reactive[j].L['P'].value,model.reactive[j].VLE_block.P_VLE.value))
+    print('Reboiler\t{:.2f}\t\t{:.2f}\t\t{:.8f}\t{:.8f}\t\t\t{:.8f}'.format(model.reboiler.T.value - 273.15,\
+        model.reboiler.Q_main.value,model.reboiler.V['out'].value,model.reboiler.L['out'].value,model.reboiler.VLE_block.P_VLE.value))
+    print('-'*108)
 
-    print('Top Product V/L/W')
-    print(model.condenser.V['out'].value)
-    print(model.condenser.L['P'].value)
-    print(model.reactive[model.TRAY.first()].V['out'].value*0.95*model.reactive[model.TRAY.first()].y['H2O'].value)
-    print('-'*100)
-
-    print('Bottom Product L')
-    print(model.reboiler.L['out'].value)
-    print('-'*100)
-
-    print('Condenser:\tVapor\t\tLiquid\t\tReboiler\tVapor\t\tLiquid')
+    print('\t\tCondenser:\tVapor\t\tLiquid\t\tReboiler\tVapor\t\tLiquid')
     for i in m.COMP_TOTAL:
         if model.condenser.y[i].value > 1e-5 or model.condenser.x[i].value > 1e-5:
-            print(i,'\t\t{:6.3%}\t\t{:6.3%}\t\t\t\t{:6.3%}\t\t{:6.3%}'\
+            print(i,'\t\t\t\t{:6.3%}\t\t{:6.3%}\t\t\t\t{:6.3%}\t\t{:6.3%}'\
                   .format(model.condenser.y[i].value,model.condenser.x[i].value,model.reboiler.y[i].value,model.reboiler.x[i].value))
 #------------------------------------------------------------------------------
 def beautify2(pe,model):
