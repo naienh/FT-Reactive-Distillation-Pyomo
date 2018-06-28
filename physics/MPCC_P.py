@@ -11,7 +11,7 @@ from pyomo import environ as pe
 def P_NCP_block_rule(block):
 
     #------------------------------LOCAL VARIABLES------------------------------
-    block.s_L = pe.Var(within=pe.NonNegativeReals,initialize=1000)#,bounds=(0,1))
+    block.s_L = pe.Var(within=pe.NonNegativeReals,initialize=0)#,bounds=(0,1))
     block.s_V = pe.Var(within=pe.NonNegativeReals,initialize=0)
 
     #-----------------------------LOCAL parameters------------------------------
