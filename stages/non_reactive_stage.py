@@ -92,3 +92,20 @@ def non_reactive_stage_rule(block):
         return block.F*block.H_F + sum(block.L[s]*block.H_L_[s] + block.V[s]*block.H_V_[s] for s in block.inlet) \
                 + block.Q_main - sum(block.L[s]*block.H_L + block.V[s]*block.H_V for s in block.outlet) == 0
     block.heat_balance_main_con = pe.Constraint(rule=heat_balance_main_rule)
+
+
+    # section used to deal with extremely low feed condition
+    block.magic = pe.Var(within=pe.NonNegativeReals,initialize=0.5)
+    all_expression = []
+    for i in block.component_data_objects(pe.Constraint, active=True):
+        if i.local_name.startswith('summation_x_y_con') or i.local_name.startswith('mass_balance_main_con'):
+            all_expression.append(i.body)
+            i.deactivate()
+
+    print(all_expression)
+    block.replaced_constraint_list = pe.ConstraintList()
+    for i in all_expression:
+        block.replaced_constraint_list.add(expr = i*block.magic==0);
+
+    block.complementarity_con = pe.Constraint(expr = block.magic == \
+                    sum(block.L[s] + block.V[s] for s in block.inlet))
