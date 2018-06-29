@@ -117,7 +117,7 @@ def VLLE_block_rule(block):
 
     def V_L_dY_inf_bounds(model):
         lower = min(VLE_bounds['V_L_dY_inf'])
-        lower = lower - abs(lower)*1
+        lower = lower - abs(lower)*0.5
         upper = max(VLE_bounds['V_L_dY_inf'])
         upper = upper + abs(upper)*1
         return (lower,upper)
