@@ -8,9 +8,9 @@ A lot of local variables are temperature dependent, so can be safely bounded
 #     C200_n58 = pickle.load(f)
 # with open('../saved_solutions/reactive_flash_300C_n58.pickle', 'rb') as f:
 #     C300_n58 = pickle.load(f)
-with open('../saved_solutions/reactive_flash_200C_n20.pickle', 'rb') as f:
+with open('../saved_solutions/reactive_flash_100C_n20.pickle', 'rb') as f:
     C200_n20 = pickle.load(f)
-with open('../saved_solutions/reactive_flash_300C_n20.pickle', 'rb') as f:
+with open('../saved_solutions/reactive_flash_350C_n20.pickle', 'rb') as f:
     C300_n20 = pickle.load(f)
 
 def collect_bounds1(name):

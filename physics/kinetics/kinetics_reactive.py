@@ -77,16 +77,16 @@ def kinetic_block_rule(block):
     #------------------------------LOCAL VARIABLES------------------------------
 
     # FT Reaction
-    block.k_FT = pe.Var(within=pe.PositiveReals,bounds=k_FT_bounds,initialize=5e-4)
+    block.k_FT = pe.Var(within=pe.PositiveReals,initialize=5e-4,bounds=k_FT_bounds)
     block.r_FT_total = pe.Var(within=pe.PositiveReals)
     block.g0_FT = pe.Var(within=pe.Reals,bounds=g0_FT_bounds)
-    block.alpha = pe.Var(within=pe.PositiveReals,bounds=alpha_bounds,initialize=0.7)
+    block.alpha = pe.Var(within=pe.PositiveReals,initialize=0.7,bounds=alpha_bounds)
     block.r_FT_cnum = pe.Var(block.C_NUMBER,within=pe.PositiveReals)
     block.r_FT_comp = pe.Var(m.COMP_TOTAL,within=pe.Reals)         # kmol/s
 
     # WGS Reaction
-    block.k_WGS = pe.Var(within=pe.PositiveReals,bounds=k_WGS_bounds,initialize=2e-4)
-    block.Ke_WGS = pe.Var(within=pe.PositiveReals,bounds=Ke_WGS_bounds,initialize=3)
+    block.k_WGS = pe.Var(within=pe.PositiveReals,initialize=2e-4,bounds=k_WGS_bounds)
+    block.Ke_WGS = pe.Var(within=pe.PositiveReals,initialize=3,bounds=Ke_WGS_bounds)
     block.r_WGS = pe.Var(within=pe.PositiveReals)
     block.r_WGS_comp = pe.Var(m.COMP_INORG,within=pe.Reals)         # kmol/s
 
