@@ -174,9 +174,9 @@ def VLE_block_rule(block):
         block.Hen[i] = mean(VLE_bounds['Hen[{}]'.format(i)])
         block.Hen0[i] = mean(VLE_bounds['Hen0[{}]'.format(i)])
 
-    # for i in block.COMP_NONHENRY:
+    for i in block.COMP_NONHENRY:
         # block.gamma[i] = mean(VLE_bounds['gamma[{}]'.format(i)])
-        # block.P_sat[i] = mean(VLE_bounds['P_sat[{}]'.format(i)])
+        block.P_sat[i] = mean(VLE_bounds['P_sat[{}]'.format(i)])
         # block.P_sat_Y[i] = mean(VLE_bounds['P_sat_Y[{}]'.format(i)])
     #
     block.P_sat_dY_inf = mean(VLE_bounds['P_sat_dY_inf'])
