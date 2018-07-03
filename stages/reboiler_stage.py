@@ -3,11 +3,11 @@ from global_sets.component import m
 from pyomo import environ as pe
 
 # stage construction rules
-from physics.energy_reboiler import energy_block_rule
-from physics.VLE_reboiler_MPCC_P import VLE_block_rule
-from physics.MPCC_P import P_NCP_block_rule, P_Reg_block_rule, P_pf_block_rule
+from physics.energy.energy_reboiler import energy_block_rule
+from physics.VLE.VLE_reboiler_MPCC_P import VLE_block_rule
+from physics.MPCC.MPCC_P import P_NCP_block_rule, P_Reg_block_rule, P_pf_block_rule
 
-def non_reactive_stage_rule(block):
+def reboiler_stage_rule(block):
     #-----------------------------------SETS-----------------------------------
 
     # local sets that will only be used in reactive stage
@@ -95,17 +95,16 @@ def non_reactive_stage_rule(block):
 
 
     # section used to deal with extremely low feed condition
-    block.magic = pe.Var(within=pe.NonNegativeReals,initialize=0.5)
-    all_expression = []
-    for i in block.component_data_objects(pe.Constraint, active=True):
-        if i.local_name.startswith('summation_x_y_con') or i.local_name.startswith('mass_balance_main_con'):
-            all_expression.append(i.body)
-            i.deactivate()
-
-    print(all_expression)
-    block.replaced_constraint_list = pe.ConstraintList()
-    for i in all_expression:
-        block.replaced_constraint_list.add(expr = i*block.magic==0);
-
-    block.complementarity_con = pe.Constraint(expr = block.magic == \
-                    sum(block.L[s] + block.V[s] for s in block.inlet))
+    # block.magic = pe.Var(within=pe.NonNegativeReals,initialize=0.5)
+    # all_expression = []
+    # for i in block.component_data_objects(pe.Constraint, active=True):
+    #     if i.local_name.startswith('summation_x_y_con') or i.local_name.startswith('mass_balance_main_con'):
+    #         all_expression.append(i.body)
+    #         i.deactivate()
+    #
+    # block.replaced_constraint_list = pe.ConstraintList()
+    # for i in all_expression:
+    #     block.replaced_constraint_list.add(expr = i*block.magic==0);
+    #
+    # block.complementarity_con = pe.Constraint(expr = block.magic == \
+    #                 sum(block.L[s] + block.V[s] for s in block.inlet))

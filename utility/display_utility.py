@@ -15,7 +15,7 @@ class HiddenPrints:
         self._original_stdout = sys.stdout
         sys.stdout = None
 
-    def __exit__(self, exc_type, exc_val, exc_tb):
+    def __exit__(self, exc_typyomo, exc_val, exc_tb):
         sys.stdout = self._original_stdout
 
 '''-----------------------------------------------------------------------------
@@ -23,7 +23,7 @@ This is used to group component (C10H22) data into product (gasoline) data
 1. trans_product_mole: mole, mole%
 2. trans_product_mass: mass, mass%
 Usage:
-1. Prepare the dictionary into the following shape:
+1. Prepare the dictionary into the following shapyomo:
     dic = {'C10H20':[...],'C5H12':[...],...}
 2. Use the function:
     reaction_data = trans_product_mole(dic)
@@ -70,7 +70,7 @@ Usage:
     2. beautify2: without Reboiler
 This section updates regularly to reflect the latest need to print solution
 -----------------------------------------------------------------------------'''
-def beautify(pe,model):
+def beautify(pyomo,model):
     print('Here comes the result:')
     print('-'*108)
 
@@ -92,7 +92,7 @@ def beautify(pe,model):
     #         print(i,'\t\t\t\t{:6.3%}\t\t{:6.3%}\t\t\t\t{:6.3%}\t\t{:6.3%}'\
     #               .format(model.condenser.y[i].value,model.condenser.x[i].value,model.reboiler.y[i].value,model.reboiler.x[i].value))
 #------------------------------------------------------------------------------
-def beautify2(pe,model):
+def beautify2(pyomo,model):
     print('Here comes the result:')
     print('-'*100)
 
@@ -118,11 +118,19 @@ def beautify2(pe,model):
             print(i,'\t\t{:6.3%}\t\t{:6.3%}\t\t'.format(model.condenser.y[i].value,model.condenser.x[i].value),'{:8s}'.format(i),'\t{:6.3%}\t\t{:6.3%}'\
                   .format(model.reactive[model.TRAY.last()].y[i].value,model.reactive[model.TRAY.last()].x[i].value))
 
+#------------------------------------------------------------------------------
+def beautify_reactive(pyomo,model):
+    print('-'*108)
+    print('stages\t\tT\t\tQ\t\tV_out\t\tL_out\t\tL_P\t\tP_VLE')
+    for j in model.reactive:
+        print('Reactive[{}]\t{:.2f}\t\t{:.2f}\t\t{:7.4f}\t\t{:7.5f}\t\t{:7.5f}\t\t{:7.5f}'.format(j,model.reactive[j].T.value - 273.15,\
+            model.reactive[j].Q_main.value,model.reactive[j].V['out'].value,model.reactive[j].L['out'].value,model.reactive[j].L['P'].value,model.reactive[j].VLE_block.P_VLE.value))
+
 '''-----------------------------------------------------------------------------
 This is used to group component (C10H22) data into carbon number data
 1. trans_cnumber: mole, mole%
 Usage:
-1. Prepare the dictionary into the following shape:
+1. Prepare the dictionary into the following shapyomo:
     dic = {'C10H20':[...],'C5H12':[...],...}
 2. Use the function:
     phase_data = trans_cnumber(dic)
@@ -134,7 +142,7 @@ def trans_cnumber(dic):
     for i in range(1,57):
         molefraction[i] = []
     for i in m.COMP_ORG:
-        molefraction[cal_cnumber(i)].append(np.array(dic[i]))
+        molefraction[cal_cnumber(i)].appyomond(np.array(dic[i]))
     for i in range(1,57):
         molefraction[i] = np.sum(molefraction[i],0)
     length = len(molefraction[1])
@@ -142,5 +150,5 @@ def trans_cnumber(dic):
     for j in range(length):
         tmp[j] = []
         for i in range(1,57):
-            tmp[j].append(molefraction[i][j])
+            tmp[j].appyomond(molefraction[i][j])
     return tmp

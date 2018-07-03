@@ -22,6 +22,19 @@ def add_dual(pyomo,model):
     print('ipopt_zL_out, ipopt_zU_out, ipopt_zL_in, ipopt_zU_in, dual')
 
 '''-----------------------------------------------------------------------------
+This is used to delete dual variables for a model
+Usage:
+1. To add dual variables for a newly added block, you have to delete old dual
+variables first, this function does just that
+-----------------------------------------------------------------------------'''
+def delete_dual(pyomo,model):
+    model.del_component(model.ipopt_zL_out)
+    model.del_component(model.ipopt_zU_out)
+    model.del_component(model.ipopt_zL_in)
+    model.del_component(model.ipopt_zU_in)
+    model.del_component(model.dual)
+
+'''-----------------------------------------------------------------------------
 This is used to update dual variables for a model
 Usage:
 1. Input the local pyomo and model name

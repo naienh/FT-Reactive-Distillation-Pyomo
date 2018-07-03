@@ -3,8 +3,8 @@ from global_sets.component import m
 from pyomo import environ as pe
 
 # stage construction rules
-from physics.energy_condenser import energy_block_rule
-from physics.VLLE_condenser import VLLE_block_rule
+from physics.energy.energy_condenser import energy_block_rule
+from physics.VLE.VLLE_condenser import VLLE_block_rule
 
 # collect variable bounds
 from physics.bounds import water_x, water_yp
@@ -44,6 +44,8 @@ def condenser_stage_rule(block):
     block.H_F = pe.Var(within=pe.Reals)
     block.f_V = pe.Var(m.COMP_TOTAL,within=pe.NonNegativeReals,initialize=1e-20)
     block.f_L = pe.Var(m.COMP_TOTAL,within=pe.NonNegativeReals,initialize=1e-20)
+
+    block.PR_L = pe.Var(within=pe.NonNegativeReals,bounds=(0,1))
 
     print('|','Importing Condenser Stage......')
     print('|','Adding the following local variable:')
@@ -113,8 +115,7 @@ def condenser_stage_rule(block):
                 - block.W*block.energy_block.dH_L['H2O'] == 0
     block.heat_balance_main_con = pe.Constraint(rule=heat_balance_main_rule)
 
-    # def total_mass_balance_rule(block):
-    #     return block.F + sum(block.V[s] + block.L[s] for s in block.inlet) \
-    #      == sum(block.V[s] + block.L[s] for s in block.outlet)
-    # block.total_mass_balance_con = pe.Constraint(rule=total_mass_balance_rule)
-    # block.total_mass_balance_con.deactivate()
+    # product / out ratio
+    def PR_L_ratio_rule(block):
+        return block.L['P'] == block.PR_L * sum(block.L[s] for s in block.outlet)
+    block.PR_L_con = pe.Constraint(rule=PR_L_ratio_rule)

@@ -99,7 +99,7 @@ def P_pf_block_rule(block):
     #-----------------------------LOCAL parameters------------------------------
     block.rho = pe.Param(initialize=1,mutable=True)
 
-    print('>','Importing MPCC_P_Reg Blocks......')
+    print('>','Importing MPCC_P_pf Blocks......')
     print('>','Adding the following local variable:')
     print('-'*50)
 

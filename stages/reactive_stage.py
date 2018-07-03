@@ -3,10 +3,10 @@ from global_sets.component import m
 from pyomo import environ as pe
 
 # stage construction rules
-from physics.kinetics_bounded import kinetic_block_rule
-from physics.energy_bounded import energy_block_rule
-from physics.VLE_bounded_MPCC_P import VLE_block_rule
-from physics.MPCC_P import P_NCP_block_rule, P_Reg_block_rule, P_pf_block_rule
+from physics.kinetics.kinetics_reactive import kinetic_block_rule
+from physics.energy.energy_reactive import energy_block_rule
+from physics.VLE.VLE_reactive_MPCC_P import VLE_block_rule
+from physics.MPCC.MPCC_P import P_NCP_block_rule, P_Reg_block_rule, P_pf_block_rule
 
 def reactive_stage_rule(block,j):
     #-----------------------------------SETS-----------------------------------
@@ -18,16 +18,12 @@ def reactive_stage_rule(block,j):
 
     #---------------------------------VARIABLES---------------------------------
 
-    block.T_F = pe.Var(within=pe.NonNegativeReals) # K
-    block.P = pe.Var(within=pe.NonNegativeReals,bounds=(10,30)) # Bar
-    block.cat = pe.Var(within=pe.NonNegativeReals) # kg
-    block.Q_main = pe.Var(within=pe.Reals) # MW
     # Tray Inlet/Outlet Variable
-    block.x_ = pe.Var(block.inlet,m.COMP_TOTAL,within=pe.NonNegativeReals,bounds=(0,1))
-    block.y_ = pe.Var(block.inlet,m.COMP_TOTAL,within=pe.NonNegativeReals,bounds=(0,1))
-    block.x = pe.Var(m.COMP_TOTAL,within=pe.NonNegativeReals,bounds=(0,1))
-    block.y = pe.Var(m.COMP_TOTAL,within=pe.NonNegativeReals,bounds=(0,1))
-    block.z = pe.Var(m.COMP_FEED,within=pe.NonNegativeReals,bounds=(0,1))
+    block.x_ = pe.Var(block.inlet,m.COMP_TOTAL,within=pe.NonNegativeReals)
+    block.y_ = pe.Var(block.inlet,m.COMP_TOTAL,within=pe.NonNegativeReals)
+    block.x = pe.Var(m.COMP_TOTAL,within=pe.NonNegativeReals)
+    block.y = pe.Var(m.COMP_TOTAL,within=pe.NonNegativeReals)
+    block.z = pe.Var(m.COMP_FEED,within=pe.NonNegativeReals)
 
     block.L = pe.Var(block.stream,within=pe.NonNegativeReals)
     block.V = pe.Var(block.stream,within=pe.NonNegativeReals)
@@ -37,12 +33,22 @@ def reactive_stage_rule(block,j):
     block.H_V_ = pe.Var(block.inlet,within=pe.Reals)
     block.H_L = pe.Var(within=pe.Reals)
     block.H_V = pe.Var(within=pe.Reals)
-
-    block.T = pe.Var(within=pe.NonNegativeReals,bounds=(200+273.15,300+273.15)) # K
     block.H_F = pe.Var(within=pe.Reals)
+
+    # State Variable
+    block.T = pe.Var(within=pe.NonNegativeReals,bounds=(100+273.15,350+273.15)) # K
+    block.T_F = pe.Var(within=pe.NonNegativeReals) # K
+    block.P = pe.Var(within=pe.NonNegativeReals,bounds=(10,30)) # Bar
+
     block.f_V = pe.Var(m.COMP_TOTAL,within=pe.NonNegativeReals,initialize=1e-20)
     block.f_L = pe.Var(m.COMP_TOTAL,within=pe.NonNegativeReals,initialize=1e-20)
+
+    block.cat = pe.Var(within=pe.NonNegativeReals,initialize=3000) # kg
+    block.Q_main = pe.Var(within=pe.Reals) # MW
     block.r_total_comp = pe.Var(m.COMP_TOTAL,within=pe.Reals) # kmol/s
+
+    block.PR_L = pe.Var(within=pe.NonNegativeReals,bounds=(0,1))
+    block.PR_V = pe.Var(within=pe.NonNegativeReals,bounds=(0,1))
 
     print('>','Importing Reactive Stage......')
     print('>','Adding the following local variable:')
@@ -97,3 +103,12 @@ def reactive_stage_rule(block,j):
         return block.F*block.H_F + sum(block.L[s]*block.H_L_[s] + block.V[s]*block.H_V_[s] for s in block.inlet) \
                 + block.Q_main - sum(block.L[s]*block.H_L + block.V[s]*block.H_V for s in block.outlet) == 0
     block.heat_balance_main_con = pe.Constraint(rule=heat_balance_main_rule)
+
+    # product / out ratio
+    def PR_L_ratio_rule(block):
+        return block.L['P'] == block.PR_L * sum(block.L[s] for s in block.outlet)
+    block.PR_L_con = pe.Constraint(rule=PR_L_ratio_rule)
+
+    def PR_V_ratio_rule(block):
+        return block.V['P'] == block.PR_V * sum(block.V[s] for s in block.outlet)
+    block.PR_V_con = pe.Constraint(rule=PR_V_ratio_rule)

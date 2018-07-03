@@ -10,7 +10,7 @@ try:
     workbook = xlrd.open_workbook("data/thermo_data.xlsx")
 except:
     try:
-        workbook = xlrd.open_workbook("thermo_data.xlsx")
+        workbook = xlrd.open_workbook("../../data/thermo_data.xlsx")
     except:
         workbook = xlrd.open_workbook("../data/thermo_data.xlsx")
 sheet = workbook.sheet_by_index(0)

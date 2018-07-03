@@ -9,7 +9,7 @@ try:
     workbook = xlrd.open_workbook("data/VLE_data.xlsx")
 except:
     try:
-        workbook = xlrd.open_workbook("VLE_data.xlsx")
+        workbook = xlrd.open_workbook("../../data/VLE_data.xlsx")
     except:
         workbook = xlrd.open_workbook("../data/VLE_data.xlsx")
 
