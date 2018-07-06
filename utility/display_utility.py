@@ -3,20 +3,50 @@ import os, sys
 import copy
 import numpy as np
 from utility.data_utility import cal_MW, cal_cnumber
+from matplotlib import pyplot as plt
+from matplotlib.backends.backend_pdf import PdfPages
 
 '''-----------------------------------------------------------------------------
-This can be used to slient output produced by constructing blocks
+This can be used to duplicate the output to an external
 Usage:
-with HiddenPrints():
-    print("This will not be printed")
+with HiddenLogs('filename','mode'):
+    print("This will be displayed as usual + saved in log")
 -----------------------------------------------------------------------------'''
-class HiddenPrints:
+
+class Logger(object):
+    def __init__(self,_original_stdout, logfile):
+        self.terminal = _original_stdout
+        self.log = logfile
+
+    def write(self, message):
+        self.terminal.write(message)
+        self.log.write(message)
+
+    def flush(self):
+        self.log.flush()
+
+class HiddenLogs(object):
+    def __init__(self,textlogdir,mode='a'):
+        self.filename = textlogdir
+        self.mode = mode
+
+    def __enter__(self):
+        self.logfile = open(self.filename, self.mode)
+        self._original_stdout = sys.stdout
+        sys.stdout = Logger(self._original_stdout, self.logfile)
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.logfile.close()
+        sys.stdout = self._original_stdout
+
+class HiddenPrints(object):
     def __enter__(self):
         self._original_stdout = sys.stdout
         sys.stdout = None
 
-    def __exit__(self, exc_typyomo, exc_val, exc_tb):
+    def __exit__(self, exc_type, exc_val, exc_tb):
         sys.stdout = self._original_stdout
+
 
 '''-----------------------------------------------------------------------------
 This is used to group component (C10H22) data into product (gasoline) data
@@ -73,58 +103,49 @@ This section updates regularly to reflect the latest need to print solution
 def beautify(pyomo,model):
     print('Here comes the result:')
     print('-'*108)
-
-    print('stages\t\tT\t\tQ\t\tV_out\t\tL_out\t\tL_P\t\tW')
-    print('Condenser\t{:.2f}\t\t{:.2f}\t\t{:.5f}\t\t{:.5f}\t\t{:.5f}\t\t{:.5f}'.format(model.condenser.T.value - 273.15,\
-        model.condenser.Q_main.value,model.condenser.V['out'].value,model.condenser.L['out'].value,model.condenser.L['P'].value,model.condenser.W.value))
+    beautify_condenser(pyomo,model)
     print('')
-    print('stages\t\tT\t\tQ\t\tV_out\t\tL_out\t\tL_P\t\tP_VLE')
-    for j in model.TRAY:
-        print('Reactive[{}]\t{:.2f}\t\t{:.2f}\t\t{:.5f}\t\t{:.5f}\t\t{:.5f}\t\t{:.5f}'.format(j,model.reactive[j].T.value - 273.15,\
-            model.reactive[j].Q_main.value,model.reactive[j].V['out'].value,model.reactive[j].L['out'].value,model.reactive[j].L['P'].value,model.reactive[j].VLE_block.P_VLE.value))
-    print('Reboiler\t{:.2f}\t\t{:.2f}\t\t{:.5f}\t\t{:.5f}\t\t\t\t{:.5f}'.format(model.reboiler.T.value - 273.15,\
-        model.reboiler.Q_main.value,model.reboiler.V['out'].value,model.reboiler.L['out'].value,model.reboiler.VLE_block.P_VLE.value))
+    beautify_reactive(pyomo,model)
+    print('')
+    beautify_reboiler(pyomo,model)
     print('-'*108)
 
-    # print('\t\tCondenser:\tVapor\t\tLiquid\t\tReboiler\tVapor\t\tLiquid')
-    # for i in m.COMP_TOTAL:
-    #     if model.condenser.y[i].value > 1e-5 or model.condenser.x[i].value > 1e-5:
-    #         print(i,'\t\t\t\t{:6.3%}\t\t{:6.3%}\t\t\t\t{:6.3%}\t\t{:6.3%}'\
-    #               .format(model.condenser.y[i].value,model.condenser.x[i].value,model.reboiler.y[i].value,model.reboiler.x[i].value))
 #------------------------------------------------------------------------------
 def beautify2(pyomo,model):
     print('Here comes the result:')
-    print('-'*100)
-
-    print('\t\tT\t\t Q\t\t\t V\t\t\t L')
-    print('{:20.2f}'.format(model.condenser.T.value - 273.15),'\t','{:20.10f}'.format(model.condenser.Q_main.value),'\t','{:20.10f}'.format(model.condenser.V['out'].value),'\t','{:20.10f}'.format(model.condenser.L['out'].value))
-    for j in model.TRAY:
-        print('{:20.2f}'.format(model.reactive[j].T.value - 273.15),'\t','{:20.10f}'.format(model.reactive[j].Q_main.value),'\t','{:20.10f}'.format(model.reactive[j].V['out'].value),'\t','{:20.10f}'.format(model.reactive[j].L['out'].value))
-    print('-'*100)
-
-    print('Top')
-    print('V\t',model.condenser.V['out'].value)
-    print('L\t',model.condenser.L['P'].value)
-    print('W\t',model.condenser.W.value)
-    print('-'*100)
-
-    print('Bottom')
-    print('L\t',model.reactive[model.TRAY.last()].L['out'].value)
-    print('-'*100)
-
-    print('Condenser:\tVapor\t\tLiquid\t\tLast Stage\tVapor\t\tLiquid')
-    for i in m.COMP_TOTAL:
-        if model.condenser.y[i].value > 1e-5 or model.condenser.x[i].value > 1e-5:
-            print(i,'\t\t{:6.3%}\t\t{:6.3%}\t\t'.format(model.condenser.y[i].value,model.condenser.x[i].value),'{:8s}'.format(i),'\t{:6.3%}\t\t{:6.3%}'\
-                  .format(model.reactive[model.TRAY.last()].y[i].value,model.reactive[model.TRAY.last()].x[i].value))
+    print('-'*108)
+    beautify_condenser(pyomo,model)
+    print('')
+    beautify_reactive(pyomo,model)
+    print('-'*108)
 
 #------------------------------------------------------------------------------
 def beautify_reactive(pyomo,model):
-    print('-'*108)
-    print('stages\t\tT\t\tQ\t\tV_out\t\tL_out\t\tL_P\t\tP_VLE')
+    convert_tmp = cal_conversion(model)
+    print('stages\t\t\tT\tQ\tr_FT\tConversion\tV_out\tL_out\tL_Prod\t\tP_VLE')
     for j in model.reactive:
-        print('Reactive[{}]\t{:.2f}\t\t{:.2f}\t\t{:7.4f}\t\t{:7.5f}\t\t{:7.5f}\t\t{:7.5f}'.format(j,model.reactive[j].T.value - 273.15,\
-            model.reactive[j].Q_main.value,model.reactive[j].V['out'].value,model.reactive[j].L['out'].value,model.reactive[j].L['P'].value,model.reactive[j].VLE_block.P_VLE.value))
+        temp_num = model.reactive[j].T.value - 273.15, model.reactive[j].Q_main.value,model.reactive[j].kinetics_block.r_FT_total.value,\
+        convert_tmp[j-1],model.reactive[j].V['out'].value,model.reactive[j].L['out'].value,model.reactive[j].L['P'].value,model.reactive[j].VLE_block.P_VLE.value
+        temp_string = ['{:.5f}'.format(i) for i in temp_num]
+        if model.reactive[j].cat != 0:
+            print('React-ive[{}]\t\t{:.5s}\t{:.5s}\t{:.6s}\t{:.5s}\t\t{:.6s}\t{:.6s}\t{:.6s}\t\t{:.6s}'.format(j,*temp_string))
+        else:
+            print('NON-react[{}]\t\t{:.5s}\t{:.5s}\t{:.6s}\t{:.5s}\t\t{:.6s}\t{:.6s}\t{:.6s}\t\t{:.6s}'.format(j,*temp_string))
+#------------------------------------------------------------------------------
+def beautify_condenser(pyomo,model):
+    print('stages\t\t\tT\tQ\t\t\t\tV_out\tL_out\tL_Prod\t\tW')
+    temp_num = model.condenser.T.value - 273.15, model.condenser.Q_main.value,model.condenser.V['out'].value,\
+    model.condenser.L['out'].value,model.condenser.L['P'].value,model.condenser.W.value
+    temp_string = ['{:.5f}'.format(i) for i in temp_num]
+    print('Condenser\t\t{:.5s}\t{:.5s}\t\t\t\t{:.6s}\t{:.6s}\t{:.6s}\t\t{:.6s}'.format(*temp_string))
+#------------------------------------------------------------------------------
+def beautify_reboiler(pyomo,model):
+    print('stages\t\t\tT\tQ\t\t\t\tV_out\tL_out\t\t\tP_VLE')
+    temp_num = model.reboiler.T.value - 273.15, model.reboiler.Q_main.value,model.reboiler.V['out'].value,\
+    model.reboiler.L['out'].value,model.reboiler.VLE_block.P_VLE.value
+    temp_string = ['{:.5f}'.format(i) for i in temp_num]
+    print('Reboiler\t\t{:.5s}\t{:.5s}\t\t\t\t{:.6s}\t{:.6s}\t\t\t{:.6s}'.format(*temp_string))
+
 
 '''-----------------------------------------------------------------------------
 This is used to group component (C10H22) data into carbon number data
@@ -137,18 +158,237 @@ Usage:
 3. Return dictionary:
     phase_data= {'original index':[c1-c56...]}
 -----------------------------------------------------------------------------'''
+cnumber_range = range(1,57)
+
 def trans_cnumber(dic):
     molefraction = {}
-    for i in range(1,57):
+    for i in cnumber_range:
         molefraction[i] = []
     for i in m.COMP_ORG:
-        molefraction[cal_cnumber(i)].appyomond(np.array(dic[i]))
-    for i in range(1,57):
+        molefraction[cal_cnumber(i)].append(np.array(dic[i]))
+    for i in cnumber_range:
         molefraction[i] = np.sum(molefraction[i],0)
-    length = len(molefraction[1])
-    tmp = {}
-    for j in range(length):
-        tmp[j] = []
-        for i in range(1,57):
-            tmp[j].appyomond(molefraction[i][j])
+    tmp = []
+    for i in cnumber_range:
+        tmp.append(molefraction[i])
     return tmp
+
+def cal_conversion(model):
+    convertion_data = []
+    for j in model.reactive:
+
+        inletfeed = sum(model.reactive[j].V[s].value*(model.reactive[j].y_[s,'CO'].value + model.reactive[j].y_[s,'H2'].value) + \
+                        model.reactive[j].L[s].value*(model.reactive[j].x_[s,'CO'].value + model.reactive[j].x_[s,'H2'].value) for s in model.reactive[j].inlet) + \
+                    model.reactive[j].F.value
+        outlet = sum(model.reactive[j].V[s].value*(model.reactive[j].y['CO'].value + model.reactive[j].y['H2'].value) + \
+                    model.reactive[j].L[s].value*(model.reactive[j].x['CO'].value + model.reactive[j].x['H2'].value) for s in model.reactive[j].outlet)
+
+        tmp = round((inletfeed - outlet)/inletfeed,3)
+        if tmp <= 0:
+            convertion_data.append(0)
+        else:
+            convertion_data.append(tmp)
+    return convertion_data
+
+def cal_total_conversion(model):
+    total_inlet = sum(model.reactive[j].F.value for j in model.reactive)
+    total_outlet = sum(model.reactive[j].V['P'].value*(model.reactive[j].y['CO'].value + model.reactive[j].y['H2'].value) + \
+                    model.reactive[j].L['P'].value*(model.reactive[j].x['CO'].value + model.reactive[j].x['H2'].value) for j in model.reactive) + \
+                    model.condenser.V['out'].value*(model.condenser.y['CO'].value + model.condenser.y['H2'].value) + \
+                    model.condenser.L['P'].value*(model.condenser.x['CO'].value + model.condenser.x['H2'].value)
+
+    total_conversion = (total_inlet - total_outlet)/total_inlet
+    return total_conversion
+
+def plot_distribution(model,open_log_pdf = None,title = None):
+
+    cnumber_range = range(1,57)
+
+    g_data = []; d_data = []; l_out_data = {}; l_P_data = {}; b_data = []
+    cd_x_data = []; rf_x_data = {}; rb_x_data = []
+
+    g_data = trans_cnumber({i:model.condenser.V['out'].value*model.condenser.y[i].value for i in m.COMP_TOTAL})
+    d_data = trans_cnumber({i:model.condenser.L['P'].value*model.condenser.x[i].value for i in m.COMP_TOTAL})
+    for j in model.reactive:
+        l_out_data[j] = trans_cnumber({i:model.reactive[j].L['out'].value*model.reactive[j].x[i].value for i in m.COMP_TOTAL})
+        l_P_data[j] = trans_cnumber({i:model.reactive[j].L['P'].value*model.reactive[j].x[i].value for i in m.COMP_TOTAL})
+    b_data = trans_cnumber({i:model.reboiler.L['out'].value*model.reboiler.x[i].value for i in m.COMP_TOTAL})
+
+    cd_x_data = trans_cnumber({i:model.condenser.x[i].value for i in m.COMP_TOTAL})
+    for j in model.reactive:
+        rf_x_data[j] = trans_cnumber({i:model.reactive[j].x[i].value for i in m.COMP_TOTAL})
+    rb_x_data = trans_cnumber({i:model.reboiler.x[i].value for i in m.COMP_TOTAL})
+
+    # start the plot
+    fig = plt.figure(figsize=(16,14))
+    gs = plt.GridSpec(4, 3)
+    ax1 = plt.subplot(gs[0,:-1])
+    ax2 = plt.subplot(gs[1,:-1])
+    ax3 = plt.subplot(gs[2,:-1])
+    ax4 = plt.subplot(gs[:2,2])
+    ax5 = plt.subplot(gs[3,:-1])
+    ax6 = plt.subplot(gs[2:,2])
+    '''
+    ax1, product distribution
+    '''
+
+    ax1.plot(cnumber_range,g_data,'C6o-',markeredgecolor='w')
+    ax1.plot(cnumber_range,d_data,'C2o-',markeredgecolor='w')
+
+    for j in model.reactive:
+        ax1.plot(cnumber_range,l_P_data[j],'C0o-',marker = r'${:}$'.format(j),markersize=14)
+
+    ax1.plot(cnumber_range,b_data,'C1o-',markeredgecolor='w')
+
+    ax1.set_xlim(0, 30)
+    ax1.set_yscale("log")
+    ax1.set_ylim(1e-6, 1)
+    # ax1.legend(['Vapor','Distillate',*['P{:}'.format(i) for i in model.reactive],'Bottom'],fontsize=14,loc=1)
+    ax1.set_title('Product Distribution (Mole log)',fontsize=14)
+
+    ax1.set_ylabel('Molar Flow (kmol/s)', color='K',fontsize=14)
+    '''
+    ax2, tray x composition
+    '''
+    ax2.plot(cnumber_range,cd_x_data,'C2o-',markeredgecolor='w')
+
+    for j in model.reactive:
+        if model.reactive[j].PR_L.value == 0:
+            ax2.plot(cnumber_range,rf_x_data[j],'C7o-',alpha = 0.5,marker = r'${:}$'.format(j),markersize=10)
+
+    for j in model.reactive:
+        if model.reactive[j].PR_L.value > 0:
+            ax2.plot(cnumber_range,rf_x_data[j],'C0o-',marker = r'${:}$'.format(j),markersize=14)
+
+    ax2.plot(cnumber_range,rb_x_data,'C1o-',markeredgecolor='w')
+
+    ax2.set_xlim(0, 30)
+    ax2.set_ylim(0, 0.4)
+    ax2.set_title('Liquid Composition (Mole)',fontsize=14)
+
+    ax2.set_ylabel('Molar Fraction', color='K',fontsize=14)
+
+    '''
+    ax3, inter stage flows
+    '''
+    tray_num = len(model.TRAY)
+    tray_pos = np.arange(tray_num)
+
+    vapor_flow = [model.reactive[j].V['out'].value for j in model.reactive]
+    liquid_flow = [model.reactive[j].L['out'].value for j in model.reactive]
+    product_flow = [model.reactive[j].L['P'].value for j in model.reactive]
+
+    line1,*trash = ax3.bar(tray_pos,liquid_flow, width = min(5/tray_num,0.1), color='C0')
+    line2,*trash = ax3.bar(tray_pos,product_flow, bottom = liquid_flow, width = min(5/tray_num,0.1)*1.1, color='C1')
+
+    ax3_ = ax3.twinx()
+    line3, = ax3_.plot(tray_pos,vapor_flow, 'C2o-',markersize=12,markeredgecolor='w')
+
+    ax3.set_xticks(tray_pos)
+    ax3.set_xticklabels(['T {:}'.format(j) for j in model.TRAY])
+    ax3.set_title('Inter Stage Flow (kmol/s)',fontsize=14)
+
+    ax3.set_ylabel('Liquid Flow (kmol/s)', color='K',fontsize=14)
+    ax3_.set_ylabel('Vapor Flow (kmol/s)', color='K',fontsize=14)
+
+    ax3.legend([line1,line2,line3],['Liquid','Product','Vapor'],loc=1,fontsize=14)
+
+    '''
+    ax4, reaction and conversion, also MPCC pf warning is embedded as well
+    '''
+
+    tray_conv = cal_conversion(model)
+
+    ax4_ = ax4.twinx()
+
+    line1, = ax4_.plot([model.reactive[j].kinetics_block.r_FT_total.value for j in model.reactive],\
+            tray_pos,'C1o-',markersize=12,markeredgecolor='w')
+    line2, *trash = ax4_.barh(tray_pos,tray_conv, height = min(10/tray_num,0.2), color='C0')
+    line3, = ax4.plot([1-model.reactive[j].MPCC.pf.value for j in model.reactive],\
+            tray_pos,'C3o-',markersize=12,markeredgecolor='w')
+
+    ax4_.set_xlim(0,1)
+    ax4_.set_xticklabels(['{:.0%}'.format(x) for x in ax4.get_xticks()])
+    ax4_.set_yticks(tray_pos)
+    ax4_.set_yticklabels(['T {:}'.format(j) for j in model.TRAY])
+    ax4_.invert_yaxis()
+    ax4_.invert_xaxis()
+
+    ax4.set_yticks([])
+
+    ax4_.set_title('Total Conversion = {:.1%}'.format(cal_total_conversion(model)),fontsize=14)
+
+    ax4_.legend([line1,line2,line3],['r_FT','Conversion','Penalty'],loc=2,fontsize=14)
+
+    '''
+    ax5, temperature and Q
+    '''
+    temp_profile = [model.reactive[j].T.value-273.15 for j in model.reactive]
+    Q_profile = [model.reactive[j].Q_main.value for j in model.reactive]
+
+    line1,*trash = ax5.bar(tray_pos,temp_profile, width = min(5/tray_num,0.1), color='C0')
+
+    ax5_ = ax5.twinx()
+    line2, = ax5_.plot(tray_pos,Q_profile, 'C2o-',markersize=12,markeredgecolor='w')
+
+    ax5.set_ylim([100,350])
+    ax5.set_xticks(tray_pos)
+    ax5.set_xticklabels(['T {:}'.format(j) for j in model.TRAY])
+    ax5.set_title('Stage Temperature and Heat',fontsize=14)
+
+    ax5.set_ylabel('Temperature (C)', color='K',fontsize=14)
+    ax5_.set_ylabel('Q_in (MW)', color='K',fontsize=14)
+
+    ax5.legend([line1,line2],['Temperature','Q'],loc=1,fontsize=14)
+
+    '''
+    ax6, reaction and conversion, also MPCC pf warning is embedded as well
+    '''
+
+    ax6_ = ax6.twinx()
+    ax6_y = ax6.twiny()
+
+    line1, = ax6_y.plot([model.reactive[j].F.value for j in model.reactive],\
+            tray_pos,'C1o-',markersize=12,markeredgecolor='w')
+    line2, *trash = ax6_.barh(tray_pos,[model.reactive[j].cat.value for j in model.reactive], height = min(10/tray_num,0.2), color='C0')
+
+    ax6_.set_xticklabels(['{:.0f}'.format(x) for x in ax6.get_xticks()])
+    ax6_.set_yticks(tray_pos)
+    ax6_.set_yticklabels(['T {:}'.format(j) for j in model.reactive])
+    ax6_.invert_yaxis()
+    ax6_.invert_xaxis()
+    ax6_y.invert_yaxis()
+    ax6_y.invert_xaxis()
+
+    ax6.set_yticks([])
+
+    ax6_.legend([line1,line2],['Feed','Catalyst'],loc=2,fontsize=14)
+
+    '''
+    Finalize
+    '''
+
+    ax1.grid()
+    ax2.grid()
+    ax3.grid(axis='y')
+    ax4.grid(axis='x')
+    ax5.grid(axis='y')
+    ax6.grid(axis='x')
+
+    if title:
+        fig.suptitle('> '+title+' <', fontsize=18)
+
+    plt.subplots_adjust(
+        left  = 0.1,
+        right = 0.9,
+        bottom = 0.1,
+        top = 0.9,
+        wspace = 0.3,
+        hspace = 0.3)
+
+    if open_log_pdf:
+        open_log_pdf.savefig()
+
+    plt.show()
+
+    plt.close(fig)
