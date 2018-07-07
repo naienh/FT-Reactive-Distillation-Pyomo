@@ -183,7 +183,12 @@ def cal_conversion(model):
         outlet = sum(model.reactive[j].V[s].value*(model.reactive[j].y['CO'].value + model.reactive[j].y['H2'].value) + \
                     model.reactive[j].L[s].value*(model.reactive[j].x['CO'].value + model.reactive[j].x['H2'].value) for s in model.reactive[j].outlet)
 
-        tmp = round((inletfeed - outlet)/inletfeed,3)
+        # to ensure other modules display properly when the solution is incorrect
+        try:
+            tmp = round((inletfeed - outlet)/inletfeed,3)
+        except:
+            tmp = 0
+
         if tmp <= 0:
             convertion_data.append(0)
         else:
@@ -196,8 +201,12 @@ def cal_total_conversion(model):
                     model.reactive[j].L['P'].value*(model.reactive[j].x['CO'].value + model.reactive[j].x['H2'].value) for j in model.reactive) + \
                     model.condenser.V['out'].value*(model.condenser.y['CO'].value + model.condenser.y['H2'].value) + \
                     model.condenser.L['P'].value*(model.condenser.x['CO'].value + model.condenser.x['H2'].value)
+    # to ensure other modules display properly when the solution is incorrect
+    try:
+        total_conversion = (total_inlet - total_outlet)/total_inlet
+    except:
+        total_conversion = 0
 
-    total_conversion = (total_inlet - total_outlet)/total_inlet
     return total_conversion
 
 def plot_distribution(model,open_log_pdf = None,title = None):
@@ -277,12 +286,16 @@ def plot_distribution(model,open_log_pdf = None,title = None):
     vapor_flow = [model.reactive[j].V['out'].value for j in model.reactive]
     liquid_flow = [model.reactive[j].L['out'].value for j in model.reactive]
     product_flow = [model.reactive[j].L['P'].value for j in model.reactive]
+    ymax = max([model.reactive[j].L['P'].value + model.reactive[j].L['out'].value for j in model.reactive])
+    ax3.set_ylim(0,ymax*1.2)
 
     line1,*trash = ax3.bar(tray_pos,liquid_flow, width = min(5/tray_num,0.1), color='C0')
-    line2,*trash = ax3.bar(tray_pos,product_flow, bottom = liquid_flow, width = min(5/tray_num,0.1)*1.1, color='C1')
+    line2,*trash = ax3.bar(tray_pos,product_flow, bottom = liquid_flow, width = min(5/tray_num,0.1), color='C1')
 
     ax3_ = ax3.twinx()
     line3, = ax3_.plot(tray_pos,vapor_flow, 'C2o-',markersize=12,markeredgecolor='w')
+    ymax = max(vapor_flow)
+    ax3_.set_ylim(0,ymax*1.1)
 
     ax3.set_xticks(tray_pos)
     ax3.set_xticklabels(['T {:}'.format(j) for j in model.TRAY])
@@ -291,34 +304,36 @@ def plot_distribution(model,open_log_pdf = None,title = None):
     ax3.set_ylabel('Liquid Flow (kmol/s)', color='K',fontsize=14)
     ax3_.set_ylabel('Vapor Flow (kmol/s)', color='K',fontsize=14)
 
-    ax3.legend([line1,line2,line3],['Liquid','Product','Vapor'],loc=1,fontsize=14)
+    ax3.legend([line1,line2,line3],['Liquid','Product','Vapor'],loc=1,fontsize=12,fancybox=True,framealpha=0.2)
 
     '''
     ax4, reaction and conversion, also MPCC pf warning is embedded as well
     '''
 
+    tray_pos_reboiler = np.arange(tray_num+1)
     tray_conv = cal_conversion(model)
 
     ax4_ = ax4.twinx()
 
-    line1, = ax4_.plot([model.reactive[j].kinetics_block.r_FT_total.value for j in model.reactive],\
-            tray_pos,'C1o-',markersize=12,markeredgecolor='w')
-    line2, *trash = ax4_.barh(tray_pos,tray_conv, height = min(10/tray_num,0.2), color='C0')
-    line3, = ax4.plot([1-model.reactive[j].MPCC.pf.value for j in model.reactive],\
-            tray_pos,'C3o-',markersize=12,markeredgecolor='w')
+    line1, = ax4_.plot([model.reactive[j].kinetics_block.r_FT_total.value for j in model.reactive] + [0],\
+            tray_pos_reboiler,'C1o-',markersize=12,markeredgecolor='w')
+    line2, *trash = ax4_.barh(tray_pos_reboiler,tray_conv + [0], height = min(10/tray_num,0.2), color='C0')
+    line3, = ax4.plot([1-model.reactive[j].MPCC.pf.value for j in model.reactive] + [1-model.reboiler.MPCC.pf.value],\
+            tray_pos_reboiler,'C3o-',markersize=8,markeredgecolor='w')
 
-    ax4_.set_xlim(0,1)
+    ax4_.set_xlim(-0.05,1.05)
     ax4_.set_xticklabels(['{:.0%}'.format(x) for x in ax4.get_xticks()])
-    ax4_.set_yticks(tray_pos)
-    ax4_.set_yticklabels(['T {:}'.format(j) for j in model.TRAY])
+    ax4_.set_yticks(tray_pos_reboiler)
+    ax4_.set_yticklabels(['T {:}'.format(j) for j in model.TRAY] + ['Reboiler'])
     ax4_.invert_yaxis()
     ax4_.invert_xaxis()
+    ax4.invert_yaxis()
 
     ax4.set_yticks([])
 
     ax4_.set_title('Total Conversion = {:.1%}'.format(cal_total_conversion(model)),fontsize=14)
 
-    ax4_.legend([line1,line2,line3],['r_FT','Conversion','Penalty'],loc=2,fontsize=14)
+    ax4_.legend([line1,line2,line3],['r_FT','Conversion','Penalty'],loc=2,fontsize=12,fancybox=True,framealpha=0.2)
 
     '''
     ax5, temperature and Q
@@ -331,7 +346,12 @@ def plot_distribution(model,open_log_pdf = None,title = None):
     ax5_ = ax5.twinx()
     line2, = ax5_.plot(tray_pos,Q_profile, 'C2o-',markersize=12,markeredgecolor='w')
 
-    ax5.set_ylim([100,350])
+    ax5.set_ylim([130,265])
+
+    ymax = max(Q_profile+[5])
+    ymin = min(Q_profile+[-5])
+    ax5_.set_ylim([ymin*1.2,ymax*1.2])
+
     ax5.set_xticks(tray_pos)
     ax5.set_xticklabels(['T {:}'.format(j) for j in model.TRAY])
     ax5.set_title('Stage Temperature and Heat',fontsize=14)
@@ -339,7 +359,7 @@ def plot_distribution(model,open_log_pdf = None,title = None):
     ax5.set_ylabel('Temperature (C)', color='K',fontsize=14)
     ax5_.set_ylabel('Q_in (MW)', color='K',fontsize=14)
 
-    ax5.legend([line1,line2],['Temperature','Q'],loc=1,fontsize=14)
+    ax5_.legend([line1,line2],['Temperature','Q'],loc=1,fontsize=12,fancybox=True,framealpha=0.2)
 
     '''
     ax6, reaction and conversion, also MPCC pf warning is embedded as well
@@ -348,13 +368,13 @@ def plot_distribution(model,open_log_pdf = None,title = None):
     ax6_ = ax6.twinx()
     ax6_y = ax6.twiny()
 
-    line1, = ax6_y.plot([model.reactive[j].F.value for j in model.reactive],\
-            tray_pos,'C1o-',markersize=12,markeredgecolor='w')
-    line2, *trash = ax6_.barh(tray_pos,[model.reactive[j].cat.value for j in model.reactive], height = min(10/tray_num,0.2), color='C0')
+    line1, = ax6_y.plot([model.reactive[j].F.value for j in model.reactive] + [model.reboiler.F.value],\
+            tray_pos_reboiler,'C1o-',markersize=12,markeredgecolor='w')
+    line2, *trash = ax6_.barh(tray_pos_reboiler,[model.reactive[j].cat.value for j in model.reactive] + [0], height = min(10/tray_num,0.2), color='C0')
 
     ax6_.set_xticklabels(['{:.0f}'.format(x) for x in ax6.get_xticks()])
-    ax6_.set_yticks(tray_pos)
-    ax6_.set_yticklabels(['T {:}'.format(j) for j in model.reactive])
+    ax6_.set_yticks(tray_pos_reboiler)
+    ax6_.set_yticklabels(['T {:}'.format(j) for j in model.reactive] + ['Reboiler'])
     ax6_.invert_yaxis()
     ax6_.invert_xaxis()
     ax6_y.invert_yaxis()
@@ -362,7 +382,7 @@ def plot_distribution(model,open_log_pdf = None,title = None):
 
     ax6.set_yticks([])
 
-    ax6_.legend([line1,line2],['Feed','Catalyst'],loc=2,fontsize=14)
+    ax6_.legend([line1,line2],['Feed','Catalyst'],loc=2,fontsize=12,fancybox=True,framealpha=0.2)
 
     '''
     Finalize
