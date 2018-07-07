@@ -196,11 +196,13 @@ def cal_conversion(model):
     return convertion_data
 
 def cal_total_conversion(model):
-    total_inlet = sum(model.reactive[j].F.value for j in model.reactive)
+    total_inlet = sum(model.reactive[j].F.value for j in model.reactive) + model.reboiler.F.value
     total_outlet = sum(model.reactive[j].V['P'].value*(model.reactive[j].y['CO'].value + model.reactive[j].y['H2'].value) + \
                     model.reactive[j].L['P'].value*(model.reactive[j].x['CO'].value + model.reactive[j].x['H2'].value) for j in model.reactive) + \
                     model.condenser.V['out'].value*(model.condenser.y['CO'].value + model.condenser.y['H2'].value) + \
-                    model.condenser.L['P'].value*(model.condenser.x['CO'].value + model.condenser.x['H2'].value)
+                    model.condenser.L['P'].value*(model.condenser.x['CO'].value + model.condenser.x['H2'].value) + \
+                    model.reboiler.V['P'].value*(model.reboiler.y['CO'].value + model.reboiler.y['H2'].value) + \
+                    model.reboiler.L['out'].value*(model.reboiler.x['CO'].value + model.reboiler.x['H2'].value)
     # to ensure other modules display properly when the solution is incorrect
     try:
         total_conversion = (total_inlet - total_outlet)/total_inlet

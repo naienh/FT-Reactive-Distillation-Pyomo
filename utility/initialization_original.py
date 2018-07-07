@@ -497,7 +497,7 @@ with PdfPages(log_figure_dir,keep_empty=True) as pdf:
     R_range = np.delete(R_range,0)
     PR_range = 1/(1+R_range)
 
-    initial_reflux_profile = [0.98,0.95,0.92,0.9,0.88,0.85,0.8,0.7,0.5,0.4]
+    initial_reflux_profile = [0.7,0.5]
     PR_range = np.hstack([[r for r in initial_reflux_profile if r > max(PR_range)],PR_range])
 
 
