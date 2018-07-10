@@ -319,7 +319,7 @@ def plot_distribution(model,open_log_pdf = None,title = None):
 
     line1, = ax4_.plot([model.reactive[j].kinetics_block.r_FT_total.value for j in model.reactive] + [0],\
             tray_pos_reboiler,'C1o-',markersize=12,markeredgecolor='w')
-    line2, *trash = ax4_.barh(tray_pos_reboiler,tray_conv + [0], height = min(10/tray_num,0.2), color='C0')
+    line2, *trash = ax4_.barh(tray_pos_reboiler,tray_conv + [0], height = min(20/tray_num,0.3), color='C0')
     line3, = ax4.plot([1-model.reactive[j].MPCC.pf.value for j in model.reactive] + [1-model.reboiler.MPCC.pf.value],\
             tray_pos_reboiler,'C3o-',markersize=8,markeredgecolor='w')
 
@@ -335,7 +335,7 @@ def plot_distribution(model,open_log_pdf = None,title = None):
 
     ax4_.set_title('Total Conversion = {:.1%}'.format(cal_total_conversion(model)),fontsize=14)
 
-    ax4_.legend([line1,line2,line3],['r_FT','Conversion','Penalty'],loc=2,fontsize=12,fancybox=True,framealpha=0.2)
+    ax4_.legend([line1,line2,line3],['r_FT','Conversion','Penalty'],loc=9,fontsize=12,fancybox=True,framealpha=0.2)
 
     '''
     ax5, temperature and Q
@@ -348,7 +348,10 @@ def plot_distribution(model,open_log_pdf = None,title = None):
     ax5_ = ax5.twinx()
     line2, = ax5_.plot(tray_pos,Q_profile, 'C2o-',markersize=12,markeredgecolor='w')
 
-    ax5.set_ylim([130,265])
+    ymax = max(temp_profile+[250])
+    ymin = min(temp_profile+[200])
+
+    ax5.set_ylim([ymin*0.9,ymax*1.3])
 
     ymax = max(Q_profile+[5])
     ymin = min(Q_profile+[-5])
@@ -372,7 +375,7 @@ def plot_distribution(model,open_log_pdf = None,title = None):
 
     line1, = ax6_y.plot([model.reactive[j].F.value for j in model.reactive] + [model.reboiler.F.value],\
             tray_pos_reboiler,'C1o-',markersize=12,markeredgecolor='w')
-    line2, *trash = ax6_.barh(tray_pos_reboiler,[model.reactive[j].cat.value for j in model.reactive] + [0], height = min(10/tray_num,0.2), color='C0')
+    line2, *trash = ax6_.barh(tray_pos_reboiler,[model.reactive[j].cat.value for j in model.reactive] + [0], height = min(20/tray_num,0.3), color='C0')
 
     ax6_.set_xticklabels(['{:.0f}'.format(x) for x in ax6.get_xticks()])
     ax6_.set_yticks(tray_pos_reboiler)
@@ -384,7 +387,7 @@ def plot_distribution(model,open_log_pdf = None,title = None):
 
     ax6.set_yticks([])
 
-    ax6_.legend([line1,line2],['Feed','Catalyst'],loc=2,fontsize=12,fancybox=True,framealpha=0.2)
+    ax6_.legend([line1,line2],['Feed','Catalyst'],loc=9,fontsize=12,fancybox=True,framealpha=0.2)
 
     '''
     Finalize

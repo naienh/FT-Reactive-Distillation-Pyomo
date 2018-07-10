@@ -16,25 +16,28 @@ def secondsToStr(elapsed=None):
         delta = timedelta(seconds=round(elapsed))
         return str(delta)
 
-def log(s, elapsed=None):
+def log(s, elapsed=None, total_elapsed=None):
     line = "="*108
     print(line)
     print(secondsToStr(), '-', s)
     if elapsed:
         print("Elapsed time:", elapsed)
+    if total_elapsed:
+        print("Total time:  ", total_elapsed)
     print(line)
 
 def log_now():
     global midway
     current = time()
     elapsed = current-midway
+    total_elasped = current - start
     midway = time()
-    log("Elapsed time from last log", secondsToStr(elapsed))
+    log("Function time", secondsToStr(elapsed), secondsToStr(total_elasped))
 
 def log_end():
     end = time()
     elapsed = end-start
-    log("End Program", secondsToStr(elapsed))
+    log("Total time", secondsToStr(elapsed))
 
 atexit.register(log_end)
 log("Start Program")

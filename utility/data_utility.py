@@ -1,5 +1,3 @@
-from global_sets.component import m
-
 '''-----------------------------------------------------------------------------
 This is used to return what is inside the data module
 -----------------------------------------------------------------------------'''
@@ -23,9 +21,10 @@ def cal_MW(name):
 '''-----------------------------------------------------------------------------
 This is used to return the carbon number of a certain components
 -----------------------------------------------------------------------------'''
-def cal_cnumber(i):
-    if i in m.COMP_OLEFIN: return m.COMP_OLEFIN.ord(i)+1
-    if i in m.COMP_PARAFFIN: return m.COMP_PARAFFIN.ord(i)
+def cal_cnumber(name):
+    start = name.index('C')+1
+    end = name.index('H')
+    return int(name[start:end])
 
 '''-----------------------------------------------------------------------------
 This is used to return the olefin and paraffin ratio based on list of points
