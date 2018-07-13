@@ -122,29 +122,29 @@ def beautify2(pyomo,model):
 #------------------------------------------------------------------------------
 def beautify_reactive(pyomo,model):
     convert_tmp = cal_conversion(model)
-    print('stages\t\t\tT\tQ\tr_FT\tConversion\tV_out\tL_out\tL_Prod\t\tP_VLE')
+    print('stages\t\tT\tQ\tr_FT\tConv%\tF\tcat\t\tV_out\tL_out\tL_Prod\t\tP_VLE')
     for j in model.reactive:
         temp_num = model.reactive[j].T.value - 273.15, model.reactive[j].Q_main.value,model.reactive[j].kinetics_block.r_FT_total.value,\
-        convert_tmp[j-1],model.reactive[j].V['out'].value,model.reactive[j].L['out'].value,model.reactive[j].L['P'].value,model.reactive[j].VLE_block.P_VLE.value
+        convert_tmp[j-1],model.reactive[j].F.value,model.reactive[j].cat.value,model.reactive[j].V['out'].value,model.reactive[j].L['out'].value,model.reactive[j].L['P'].value,model.reactive[j].VLE_block.P_VLE.value
         temp_string = ['{:.5f}'.format(i) for i in temp_num]
         if model.reactive[j].cat != 0:
-            print('React-ive[{}]\t\t{:.5s}\t{:.5s}\t{:.6s}\t{:.5s}\t\t{:.6s}\t{:.6s}\t{:.6s}\t\t{:.6s}'.format(j,*temp_string))
+            print('React[{}]\t{:.5s}\t{:.5s}\t{:.6s}\t{:.5s}\t{:.4s}\t{:.5s}\t\t{:.6s}\t{:.6s}\t{:.6s}\t\t{:.6s}'.format(j,*temp_string))
         else:
-            print('NON-react[{}]\t\t{:.5s}\t{:.5s}\t{:.6s}\t{:.5s}\t\t{:.6s}\t{:.6s}\t{:.6s}\t\t{:.6s}'.format(j,*temp_string))
+            print('NON--[{}]\t{:.5s}\t{:.5s}\t{:.6s}\t{:.5s}\t{:.4s}\t{:.5s}\t\t{:.6s}\t{:.6s}\t{:.6s}\t\t{:.6s}'.format(j,*temp_string))
 #------------------------------------------------------------------------------
 def beautify_condenser(pyomo,model):
-    print('stages\t\t\tT\tQ\t\t\t\tV_out\tL_out\tL_Prod\t\tW')
+    print('stages\t\tT\tQ\t\t\t\t\t\tV_out\tL_out\tL_Prod\t\tW')
     temp_num = model.condenser.T.value - 273.15, model.condenser.Q_main.value,model.condenser.V['out'].value,\
     model.condenser.L['out'].value,model.condenser.L['P'].value,model.condenser.W.value
     temp_string = ['{:.5f}'.format(i) for i in temp_num]
-    print('Condenser\t\t{:.5s}\t{:.5s}\t\t\t\t{:.6s}\t{:.6s}\t{:.6s}\t\t{:.6s}'.format(*temp_string))
+    print('Condenser\t{:.5s}\t{:.5s}\t\t\t\t\t\t{:.6s}\t{:.6s}\t{:.6s}\t\t{:.6s}'.format(*temp_string))
 #------------------------------------------------------------------------------
 def beautify_reboiler(pyomo,model):
-    print('stages\t\t\tT\tQ\t\t\t\tV_out\tL_out\t\t\tP_VLE')
+    print('stages\t\tT\tQ\t\t\t\t\t\tV_out\tL_out\t\t\tP_VLE')
     temp_num = model.reboiler.T.value - 273.15, model.reboiler.Q_main.value,model.reboiler.V['out'].value,\
     model.reboiler.L['out'].value,model.reboiler.VLE_block.P_VLE.value
     temp_string = ['{:.5f}'.format(i) for i in temp_num]
-    print('Reboiler\t\t{:.5s}\t{:.5s}\t\t\t\t{:.6s}\t{:.6s}\t\t\t{:.6s}'.format(*temp_string))
+    print('Reboiler\t{:.5s}\t{:.5s}\t\t\t\t\t\t{:.6s}\t{:.6s}\t\t\t{:.6s}'.format(*temp_string))
 
 
 '''-----------------------------------------------------------------------------
