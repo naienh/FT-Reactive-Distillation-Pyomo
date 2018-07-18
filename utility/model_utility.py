@@ -173,3 +173,34 @@ def check_DOF(pyomo,m):
     print('Active Variables:\t\t',variable_number)
     print('Fixed Variables:\t\t',fixed_variable_number)
     print('DOF:\t\t\t\t',variable_number-fixed_variable_number-equality_number)
+
+'''-----------------------------------------------------------------------------
+This is used to get the corresponding block based on tray number or tray name
+note: j should be string
+-----------------------------------------------------------------------------'''
+def tray_translator(model,j):
+    if j == 'condenser':
+        return model.condenser
+    elif j == 'reboiler':
+        return model.reboiler
+    else:
+        return model.reactive[int(j)]
+
+'''-----------------------------------------------------------------------------
+This is used to get the corresponding iteration count, if no optimal solution
+, print no optimal solution found
+-----------------------------------------------------------------------------'''
+def check_iteration(filename='./tmp/ipopt_output_tmp.output'):
+    with open(filename,'r') as f:
+        line_tmps = f.readlines()
+        if 'EXIT: Optimal Solution Found.' not in line_tmps[-1]:
+            print('No Optimal Solution Found')
+            return None
+        else:
+            line_start = line_tmps[-21].find(':')
+            line_end = line_tmps[-21].find('\n')
+            itr = int(line_tmps[-21][line_start+2:line_end])
+            print
+            print('Iteration Count:',itr)
+            print('')
+            return None

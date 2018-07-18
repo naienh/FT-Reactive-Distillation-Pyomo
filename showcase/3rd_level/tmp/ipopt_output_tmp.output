@@ -1,0 +1,41 @@
+
+List of user-set options:
+
+                                    Name   Value                used
+                linear_scaling_on_demand = no                    yes
+                           linear_solver = ma86                  yes
+                   linear_system_scaling = mc19                  yes
+                                max_iter = 7000                  yes
+                                 mu_init = 1e-06                 yes
+                             output_file = ./tmp/ipopt_output_tmp.output  yes
+                      print_user_options = yes                   yes
+                   warm_start_bound_push = 1e-20                 yes
+                   warm_start_init_point = yes                   yes
+              warm_start_mult_bound_push = 1e-20                 yes
+
+******************************************************************************
+This program contains Ipopt, a library for large-scale nonlinear optimization.
+ Ipopt is released as open source code under the Eclipse Public License (EPL).
+         For more information visit http://projects.coin-or.org/Ipopt
+******************************************************************************
+
+This is Ipopt version 3.12.8, running with linear solver ma86.
+
+Number of nonzeros in equality constraint Jacobian...:    95834
+Number of nonzeros in inequality constraint Jacobian.:      140
+Number of nonzeros in Lagrangian Hessian.............:    94180
+
+Total number of variables............................:    26838
+                     variables with only lower bounds:    10740
+                variables with lower and upper bounds:    12660
+                     variables with only upper bounds:        0
+Total number of equality constraints.................:    26758
+Total number of inequality constraints...............:       20
+        inequality constraints with only lower bounds:        0
+   inequality constraints with lower and upper bounds:        0
+        inequality constraints with only upper bounds:       20
+
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+   0 -9.8630000e+03 1.19e-01 3.38e-07  -6.0 0.00e+00    -  0.00e+00 0.00e+00   0
+   1 -9.8630001e+03 4.75e-04 5.46e-01  -6.0 1.99e-01    -  1.00e+00 9.96e-01h  1
+   2 -9.8630001e+03 1.60e-04 1.84e-01  -6.0 2.18e-03    -  1.00e+00 6.63e-01h  1

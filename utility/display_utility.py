@@ -62,21 +62,11 @@ Usage:
     reaction_data['scaled'] = {'gasoline':[...]}
 -----------------------------------------------------------------------------'''
 def trans_product_mole(dic):
-    product = {}
-    product['c1'] = [i for i in m.COMP_ORG if cal_cnumber(i) == 1]
-    product['c2'] = [i for i in m.COMP_ORG if cal_cnumber(i) == 2]
-    product['c3'] = [i for i in m.COMP_ORG if cal_cnumber(i) == 3]
-    product['c4'] = [i for i in m.COMP_ORG if cal_cnumber(i) == 4]
-    product['napha'] = [i for i in m.COMP_ORG if cal_cnumber(i) >= 5 and cal_cnumber(i) <= 7]
-    product['gasoline'] = [i for i in m.COMP_ORG if cal_cnumber(i) >= 8 and cal_cnumber(i) <= 12]
-    product['diesel'] = [i for i in m.COMP_ORG if cal_cnumber(i) >= 13 and cal_cnumber(i) <= 18]
-    product['heavy'] = [i for i in m.COMP_ORG if cal_cnumber(i) >= 19 and cal_cnumber(i) <= 56]
-
     # compute mole flow rate
     dataset = {}
-    for c in product.keys():
-        for i in product[c]:
-            tmp = np.array([np.array(dic[i]) for i in product[c]])
+    for c in m.PRODUCT_cnumber:
+        for i in m.PRODUCT_cnumber[c]:
+            tmp = np.array([np.array(dic[i]) for i in m.PRODUCT_cnumber[c]])
             dataset[c] = np.sum(tmp,0)
 
     # compute mole % scaled
@@ -92,6 +82,16 @@ def trans_product_mass(dic):
     for i in m.COMP_ORG:
         mass_data[i] = np.array(dic[i])*cal_MW(i)
     return trans_product_mole(mass_data)
+
+def check_product_spec(model):
+    product_data = {}
+    print('The following is considered as dry')
+    for p in m.PRODUCT:
+        product_data[p] = trans_product_mole({i:model.x_P_dry[i,p].value for i in m.COMP_ORG})
+        if p == 'intermediate':
+            continue
+        print('{:<14}:\t{:.2f}\t|\tWet flow:\t{:.4f}\t|\tDry flow:\t{:.4f}'\
+        .format(p,product_data[p]['unscaled'][p],model.P_total[p].value,model.P_total_dry[p].value))
 
 '''-----------------------------------------------------------------------------
 This can be used to pretty print a reactive distillation solution
@@ -133,18 +133,18 @@ def beautify_reactive(pyomo,model):
             print('NON--[{}]\t{:.5s}\t{:.5s}\t{:.6s}\t{:.5s}\t{:.4s}\t{:.5s}\t\t{:.6s}\t{:.6s}\t{:.6s}\t\t{:.6s}'.format(j,*temp_string))
 #------------------------------------------------------------------------------
 def beautify_condenser(pyomo,model):
-    print('stages\t\tT\tQ\t\t\t\t\t\tV_out\tL_out\tL_Prod\t\tW')
-    temp_num = model.condenser.T.value - 273.15, model.condenser.Q_main.value,model.condenser.V['out'].value,\
+    print('stages\t\tT\tQ\t\t\t\t\t\tV_Prod\tL_out\tL_Prod\t\tW')
+    temp_num = model.condenser.T.value - 273.15, model.condenser.Q_main.value,model.condenser.V['P'].value,\
     model.condenser.L['out'].value,model.condenser.L['P'].value,model.condenser.W.value
     temp_string = ['{:.5f}'.format(i) for i in temp_num]
     print('Condenser\t{:.5s}\t{:.5s}\t\t\t\t\t\t{:.6s}\t{:.6s}\t{:.6s}\t\t{:.6s}'.format(*temp_string))
 #------------------------------------------------------------------------------
 def beautify_reboiler(pyomo,model):
-    print('stages\t\tT\tQ\t\t\t\t\t\tV_out\tL_out\t\t\tP_VLE')
+    print('stages\t\tT\tQ\t\t\t\t\t\tV_out\tL_out\tL_P\t\tP_VLE')
     temp_num = model.reboiler.T.value - 273.15, model.reboiler.Q_main.value,model.reboiler.V['out'].value,\
-    model.reboiler.L['out'].value,model.reboiler.VLE_block.P_VLE.value
+    model.reboiler.L['out'].value,model.reboiler.L['P'].value,model.reboiler.VLE_block.P_VLE.value
     temp_string = ['{:.5f}'.format(i) for i in temp_num]
-    print('Reboiler\t{:.5s}\t{:.5s}\t\t\t\t\t\t{:.6s}\t{:.6s}\t\t\t{:.6s}'.format(*temp_string))
+    print('Reboiler\t{:.5s}\t{:.5s}\t\t\t\t\t\t{:.6s}\t{:.6s}\t{:.6s}\t\t{:.6s}'.format(*temp_string))
 
 
 '''-----------------------------------------------------------------------------
@@ -264,11 +264,11 @@ def plot_distribution(model,open_log_pdf = None,title = None):
     ax2.plot(cnumber_range,cd_x_data,'C2o-',markeredgecolor='w')
 
     for j in model.reactive:
-        if model.reactive[j].PR_L.value == 0:
+        if model.reactive[j].PR_L.value < 1e-6:
             ax2.plot(cnumber_range,rf_x_data[j],'C7o-',alpha = 0.5,marker = r'${:}$'.format(j),markersize=10)
 
     for j in model.reactive:
-        if model.reactive[j].PR_L.value > 0:
+        if model.reactive[j].PR_L.value >= 1e-6:
             ax2.plot(cnumber_range,rf_x_data[j],'C0o-',marker = r'${:}$'.format(j),markersize=14)
 
     ax2.plot(cnumber_range,rb_x_data,'C1o-',markeredgecolor='w')
