@@ -127,7 +127,7 @@ def beautify_reactive(pyomo,model):
         temp_num = model.reactive[j].T.value - 273.15, model.reactive[j].Q_main.value,model.reactive[j].kinetics_block.r_FT_total.value,\
         convert_tmp[j-1],model.reactive[j].F.value,model.reactive[j].cat.value,model.reactive[j].V['out'].value,model.reactive[j].L['out'].value,model.reactive[j].L['P'].value,model.reactive[j].VLE_block.P_VLE.value
         temp_string = ['{:.5f}'.format(i) for i in temp_num]
-        if model.reactive[j].cat != 0:
+        if model.reactive[j].cat.value >= 1e-6:
             print('React[{}]\t{:.5s}\t{:.5s}\t{:.6s}\t{:.5s}\t{:.4s}\t{:.5s}\t\t{:.6s}\t{:.6s}\t{:.6s}\t\t{:.6s}'.format(j,*temp_string))
         else:
             print('NON--[{}]\t{:.5s}\t{:.5s}\t{:.6s}\t{:.5s}\t{:.4s}\t{:.5s}\t\t{:.6s}\t{:.6s}\t{:.6s}\t\t{:.6s}'.format(j,*temp_string))
@@ -320,8 +320,9 @@ def plot_distribution(model,open_log_pdf = None,title = None):
     line1, = ax4_.plot([model.reactive[j].kinetics_block.r_FT_total.value for j in model.reactive] + [0],\
             tray_pos_reboiler,'C1o-',markersize=12,markeredgecolor='w')
     line2, *trash = ax4_.barh(tray_pos_reboiler,tray_conv + [0], height = min(20/tray_num,0.3), color='C0')
-    line3, = ax4.plot([1-model.reactive[j].MPCC.pf.value for j in model.reactive] + [1-model.reboiler.MPCC.pf.value],\
-            tray_pos_reboiler,'C3o-',markersize=8,markeredgecolor='w')
+    if model.find_component('reactive[1].MPCC.pf') and model.find_component('reboiler.MPCC.pf'):
+        line3, = ax4.plot([1-model.reactive[j].MPCC.pf.value for j in model.reactive] + [1-model.reboiler.MPCC.pf.value],\
+                tray_pos_reboiler,'C3o-',markersize=8,markeredgecolor='w')
 
     ax4_.set_xlim(-0.05,1.05)
     ax4_.set_xticklabels(['{:.0%}'.format(x) for x in ax4.get_xticks()])
@@ -335,7 +336,10 @@ def plot_distribution(model,open_log_pdf = None,title = None):
 
     ax4_.set_title('Total Conversion = {:.1%}'.format(cal_total_conversion(model)),fontsize=14)
 
-    ax4_.legend([line1,line2,line3],['r_FT','Conversion','Penalty'],loc=9,fontsize=12,fancybox=True,framealpha=0.2)
+    if model.find_component('reactive[1].MPCC.pf') and model.find_component('reboiler.MPCC.pf'):
+        ax4_.legend([line1,line2,line3],['r_FT','Conversion','Penalty'],loc=9,fontsize=12,fancybox=True,framealpha=0.2)
+    else:
+        ax4_.legend([line1,line2],['r_FT','Conversion'],loc=9,fontsize=12,fancybox=True,framealpha=0.2)
 
     '''
     ax5, temperature and Q
