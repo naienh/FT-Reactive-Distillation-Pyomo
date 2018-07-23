@@ -1,5 +1,6 @@
 from global_sets.component import m
 import pickle
+from utility.data_utility import cal_cnumber
 
 '''-----------------------------------------------------------------------------
 This is used to create dual variables for a model
@@ -204,3 +205,30 @@ def check_iteration(filename='./tmp/ipopt_output_tmp.output'):
             print('Iteration Count:',itr)
             print('')
             return None
+
+'''-----------------------------------------------------------------------------
+This is used to get a corresponding scaling factor for x[]
+-----------------------------------------------------------------------------'''
+def get_x_scale_factor(i):
+    if i in m.COMP_INORG:
+        return 10
+    elif cal_cnumber(i) <= 10:
+        return 10
+    elif cal_cnumber(i) <= 15:
+        return 50
+    elif cal_cnumber(i) <= 20:
+        return 100
+    elif cal_cnumber(i) <= 25:
+        return 1e4
+    elif cal_cnumber(i) <= 30:
+        return 1e5
+    elif cal_cnumber(i) <= 35:
+        return 1e6
+    elif cal_cnumber(i) <= 40:
+        return 1e7
+    elif cal_cnumber(i) <= 45:
+        return 1e8
+    elif cal_cnumber(i) <= 50:
+        return 1e9
+    else:
+        return 1e10
