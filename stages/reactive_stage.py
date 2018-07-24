@@ -1,5 +1,6 @@
 # 2nd level block Structure: Stage Block
 from global_sets.component import m
+from utility.model_utility import select_MPCC
 from pyomo import environ as pe
 
 # stage construction rules
@@ -86,7 +87,12 @@ def reactive_stage_rule(block,j):
     block.VL_equil_con = pe.Constraint(m.COMP_TOTAL,rule=VL_equil_rule)
 
     # MPCC formation
-    block.MPCC = pe.Block(rule = P_pf_block_rule)
+    block.MPCC_P_pf = pe.Block(rule = P_pf_block_rule)
+    block.MPCC_P_NCP = pe.Block(rule = P_NCP_block_rule)
+    block.MPCC_P_Reg = pe.Block(rule = P_Reg_block_rule)
+
+    # by default deactivated, can be switched after the block is constructed
+    select_MPCC(block,'pf')
 
     # Summation
     def summation_x_y_rule(block):
