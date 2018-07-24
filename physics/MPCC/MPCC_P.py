@@ -29,7 +29,6 @@ def P_NCP_block_rule(block):
     print('-'*50)
 
     print('>','Adding complementarity constraint, spliting pressure used in VLE')
-    print('')
 
     #------------------------------MPCC equations-------------------------------
     def s_L_complementarity_rule(block):
@@ -43,7 +42,13 @@ def P_NCP_block_rule(block):
     block.s_V_complementarity_con = pe.Constraint(rule=s_V_complementarity_rule)
 
     #-----------------------------Global equations------------------------------
-    block.parent_block().VLE_block.del_component(block.parent_block().VLE_block.pressure_equal_con)
+    if block.parent_block().VLE_block.find_component('pressure_equal_con'):
+        block.parent_block().VLE_block.del_component(block.parent_block().VLE_block.pressure_equal_con)
+        print('Deleted original P_equal constraint')
+    else:
+        print('No constraint to delete')
+    print('')
+
     def pressure_equal_rule(block):
         return block.parent_block().VLE_block.P_VLE - block.parent_block().P == block.s_L - block.s_V
     block.pressure_equal_con = pe.Constraint(rule=pressure_equal_rule)
@@ -70,7 +75,6 @@ def P_Reg_block_rule(block):
     print('-'*50)
 
     print('>','Adding complementarity constraint, spliting pressure used in VLE')
-    print('')
 
     #------------------------------MPCC equations-------------------------------
     def s_L_complementarity_rule(block):
@@ -83,7 +87,13 @@ def P_Reg_block_rule(block):
     block.s_V_complementarity_con = pe.Constraint(rule=s_V_complementarity_rule)
 
     #-----------------------------Global equations------------------------------
-    block.parent_block().VLE_block.del_component(block.parent_block().VLE_block.pressure_equal_con)
+    if block.parent_block().VLE_block.find_component('pressure_equal_con'):
+        block.parent_block().VLE_block.del_component(block.parent_block().VLE_block.pressure_equal_con)
+        print('Deleted original P_equal constraint')
+    else:
+        print('No constraint to delete')
+    print('')
+
     def pressure_equal_rule(block):
         return block.parent_block().VLE_block.P_VLE - block.parent_block().P == block.s_L - block.s_V
     block.pressure_equal_con = pe.Constraint(rule=pressure_equal_rule)
@@ -97,8 +107,7 @@ def P_pf_block_rule(block):
     block.pf = pe.Var(within=pe.NonNegativeReals,initialize=0)
 
     #-----------------------------LOCAL parameters------------------------------
-    block.rho = pe.Param(initialize=10,mutable=True)
-    block.epi = pe.Param(initialize=1e-4,mutable=True)
+    block.rho = pe.Param(initialize=1,mutable=True)
 
     print('>','Importing MPCC_P_pf Blocks......')
     print('>','Adding the following local variable:')
@@ -111,7 +120,6 @@ def P_pf_block_rule(block):
 
     print('-'*50)
     print('>','Spliting pressure used in VLE')
-    print('')
 
     #------------------------------MPCC equations-------------------------------
     def penalty_rule(block):
@@ -120,17 +128,13 @@ def P_pf_block_rule(block):
     block.penalty_con = pe.Constraint(rule=penalty_rule)
 
     #-----------------------------Global equations------------------------------
-    block.parent_block().VLE_block.del_component(block.parent_block().VLE_block.pressure_equal_con)
+    if block.parent_block().VLE_block.find_component('pressure_equal_con'):
+        block.parent_block().VLE_block.del_component(block.parent_block().VLE_block.pressure_equal_con)
+        print('Deleted original P_equal constraint')
+    else:
+        print('No constraint to delete')
+    print('')
+
     def pressure_equal_rule(block):
         return block.parent_block().VLE_block.P_VLE - block.parent_block().P == block.s_L - block.s_V
     block.pressure_equal_con = pe.Constraint(rule=pressure_equal_rule)
-
-    # def s_L_complementarity_rule(block):
-    #     return (sum(block.parent_block().L[s] for s in block.parent_block().outlet) + block.s_L) \
-    #     <= ((sum(block.parent_block().L[s] for s in block.parent_block().outlet) - block.s_L)**2+block.epi)**0.5
-    # block.s_L_complementarity_con = pe.Constraint(rule=s_L_complementarity_rule)
-    #
-    # def s_V_complementarity_rule(block):
-    #     return (sum(block.parent_block().V[s] for s in block.parent_block().outlet) + block.s_V) \
-    #     <= ((sum(block.parent_block().V[s] for s in block.parent_block().outlet) - block.s_V)**2+block.epi)**0.5
-    # block.s_V_complementarity_con = pe.Constraint(rule=s_V_complementarity_rule)

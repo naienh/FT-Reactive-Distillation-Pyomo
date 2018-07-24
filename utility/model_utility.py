@@ -1,5 +1,7 @@
 from global_sets.component import m
 import pickle
+from utility.data_utility import cal_cnumber
+import os
 
 '''-----------------------------------------------------------------------------
 This is used to create dual variables for a model
@@ -187,6 +189,41 @@ def tray_translator(model,j):
         return model.reactive[int(j)]
 
 '''-----------------------------------------------------------------------------
+This is used to get the corresponding MPCC block name automatically
+-----------------------------------------------------------------------------'''
+def which_MPCC(block):
+    for i in block.block_data_objects(active=True):
+        if i != block.name and 'MPCC' in i.local_name:
+            return i
+
+'''-----------------------------------------------------------------------------
+This is used to set the corresponding MPCC block based on input
+Note1: when switch from solved solution, slack variabls value should be set
+-----------------------------------------------------------------------------'''
+def select_MPCC(block,formulation):
+    # get the corresponding value, only if a MPCC block is currently active
+    mpcc_block = which_MPCC(block)
+    if mpcc_block:
+        s_L = mpcc_block.s_L.value
+        s_V = mpcc_block.s_V.value
+
+    # switch off and back on
+    for i in block.block_data_objects():
+        if i != block.name and 'MPCC' in i.local_name:
+            i.deactivate()
+        if i != block.name and i.name.endswith(formulation):
+            i.activate()
+            print('>','Selected MPCC:',i)
+
+    mpcc_block = which_MPCC(block)
+    mpcc_block.s_L.set_value(s_L)
+    mpcc_block.s_V.set_value(s_V)
+    print('s_L: ',s_L)
+    print('s_V: ',s_V)
+    print('')
+
+
+'''-----------------------------------------------------------------------------
 This is used to get the corresponding iteration count, if no optimal solution
 , print no optimal solution found
 -----------------------------------------------------------------------------'''
@@ -204,3 +241,57 @@ def check_iteration(filename='./tmp/ipopt_output_tmp.output'):
             print('Iteration Count:',itr)
             print('')
             return None
+
+'''-----------------------------------------------------------------------------
+This is a wrapper to automatically handle penalty function added to obj
+Note the active=True argument
+If expr = None, this will modifify original Objective
+If expr = XXXX, this will return new Objective
+-----------------------------------------------------------------------------'''
+def augmented_objective(pyomo, model, expr , sense):
+    pf_expr = 0
+    for i in model.component_data_objects(pyomo.Var,active=True):
+        if 'MPCC' in i.name and i.name.endswith('.pf'):
+            pf_expr += i
+    print('-'*108)
+    if sense == pyomo.maximize:
+        print('>','Obj = maximize')
+        augmented_expr = expr - pf_expr
+    else:
+        print('>','Obj = minimize')
+        augmented_expr = expr + pf_expr
+    obj_tmp = pyomo.Objective(expr = augmented_expr, sense=sense)
+    print('>',augmented_expr)
+    print('-'*108)
+    return obj_tmp
+
+
+'''-----------------------------------------------------------------------------
+This is a wrapper to automatically create solver depend on machine configuration
+At this moment I don't know any way that is more elegent
+-----------------------------------------------------------------------------'''
+def add_solver(pyomo, max_iter = 500, warm_start = False, output = True, scale = True):
+    opt = None
+    opt = pyomo.SolverFactory('ipopt')
+    opt.options['print_user_options'] = 'yes'
+
+    if os.name == 'posix':
+        opt.options['linear_solver'] = 'ma86'
+        opt.options['linear_system_scaling'] = 'mc19'
+
+    opt.options['max_iter'] = max_iter
+
+    if warm_start:
+        opt.options['warm_start_init_point'] = 'yes'
+        opt.options['warm_start_bound_push'] = 1e-20
+        opt.options['warm_start_mult_bound_push'] = 1e-20
+        opt.options['mu_init'] = 1e-6
+
+    if output:
+        os.makedirs('./tmp',exist_ok=True)
+        opt.options['output_file'] = './tmp/ipopt_output_tmp.output'
+
+    if scale:
+        opt.options['linear_scaling_on_demand'] = 'no'
+
+    return opt

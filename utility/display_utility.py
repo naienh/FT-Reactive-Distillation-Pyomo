@@ -4,7 +4,8 @@ import copy
 import numpy as np
 from utility.data_utility import cal_MW, cal_cnumber
 from matplotlib import pyplot as plt
-from matplotlib.backends.backend_pdf import PdfPages
+from utility.model_utility import tray_translator
+# from matplotlib.backends.backend_pdf import PdfPages
 
 '''-----------------------------------------------------------------------------
 This can be used to duplicate the output to an external
@@ -100,8 +101,11 @@ Usage:
     2. beautify2: without Reboiler
 This section updates regularly to reflect the latest need to print solution
 -----------------------------------------------------------------------------'''
+placeholder = '{:<13.13}'+'{:<5.5}  '*2+' '*5+'{:<5.5}  '*4+' '*5+'{:<6.6}  '*4+' '*5+'{:<6.6}'
+
 def beautify(pyomo,model):
     print('Here comes the result:')
+    print('Total Conversion: {:.2%}'.format(cal_total_conversion(model)))
     print('-'*108)
     beautify_condenser(pyomo,model)
     print('')
@@ -122,29 +126,35 @@ def beautify2(pyomo,model):
 #------------------------------------------------------------------------------
 def beautify_reactive(pyomo,model):
     convert_tmp = cal_conversion(model)
-    print('stages\t\tT\tQ\tr_FT\tConv%\tF\tcat\t\tV_out\tL_out\tL_Prod\t\tP_VLE')
+    print(placeholder.format('stages','T','Q','r_FT','Conv%','F','cat','V','Re','L','P','P_VLE'))
     for j in model.reactive:
-        temp_num = model.reactive[j].T.value - 273.15, model.reactive[j].Q_main.value,model.reactive[j].kinetics_block.r_FT_total.value,\
-        convert_tmp[j-1],model.reactive[j].F.value,model.reactive[j].cat.value,model.reactive[j].V['out'].value,model.reactive[j].L['out'].value,model.reactive[j].L['P'].value,model.reactive[j].VLE_block.P_VLE.value
-        temp_string = ['{:.5f}'.format(i) for i in temp_num]
-        if model.reactive[j].cat != 0:
-            print('React[{}]\t{:.5s}\t{:.5s}\t{:.6s}\t{:.5s}\t{:.4s}\t{:.5s}\t\t{:.6s}\t{:.6s}\t{:.6s}\t\t{:.6s}'.format(j,*temp_string))
+        if model.reactive[j].cat.value >= 1e-6:
+            stagename = 'React[{}]'.format(j)
         else:
-            print('NON--[{}]\t{:.5s}\t{:.5s}\t{:.6s}\t{:.5s}\t{:.4s}\t{:.5s}\t\t{:.6s}\t{:.6s}\t{:.6s}\t\t{:.6s}'.format(j,*temp_string))
+            stagename = 'NON--[{}]'.format(j)
+        temp_num =model.reactive[j].T.value - 273.15, model.reactive[j].Q_main.value,model.reactive[j].kinetics_block.r_FT_total.value,\
+        convert_tmp[j-1],model.reactive[j].F.value,model.reactive[j].cat.value,model.reactive[j].V['out'].value,model.reactive[j].L['R'].value,\
+        model.reactive[j].L['out'].value,model.reactive[j].L['P'].value,model.reactive[j].VLE_block.P_VLE.value
+        temp_string = ['{:.5f}'.format(i) for i in temp_num]
+        print(placeholder.format(stagename,*temp_string))
 #------------------------------------------------------------------------------
 def beautify_condenser(pyomo,model):
-    print('stages\t\tT\tQ\t\t\t\t\t\tV_Prod\tL_out\tL_Prod\t\tW')
+    print(placeholder.format('stages','T','Q','','','','','V','','L','P','W'))
     temp_num = model.condenser.T.value - 273.15, model.condenser.Q_main.value,model.condenser.V['P'].value,\
     model.condenser.L['out'].value,model.condenser.L['P'].value,model.condenser.W.value
     temp_string = ['{:.5f}'.format(i) for i in temp_num]
-    print('Condenser\t{:.5s}\t{:.5s}\t\t\t\t\t\t{:.6s}\t{:.6s}\t{:.6s}\t\t{:.6s}'.format(*temp_string))
+    temp_string = ['condenser',temp_string[0],temp_string[1],'','','','',temp_string[2],'',temp_string[3],\
+                   temp_string[4],temp_string[5]]
+    print(placeholder.format(*temp_string))
 #------------------------------------------------------------------------------
 def beautify_reboiler(pyomo,model):
-    print('stages\t\tT\tQ\t\t\t\t\t\tV_out\tL_out\tL_P\t\tP_VLE')
+    print(placeholder.format('stages','T','Q','','','','','V','','L','P','P_VLE'))
     temp_num = model.reboiler.T.value - 273.15, model.reboiler.Q_main.value,model.reboiler.V['out'].value,\
     model.reboiler.L['out'].value,model.reboiler.L['P'].value,model.reboiler.VLE_block.P_VLE.value
     temp_string = ['{:.5f}'.format(i) for i in temp_num]
-    print('Reboiler\t{:.5s}\t{:.5s}\t\t\t\t\t\t{:.6s}\t{:.6s}\t{:.6s}\t\t{:.6s}'.format(*temp_string))
+    temp_string = ['condenser',temp_string[0],temp_string[1],'','','','',temp_string[2],'',temp_string[3],\
+                   temp_string[4],temp_string[5]]
+    print(placeholder.format(*temp_string))
 
 
 '''-----------------------------------------------------------------------------
@@ -183,7 +193,7 @@ def cal_conversion(model):
         outlet = sum(model.reactive[j].V[s].value*(model.reactive[j].y['CO'].value + model.reactive[j].y['H2'].value) + \
                     model.reactive[j].L[s].value*(model.reactive[j].x['CO'].value + model.reactive[j].x['H2'].value) for s in model.reactive[j].outlet)
 
-        # to ensure other modules display properly when the solution is incorrect
+        # to ensure other modules display some helpful information when the solution is incorrect
         try:
             tmp = round((inletfeed - outlet)/inletfeed,3)
         except:
@@ -197,12 +207,8 @@ def cal_conversion(model):
 
 def cal_total_conversion(model):
     total_inlet = sum(model.reactive[j].F.value for j in model.reactive) + model.reboiler.F.value
-    total_outlet = sum(model.reactive[j].V['P'].value*(model.reactive[j].y['CO'].value + model.reactive[j].y['H2'].value) + \
-                    model.reactive[j].L['P'].value*(model.reactive[j].x['CO'].value + model.reactive[j].x['H2'].value) for j in model.reactive) + \
-                    model.condenser.V['P'].value*(model.condenser.y['CO'].value + model.condenser.y['H2'].value) + \
-                    model.condenser.L['P'].value*(model.condenser.x['CO'].value + model.condenser.x['H2'].value) + \
-                    model.reboiler.V['P'].value*(model.reboiler.y['CO'].value + model.reboiler.y['H2'].value) + \
-                    model.reboiler.L['P'].value*(model.reboiler.x['CO'].value + model.reboiler.x['H2'].value)
+    total_outlet = sum(tray_translator(model,j).V['P'].value*(tray_translator(model,j).y['CO'].value + tray_translator(model,j).y['H2'].value) + \
+                    tray_translator(model,j).L['P'].value*(tray_translator(model,j).x['CO'].value + tray_translator(model,j).x['H2'].value) for j in model.TRAY_total)
     # to ensure other modules display properly when the solution is incorrect
     try:
         total_conversion = (total_inlet - total_outlet)/total_inlet
@@ -218,12 +224,12 @@ def plot_distribution(model,open_log_pdf = None,title = None):
     g_data = []; d_data = []; l_out_data = {}; l_P_data = {}; b_data = []
     cd_x_data = []; rf_x_data = {}; rb_x_data = []
 
-    g_data = trans_cnumber({i:model.condenser.V['out'].value*model.condenser.y[i].value for i in m.COMP_TOTAL})
+    g_data = trans_cnumber({i:model.condenser.V['P'].value*model.condenser.y[i].value for i in m.COMP_TOTAL})
     d_data = trans_cnumber({i:model.condenser.L['P'].value*model.condenser.x[i].value for i in m.COMP_TOTAL})
     for j in model.reactive:
         l_out_data[j] = trans_cnumber({i:model.reactive[j].L['out'].value*model.reactive[j].x[i].value for i in m.COMP_TOTAL})
         l_P_data[j] = trans_cnumber({i:model.reactive[j].L['P'].value*model.reactive[j].x[i].value for i in m.COMP_TOTAL})
-    b_data = trans_cnumber({i:model.reboiler.L['out'].value*model.reboiler.x[i].value for i in m.COMP_TOTAL})
+    b_data = trans_cnumber({i:model.reboiler.L['P'].value*model.reboiler.x[i].value for i in m.COMP_TOTAL})
 
     cd_x_data = trans_cnumber({i:model.condenser.x[i].value for i in m.COMP_TOTAL})
     for j in model.reactive:
@@ -320,8 +326,9 @@ def plot_distribution(model,open_log_pdf = None,title = None):
     line1, = ax4_.plot([model.reactive[j].kinetics_block.r_FT_total.value for j in model.reactive] + [0],\
             tray_pos_reboiler,'C1o-',markersize=12,markeredgecolor='w')
     line2, *trash = ax4_.barh(tray_pos_reboiler,tray_conv + [0], height = min(20/tray_num,0.3), color='C0')
-    line3, = ax4.plot([1-model.reactive[j].MPCC.pf.value for j in model.reactive] + [1-model.reboiler.MPCC.pf.value],\
-            tray_pos_reboiler,'C3o-',markersize=8,markeredgecolor='w')
+    if model.find_component('reactive[1].MPCC.pf') and model.find_component('reboiler.MPCC.pf'):
+        line3, = ax4.plot([1-model.reactive[j].MPCC.pf.value for j in model.reactive] + [1-model.reboiler.MPCC.pf.value],\
+                tray_pos_reboiler,'C3o-',markersize=8,markeredgecolor='w')
 
     ax4_.set_xlim(-0.05,1.05)
     ax4_.set_xticklabels(['{:.0%}'.format(x) for x in ax4.get_xticks()])
@@ -335,7 +342,10 @@ def plot_distribution(model,open_log_pdf = None,title = None):
 
     ax4_.set_title('Total Conversion = {:.1%}'.format(cal_total_conversion(model)),fontsize=14)
 
-    ax4_.legend([line1,line2,line3],['r_FT','Conversion','Penalty'],loc=9,fontsize=12,fancybox=True,framealpha=0.2)
+    if model.find_component('reactive[1].MPCC_P_pf.pf') and model.find_component('reboiler.MPCC_P_pf.pf'):
+        ax4_.legend([line1,line2,line3],['r_FT','Conversion','Penalty'],loc=9,fontsize=12,fancybox=True,framealpha=0.2)
+    else:
+        ax4_.legend([line1,line2],['r_FT','Conversion'],loc=9,fontsize=12,fancybox=True,framealpha=0.2)
 
     '''
     ax5, temperature and Q
