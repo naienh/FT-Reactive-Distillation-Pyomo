@@ -201,7 +201,7 @@ This is used to set the corresponding MPCC block based on input
 Note1: when switch from solved solution, slack variabls value should be set
 -----------------------------------------------------------------------------'''
 def select_MPCC(block,formulation):
-    # get the corresponding value
+    # get the corresponding value, only if a MPCC block is currently active
     mpcc_block = which_MPCC(block)
     if mpcc_block:
         s_L = mpcc_block.s_L.value
@@ -253,7 +253,7 @@ def augmented_objective(pyomo, model, expr , sense):
     for i in model.component_data_objects(pyomo.Var,active=True):
         if 'MPCC' in i.name and i.name.endswith('.pf'):
             pf_expr += i
-    print('-'*30)
+    print('-'*108)
     if sense == pyomo.maximize:
         print('>','Obj = maximize')
         augmented_expr = expr - pf_expr
@@ -262,35 +262,36 @@ def augmented_objective(pyomo, model, expr , sense):
         augmented_expr = expr + pf_expr
     obj_tmp = pyomo.Objective(expr = augmented_expr, sense=sense)
     print('>',augmented_expr)
-    print('-'*30)
+    print('-'*108)
     return obj_tmp
 
 
 '''-----------------------------------------------------------------------------
 This is a wrapper to automatically create solver depend on machine configuration
-At this moment I don't know any elegent way to do this apart from the try and
-error approach
+At this moment I don't know any way that is more elegent
 -----------------------------------------------------------------------------'''
-def add_solver(pyomo, max_iter = 500, warm_start = False, output = True):
+def add_solver(pyomo, max_iter = 500, warm_start = False, output = True, scale = True):
     opt = None
     opt = pyomo.SolverFactory('ipopt')
-
     opt.options['print_user_options'] = 'yes'
-    opt.options['linear_scaling_on_demand '] = 'no'
-    opt.options['max_iter'] = max_iter
-
-    if output:
-        os.makedirs('./tmp',exist_ok=True)
-        opt.options['output_file'] = './tmp/ipopt_output_tmp.output'
 
     if os.name == 'posix':
         opt.options['linear_solver'] = 'ma86'
-        opt.options['linear_system_scaling '] = 'mc19'
+        opt.options['linear_system_scaling'] = 'mc19'
+
+    opt.options['max_iter'] = max_iter
 
     if warm_start:
         opt.options['warm_start_init_point'] = 'yes'
         opt.options['warm_start_bound_push'] = 1e-20
         opt.options['warm_start_mult_bound_push'] = 1e-20
         opt.options['mu_init'] = 1e-6
+
+    if output:
+        os.makedirs('./tmp',exist_ok=True)
+        opt.options['output_file'] = './tmp/ipopt_output_tmp.output'
+
+    if scale:
+        opt.options['linear_scaling_on_demand'] = 'no'
 
     return opt

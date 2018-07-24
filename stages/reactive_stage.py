@@ -13,7 +13,7 @@ def reactive_stage_rule(block,j):
     #-----------------------------------SETS-----------------------------------
 
     # local sets that will only be used in reactive stage
-    block.inlet = pe.Set(initialize=['in'])
+    block.inlet = pe.Set(initialize=['in','R'])
     block.outlet = pe.Set(initialize=['out','P'])
     block.stream = block.inlet | block.outlet
 

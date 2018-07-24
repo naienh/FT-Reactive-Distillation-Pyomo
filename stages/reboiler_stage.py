@@ -1,6 +1,7 @@
 # 2nd level block Structure: Stage Block
 from global_sets.component import m
 from pyomo import environ as pe
+from utility.model_utility import select_MPCC
 
 # stage construction rules
 from physics.energy.energy_reboiler import energy_block_rule
