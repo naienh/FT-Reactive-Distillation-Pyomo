@@ -250,9 +250,9 @@ If expr = XXXX, this will return new Objective
 -----------------------------------------------------------------------------'''
 def augmented_objective(pyomo, model, expr , sense):
     pf_expr = 0
-    for i in model.component_data_objects(pyomo.Var,active=True):
-        if 'MPCC' in i.name and i.name.endswith('.pf'):
-            pf_expr += i
+    for i in model.block_data_objects(active=True):
+        if 'MPCC_P_pf' in i.name:
+            pf_expr += i.pf
     print('-'*108)
     if sense == pyomo.maximize:
         print('>','Obj = maximize')
