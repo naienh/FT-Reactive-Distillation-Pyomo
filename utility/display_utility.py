@@ -326,8 +326,8 @@ def plot_distribution(model,open_log_pdf = None,title = None):
     line1, = ax4_.plot([model.reactive[j].kinetics_block.r_FT_total.value for j in model.reactive] + [0],\
             tray_pos_reboiler,'C1o-',markersize=12,markeredgecolor='w')
     line2, *trash = ax4_.barh(tray_pos_reboiler,tray_conv + [0], height = min(20/tray_num,0.3), color='C0')
-    if model.find_component('reactive[1].MPCC_P_pf.pf') is not None and \
-        model.find_component('reboiler.MPCC_P_pf.pf') is not None:
+    if model.find_component('reactive[1].MPCC_P_pf').active and \
+        model.find_component('reboiler.MPCC_P_pf').active:
         line3, = ax4.plot([1-model.reactive[j].MPCC_P_pf.pf.value for j in model.reactive] + [1-model.reboiler.MPCC_P_pf.pf.value],\
                 tray_pos_reboiler,'C3o-',markersize=8,markeredgecolor='w')
 
@@ -343,8 +343,8 @@ def plot_distribution(model,open_log_pdf = None,title = None):
 
     ax4_.set_title('Total Conversion = {:.1%}'.format(cal_total_conversion(model)),fontsize=14)
 
-    if model.find_component('reactive[1].MPCC_P_pf.pf') is not None and \
-        model.find_component('reboiler.MPCC_P_pf.pf') is not None:
+    if model.find_component('reactive[1].MPCC_P_pf').active and \
+        model.find_component('reboiler.MPCC_P_pf').active:
         ax4_.legend([line1,line2,line3],['r_FT','Conversion','Penalty'],loc=9,fontsize=12,fancybox=True,framealpha=0.2)
     else:
         ax4_.legend([line1,line2],['r_FT','Conversion'],loc=9,fontsize=12,fancybox=True,framealpha=0.2)

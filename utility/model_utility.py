@@ -230,17 +230,18 @@ This is used to get the corresponding iteration count, if no optimal solution
 def check_iteration(filename='./tmp/ipopt_output_tmp.output'):
     with open(filename,'r') as f:
         line_tmps = f.readlines()
-        if 'EXIT: Optimal Solution Found.' not in line_tmps[-1]:
-            print('No Optimal Solution Found')
-            return None
+        print(line_tmps[-1],end='')
+        if 'EXIT: Optimal Solution Found.' in line_tmps[-1]:
+            exitcode = 1
         else:
-            line_start = line_tmps[-21].find(':')
-            line_end = line_tmps[-21].find('\n')
-            itr = int(line_tmps[-21][line_start+2:line_end])
-            print
-            print('Iteration Count:',itr)
-            print('')
-            return None
+            exitcode = 0
+        line_start = line_tmps[-21].find(':')
+        line_end = line_tmps[-21].find('\n')
+        itr = int(line_tmps[-21][line_start+2:line_end])
+        print
+        print('Iteration Count:',itr)
+        print('')
+        return exitcode
 
 '''-----------------------------------------------------------------------------
 This is a wrapper to automatically handle penalty function added to obj
