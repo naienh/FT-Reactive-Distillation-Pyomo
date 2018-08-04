@@ -89,8 +89,10 @@ def check_product_spec(model):
     print('The following is considered as dry')
     for p in m.PRODUCT:
         product_data[p] = trans_product_mole({i:model.x_P_dry[i,p].value for i in m.COMP_ORG})
-        print('{:<14}:\t{:.2f}\t|\tWet flow:\t{:.4f}\t|\tDry flow:\t{:.4f}'\
-        .format(p,product_data[p]['unscaled'][p],model.P_total[p].value,model.P_total_dry[p].value))
+        print('{:<14.14}: {:<14.7}{:<10.10}: {:14.7}{:<10.10}: {:<14.7}{:<10.10}: {:>7}'\
+        .format(p,'{:.2f}'.format(product_data[p]['unscaled'][p]),'Wet flow',\
+        '{:.4f}'.format(model.P_total[p].value),'Dry flow','{:.4f}'.format(model.P_total_dry[p].value),\
+        'N_tray','{:.1f}'.format(model.N_tray[p].value)))
 
 '''-----------------------------------------------------------------------------
 This can be used to pretty print a reactive distillation solution
@@ -99,7 +101,6 @@ Usage:
     2. beautify2: without Reboiler
 This section updates regularly to reflect the latest need to print solution
 -----------------------------------------------------------------------------'''
-placeholder = '{:<13.13}'+'{:<5.5}  '*2+' '*5+'{:<5.5}  '*4+' '*5+'{:<6.6}  '*4+' '*5+'{:<6.6}'
 
 def beautify(pyomo,model):
     print('Here comes the result:')
@@ -123,6 +124,7 @@ def beautify2(pyomo,model):
 
 #------------------------------------------------------------------------------
 def beautify_reactive(pyomo,model):
+    placeholder = '{:<13.13}'+'{:<5.5}  '*2+' '*5+'{:<5.5}  '*4+' '*5+'{:<6.6}  '*4+' '*5+'{:<6.6}'
     convert_tmp = cal_conversion(model)
     print(placeholder.format('stages','T','Q','r_FT','Conv%','F','cat','V','Re','L','P','P_VLE'))
     for j in model.reactive:
@@ -137,6 +139,7 @@ def beautify_reactive(pyomo,model):
         print(placeholder.format(stagename,*temp_string))
 #------------------------------------------------------------------------------
 def beautify_condenser(pyomo,model):
+    placeholder = '{:<13.13}'+'{:<5.5}  '*2+' '*5+'{:<5.5}  '*4+' '*5+'{:<6.6}  '*4+' '*5+'{:<6.6}'
     print(placeholder.format('stages','T','Q','','','','','V','','L','P','W'))
     temp_num = model.condenser.T.value - 273.15, model.condenser.Q_main.value,model.condenser.V['P'].value,\
     model.condenser.L['out'].value,model.condenser.L['P'].value,model.condenser.W.value
@@ -146,6 +149,7 @@ def beautify_condenser(pyomo,model):
     print(placeholder.format(*temp_string))
 #------------------------------------------------------------------------------
 def beautify_reboiler(pyomo,model):
+    placeholder = '{:<13.13}'+'{:<5.5}  '*2+' '*5+'{:<5.5}  '*4+' '*5+'{:<6.6}  '*4+' '*5+'{:<6.6}'
     print(placeholder.format('stages','T','Q','','','','','V','','L','P','P_VLE'))
     temp_num = model.reboiler.T.value - 273.15, model.reboiler.Q_main.value,model.reboiler.V['out'].value,\
     model.reboiler.L['P'].value,model.reboiler.VLE_block.P_VLE.value
@@ -438,4 +442,29 @@ def plot_distribution(model,open_log_pdf = None,title = None):
 
     plt.show()
 
+    plt.close(fig)
+
+def plot_product_distribution(model,open_log_pdf = None):
+    tray_num = len(model.TRAY_total)
+    tray_pos = np.arange(tray_num)
+
+    fig, ax = plt.subplots(figsize=(16,4))
+
+    for i in m.PRODUCT:
+        product_flow = [model.P_tray[j,i].value for j in model.TRAY_total]
+        ax.bar(tray_pos,product_flow,alpha=0.7)
+
+    ax.legend([i for i in m.PRODUCT],fontsize=12)
+    ax.set_title('DDF Product Distribution',fontsize=14)
+    ax.set_ylabel('Product Flow kmol/s',fontsize=14)
+
+    ax.set_xticks(tray_pos)
+    ax.set_xticklabels(['{:}'.format(j) for j in model.TRAY_total])
+
+    ax.grid()
+
+    if open_log_pdf:
+        open_log_pdf.savefig()
+
+    plt.show()
     plt.close(fig)
