@@ -198,7 +198,7 @@ def which_MPCC(block):
 
 '''-----------------------------------------------------------------------------
 This is used to set the corresponding MPCC block based on input
-Note1: when switch from solved solution, slack variabls value should be set
+Note1: when switch from solved solution, variabl value should be set accordingly
 -----------------------------------------------------------------------------'''
 def select_MPCC(block,formulation):
     # get the corresponding value, only if a MPCC block is currently active
@@ -246,8 +246,6 @@ def check_iteration(filename='./tmp/ipopt_output_tmp.output'):
 '''-----------------------------------------------------------------------------
 This is a wrapper to automatically handle penalty function added to obj
 Note the active=True argument
-If expr = None, this will modifify original Objective
-If expr = XXXX, this will return new Objective
 -----------------------------------------------------------------------------'''
 def augmented_objective(pyomo, model, expr , sense):
     pf_expr = 0
@@ -271,13 +269,13 @@ def augmented_objective(pyomo, model, expr , sense):
 This is a wrapper to automatically create solver depend on machine configuration
 At this moment I don't know any way that is more elegent
 -----------------------------------------------------------------------------'''
-def add_solver(pyomo, max_iter = 500, warm_start = False, output = True, scale = True):
+def add_solver(pyomo, max_iter = 500, warm_start = False, output = True, scale = True, solver='ma86'):
     opt = None
     opt = pyomo.SolverFactory('ipopt')
     opt.options['print_user_options'] = 'yes'
 
     if os.name == 'posix':
-        opt.options['linear_solver'] = 'ma86'
+        opt.options['linear_solver'] = solver
         opt.options['linear_system_scaling'] = 'mc19'
 
     opt.options['max_iter'] = max_iter

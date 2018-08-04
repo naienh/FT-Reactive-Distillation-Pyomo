@@ -89,8 +89,6 @@ def check_product_spec(model):
     print('The following is considered as dry')
     for p in m.PRODUCT:
         product_data[p] = trans_product_mole({i:model.x_P_dry[i,p].value for i in m.COMP_ORG})
-        if p == 'intermediate':
-            continue
         print('{:<14}:\t{:.2f}\t|\tWet flow:\t{:.4f}\t|\tDry flow:\t{:.4f}'\
         .format(p,product_data[p]['unscaled'][p],model.P_total[p].value,model.P_total_dry[p].value))
 
@@ -252,8 +250,15 @@ def plot_distribution(model,open_log_pdf = None,title = None):
     ax1.plot(cnumber_range,g_data,'C6o-',markeredgecolor='w')
     ax1.plot(cnumber_range,d_data,'C2o-',markeredgecolor='w')
 
-    for j in model.reactive:
-        ax1.plot(cnumber_range,l_P_data[j],'C0o-',marker = r'${:}$'.format(j),markersize=14)
+    if model.find_component('epi'):
+        for j in model.reactive:
+            if model.reactive[j].L['P'].value < 50*model.epi.value:
+                ax1.plot(cnumber_range,l_P_data[j],'C7o-',alpha = 0.5,marker = r'${:}$'.format(j),markersize=10)
+            else:
+                ax1.plot(cnumber_range,l_P_data[j],'C0o-',marker = r'${:}$'.format(j),markersize=14)
+    else:
+        for j in model.reactive:
+            ax1.plot(cnumber_range,l_P_data[j],'C0o-',marker = r'${:}$'.format(j),markersize=14)
 
     ax1.plot(cnumber_range,b_data,'C1o-',markeredgecolor='w')
 
@@ -269,13 +274,18 @@ def plot_distribution(model,open_log_pdf = None,title = None):
     '''
     ax2.plot(cnumber_range,cd_x_data,'C2o-',markeredgecolor='w')
 
-    for j in model.reactive:
-        if model.reactive[j].PR_L.value < 1e-6:
-            ax2.plot(cnumber_range,rf_x_data[j],'C7o-',alpha = 0.5,marker = r'${:}$'.format(j),markersize=10)
-
-    for j in model.reactive:
-        if model.reactive[j].PR_L.value >= 1e-6:
-            ax2.plot(cnumber_range,rf_x_data[j],'C0o-',marker = r'${:}$'.format(j),markersize=14)
+    if model.find_component('epi'):
+        for j in model.reactive:
+            if model.reactive[j].L['P'].value < 50*model.epi.value:
+                ax2.plot(cnumber_range,rf_x_data[j],'C7o-',alpha = 0.5,marker = r'${:}$'.format(j),markersize=10)
+            else:
+                ax2.plot(cnumber_range,rf_x_data[j],'C0o-',marker = r'${:}$'.format(j),markersize=14)
+    else:
+        for j in model.reactive:
+            if model.reactive[j].L['P'].value < 1e-6:
+                ax2.plot(cnumber_range,rf_x_data[j],'C7o-',alpha = 0.5,marker = r'${:}$'.format(j),markersize=10)
+            else:
+                ax2.plot(cnumber_range,rf_x_data[j],'C0o-',marker = r'${:}$'.format(j),markersize=14)
 
     ax2.plot(cnumber_range,rb_x_data,'C1o-',markeredgecolor='w')
 
