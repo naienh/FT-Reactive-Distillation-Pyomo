@@ -273,6 +273,7 @@ def add_solver(pyomo, max_iter = 500, warm_start = False, output = True, scale =
     opt = None
     opt = pyomo.SolverFactory('ipopt')
     opt.options['print_user_options'] = 'yes'
+    opt.options['option_file_name'] = './ipopt.opt'
 
     if os.name == 'posix':
         opt.options['linear_solver'] = solver
