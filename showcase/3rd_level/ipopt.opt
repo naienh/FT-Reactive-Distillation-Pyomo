@@ -17,13 +17,13 @@ min_refinement_steps 5
 max_refinement_steps 20
 # linear_scaling_on_demand yes
 
-ma86_small 1e-30
-ma86_u 1e-4
+# ma86_small 1e-30
+# ma86_u 1e-4
 
 linear_solver ma97
 ma97_order best
 ma97_switch1 at_start
-ma97_switch2 od_hd_reuse
+# ma97_switch2 od_hd_reuse
 ma97_u 1e-6
 ma97_umax 0.1
 ma97_small 1e-30
