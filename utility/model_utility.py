@@ -277,7 +277,7 @@ def add_solver(pyomo, max_iter = 500, warm_start = False, output = True, scale =
 
     if os.name == 'posix':
         opt.options['linear_solver'] = solver
-        opt.options['linear_system_scaling'] = 'mc19'
+        # opt.options['linear_system_scaling'] = 'mc19'
 
     opt.options['max_iter'] = max_iter
 
@@ -291,7 +291,7 @@ def add_solver(pyomo, max_iter = 500, warm_start = False, output = True, scale =
         os.makedirs('./tmp',exist_ok=True)
         opt.options['output_file'] = './tmp/ipopt_output_tmp.output'
 
-    if scale:
-        opt.options['linear_scaling_on_demand'] = 'no'
+    # if scale:
+        # opt.options['linear_scaling_on_demand'] = 'no'
 
     return opt
