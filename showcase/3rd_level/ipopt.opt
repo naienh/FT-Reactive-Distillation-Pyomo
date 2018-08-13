@@ -24,6 +24,6 @@ linear_solver ma97
 ma97_order best
 ma97_switch1 at_start_reuse
 ma97_switch2 od_hd_reuse
-ma97_u 1e-4
-ma97_umax 0.1
+ma97_u 1e-2
+ma97_umax 0.5
 ma97_small 1e-30
