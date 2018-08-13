@@ -10,7 +10,7 @@ required_infeasibility_reduction 0.999999999999999
 warm_start_bound_frac 1e-20
 warm_start_slack_bound_frac 1e-20
 warm_start_slack_bound_push 1e-20
-# warm_start_mult_init_max 1e20
+warm_start_mult_init_max 1e40
 
 mu_init 1e-6
 min_refinement_steps 5
@@ -22,8 +22,8 @@ max_refinement_steps 20
 
 linear_solver ma97
 ma97_order best
-ma97_switch1 at_start
-# ma97_switch2 od_hd_reuse
-ma97_u 1e-6
+ma97_switch1 at_start_reuse
+ma97_switch2 od_hd_reuse
+ma97_u 1e-4
 ma97_umax 0.1
 ma97_small 1e-30
