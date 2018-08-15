@@ -237,7 +237,10 @@ def check_iteration(filename='./tmp/ipopt_output_tmp.output'):
             exitcode = 0
         line_start = line_tmps[-21].find(':')
         line_end = line_tmps[-21].find('\n')
-        itr = int(line_tmps[-21][line_start+2:line_end])
+        try:
+            itr = int(line_tmps[-21][line_start+2:line_end])
+        except:
+            itr = 'N/A'
         print
         print('Iteration Count:',itr)
         print('')
