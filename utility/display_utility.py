@@ -441,7 +441,7 @@ def plot_distribution(model,open_log_pdf = None,title = None):
         open_log_pdf.savefig()
 
     plt.show()
-    plt.close(fig)
+    plt.close()
 
 def plot_product_distribution(model,open_log_pdf = None):
     tray_num = len(model.TRAY_total)

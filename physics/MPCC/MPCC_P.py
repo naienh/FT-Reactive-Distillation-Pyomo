@@ -15,7 +15,7 @@ def P_NCP_block_rule(block):
     block.s_V = pe.Var(within=pe.NonNegativeReals,initialize=0)
 
     #-----------------------------LOCAL parameters------------------------------
-    block.epi = pe.Param(initialize=1e-4,mutable=True)
+    block.epi = pe.Param(initialize=1e-3,mutable=True)
 
     print('>','Importing MPCC_P_NCP Blocks......')
     print('>','Adding the following local variable:')
@@ -107,7 +107,7 @@ def P_pf_block_rule(block):
     block.pf = pe.Var(within=pe.NonNegativeReals,initialize=0)
 
     #-----------------------------LOCAL parameters------------------------------
-    block.rho = pe.Param(initialize=1,mutable=True)
+    block.rho = pe.Param(initialize=10000,mutable=True)
 
     print('>','Importing MPCC_P_pf Blocks......')
     print('>','Adding the following local variable:')
