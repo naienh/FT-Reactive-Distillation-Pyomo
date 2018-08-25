@@ -105,9 +105,9 @@ def P_pf_block_rule(block):
     block.s_L = pe.Var(within=pe.NonNegativeReals,initialize=0)#,bounds=(0,1))
     block.s_V = pe.Var(within=pe.NonNegativeReals,initialize=0)
     block.pf = pe.Var(within=pe.NonNegativeReals,initialize=0)
-
+    block.epi = pe.Param(initialize=1e-3,mutable=True)
     #-----------------------------LOCAL parameters------------------------------
-    block.rho = pe.Param(initialize=10000,mutable=True)
+    block.rho = pe.Param(initialize=100000,mutable=True)
 
     print('>','Importing MPCC_P_pf Blocks......')
     print('>','Adding the following local variable:')

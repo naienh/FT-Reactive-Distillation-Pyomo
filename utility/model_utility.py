@@ -272,11 +272,17 @@ def augmented_objective(pyomo, model, expr , sense):
 This is a wrapper to automatically create solver depend on machine configuration
 At this moment I don't know any way that is more elegent
 -----------------------------------------------------------------------------'''
-def add_solver(pyomo, max_iter = 500, warm_start = False, output = False, scale = True):
+def add_solver(pyomo, max_iter = 500, warm_start = False, output = False, option_dir = None, tol = 1e-8):
     opt = None
     opt = pyomo.SolverFactory('ipopt')
     opt.options['print_user_options'] = 'yes'
-    opt.options['option_file_name'] = './ipopt.opt'
+    opt.options['tol'] = tol
+
+    if option_dir:
+        opt.options['option_file_name'] = option_dir
+    else:
+        opt.options['option_file_name'] = './ipopt.opt'
+
 
     opt.options['max_iter'] = max_iter
 
@@ -296,18 +302,23 @@ def add_solver(pyomo, max_iter = 500, warm_start = False, output = False, scale 
 This is used to disable restoration, default is 0.9, written as 0.99999
 effectively disables it
 -----------------------------------------------------------------------------'''
-def disable_restoration(mode = 'disable'):
+def disable_restoration(mode = 'disable', option_dir = None):
+    if not option_dir:
+        option_dir = 'ipopt.opt'
+
     if mode == 'disable':
-        with open('ipopt.opt','r') as opt_file:
+        with open(option_dir,'r') as opt_file:
             options_lines = opt_file.read()
+        options_lines = options_lines.replace('\nlinear_solver ma86','\nlinear_solver ma97')
         options_lines = options_lines.replace('\n# required_infeasibility_reduction 0.999999999999999',\
                                               '\nrequired_infeasibility_reduction 0.999999999999999')
-        with open('ipopt.opt','w') as opt_file:
+        with open(option_dir,'w') as opt_file:
             opt_file.write(options_lines)
     if mode == 'enable':
-        with open('ipopt.opt','r') as opt_file:
+        with open(option_dir,'r') as opt_file:
             options_lines = opt_file.read()
+        # options_lines = options_lines.replace('\nlinear_solver ma97','\nlinear_solver ma86')
         options_lines = options_lines.replace('\nrequired_infeasibility_reduction 0.999999999999999',\
                                               '\n# required_infeasibility_reduction 0.999999999999999')
-        with open('ipopt.opt','w') as opt_file:
+        with open(option_dir,'w') as opt_file:
             opt_file.write(options_lines)

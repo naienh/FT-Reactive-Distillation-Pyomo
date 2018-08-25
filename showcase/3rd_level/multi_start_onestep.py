@@ -3,12 +3,14 @@
 How to Train Your Dragon: V5
 To be used with multi-start, randomized system operating parameters
 Sequentially initialize FT reactive distillation model automatically
-Plotting and logging functions will be minimized
+Add DDF module and then optimize during one step
 '''
 # system imports
 import sys
 import os
 import datetime
+import shutil
+import atexit
 sys.path.append(os.path.abspath('..'))
 sys.path.append(os.path.abspath('../..'))
 
@@ -45,22 +47,36 @@ plt.ion()
 Constructing the model and logfile
 '''
 model = pe.ConcreteModel(name='reactive_distillation')
+mpcc_type = 'NCP'
 # digest input arguments
 if len(sys.argv) == 1:
-    logname = create_filename_time()
+    logname = create_filename_time()+'_'+mpcc_type
     log_text_dir = './log/text/mul_onestep_'+logname+'.dat'
     log_figure_dir = './log/figure/mul_onestep_'+logname+'.pdf'
     output_dir = './tmp/'+logname+'.output'
     log_master_dir = './log/master/master_log.txt'
 elif len(sys.argv) == 4:
     rand_file_name = sys.argv[1]
-    logname = 'Preset_Case:_{}'.format(sys.argv[2])
+    logname = 'Preset_Case:_{}'.format(sys.argv[2])+'_'+mpcc_type
     log_text_dir = './log/text/mul_onestep_'+logname+'.dat'
     log_figure_dir = './log/figure/mul_onestep_'+logname+'.pdf'
     output_dir = './tmp/'+logname+'.output'
     log_master_dir = './log/master/'+sys.argv[3]
 else:
     exit('Argument Number MIS-MATCH')
+
+'''
+write its own option files, clean up after done
+'''
+
+option_dir = logname+'.opt'
+shutil.copy('ipopt.opt',option_dir)
+
+def cleanup():
+    if option_dir:
+        if os.path.exists(option_dir):
+            os.remove(option_dir)
+atexit.register(cleanup)
 
 os.makedirs('./log/text',exist_ok=True)
 os.makedirs('./log/figure',exist_ok=True)
@@ -71,7 +87,7 @@ os.makedirs('./tmp',exist_ok=True)
 '''
 model input, randomized, or input from already generated random files
 '''
-mpcc_type = 'NCP'
+
 if len(sys.argv) == 1:
     # The following parameters requires manual input
     tray_number = 20
@@ -101,11 +117,11 @@ if len(sys.argv) == 1:
     side_draw_flag.update({rand_int:0.2+0.3*rand})
 
     # generating temperature profile
-    profile_tmp = sorted(np.random.rand(rand_input.tray_number - len(rand_input.non_reactive_flag)))
-    rand_input.temperature_flag = {}; n = 0
-    for j in range(1,rand_input.tray_number+1):
-        if j not in rand_input.non_reactive_flag:
-            rand_input.temperature_flag[j] = 200+100*profile_tmp[n]
+    profile_tmp = sorted(np.random.rand(tray_number - len(non_reactive_flag)))
+    temperature_flag = {}; n = 0
+    for j in range(1,tray_number+1):
+        if j not in non_reactive_flag:
+            temperature_flag[j] = 200+100*profile_tmp[n]
             n += 1
 
     # generating catalyst profile, total = 30000 kg
@@ -193,8 +209,8 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
     '''
     solver options
     '''
-    disable_restoration(mode = 'enable')
-    opt = add_solver(pe, max_iter = 1000, warm_start = False, output = output_dir)
+    disable_restoration(mode = 'enable', option_dir = option_dir)
+    opt = add_solver(pe, max_iter = 2000, warm_start = False, output = output_dir, option_dir = option_dir)
 
     progress = '> First Solve, disconnected reactive stages'
 
@@ -262,7 +278,7 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
     '''
     warm start options
     '''
-    opt = add_solver(pe, max_iter = 1000, warm_start = True, output = output_dir)
+    opt = add_solver(pe, max_iter = 2000, warm_start = True, output = output_dir, option_dir = option_dir, tol=1e-8)
 
     results = opt.solve(model,tee=False)
     update_dual(pe,model)
@@ -274,7 +290,7 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
     else:
         not_optimum_counter = 0
 
-    if not_optimum_counter == 2:
+    if not_optimum_counter == 1:
         with HiddenLogs(log_text_dir):
             print('NOT Optimum: ' + results.solver.termination_condition.key)
         exit()
@@ -310,7 +326,7 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
             beautify_reactive(pe,model)
             log_now()
             check_iteration(output_dir)
-            if not_optimum_counter == 2:
+            if not_optimum_counter == 1:
                 print('NOT Optimum: ' + results.solver.termination_condition.key)
                 master_log.write('Failed: {}\n'.format(progress))
                 exit()
@@ -360,7 +376,7 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
     '''
     setting solver optopms
     '''
-    opt = add_solver(pe, max_iter = 1000, warm_start = False, output = output_dir)
+    opt = add_solver(pe, max_iter = 2000, warm_start = False, output = output_dir, option_dir = option_dir)
 
     progress = '> Initialize condenser'
 
@@ -376,7 +392,7 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
         print('\n{}'.format(progress))
         log_now()
         check_iteration(output_dir)
-        if not_optimum_counter == 2:
+        if not_optimum_counter == 1:
             print('NOT Optimum: ' + results.solver.termination_condition.key)
             master_log.write('Failed: {}\n'.format(progress))
             exit()
@@ -432,7 +448,7 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
         print('\n{}'.format(progress))
         log_now()
         check_iteration(output_dir)
-        if not_optimum_counter == 2:
+        if not_optimum_counter == 1:
             print('NOT Optimum: ' + results.solver.termination_condition.key)
             master_log.write('Failed: {}\n'.format(progress))
             exit()
@@ -490,7 +506,7 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
 
     # note the epi here
     def L_reboiler_rule(model):
-        return model.reactive[model.TRAY.last()].L['out'] + 1e-6 == model.reboiler.L['in']
+        return model.reactive[model.TRAY.last()].L['out'] + 1e-4 == model.reboiler.L['in']
     model.L_reboiler_con = pe.Constraint(rule=L_reboiler_rule)
 
     def Lx_reboiler_rule(model,i):
@@ -590,7 +606,7 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
         print('-'*108)
         check_DOF(pe,model)
 
-    opt = add_solver(pe, max_iter = 1000, warm_start = True, output = output_dir, scale = True)
+    opt = add_solver(pe, max_iter = 2000, warm_start = True, output = output_dir, option_dir = option_dir, tol=1e-4)
 
     progress = '> Initialization with no reflux and reboil'
 
@@ -607,7 +623,7 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
         beautify(pe,model)
         log_now()
         check_iteration(output_dir)
-        if not_optimum_counter == 2:
+        if not_optimum_counter == 1:
             print('NOT Optimum: ' + results.solver.termination_condition.key)
             master_log.write('Failed: {}\n'.format(progress))
             exit()
@@ -646,7 +662,7 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
             beautify(pe,model)
             log_now()
             check_iteration(output_dir)
-            if not_optimum_counter == 2:
+            if not_optimum_counter == 1:
                 print('NOT Optimum: ' + results.solver.termination_condition.key)
                 master_log.write('Failed: {}\n'.format(progress))
                 exit()
@@ -677,7 +693,7 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
             beautify(pe,model)
             log_now()
             check_iteration(output_dir)
-            if not_optimum_counter == 2:
+            if not_optimum_counter == 1:
                 print('NOT Optimum: ' + results.solver.termination_condition.key)
                 master_log.write('Failed: {}\n'.format(progress))
                 exit()
@@ -710,7 +726,7 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
             beautify(pe,model)
             log_now()
             check_iteration(output_dir)
-            if not_optimum_counter == 2:
+            if not_optimum_counter == 1:
                 print('NOT Optimum: ' + results.solver.termination_condition.key)
                 master_log.write('Failed: {}\n'.format(progress))
                 exit()
@@ -718,12 +734,15 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
     plot_distribution(model,pdf,'Side draw')
 
     '''
-    Following design specification, remove non-reactive stages' catalyst and feed, maybe feed cat first then Q
+    Following design specification, remove non-reactive stages' catalyst and feed, feed cat first then Q
     '''
-    for j in model.TRAY:
+    for j in model.reactive:
 
         model.reactive[j].cat.fix(catalyst_flag[j])
         model.reactive[j].F.fix(feed_flag[j])
+        # During this step, it is very likely for the temperature to not conform to the given profile
+        # Therefore, add an additional layer of protection with temperature lower bounds
+        # model.reactive[j].T.setlb(model.reactive[j].T.ub - 1)
 
         progress = '> Working to adjust and feed from stage {}:'.format(j)
 
@@ -741,11 +760,10 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
             beautify(pe,model)
             log_now()
             check_iteration(output_dir)
-            if not_optimum_counter == 2:
+            if not_optimum_counter == 1:
                 print('NOT Optimum: ' + results.solver.termination_condition.key)
                 master_log.write('Failed: {}\n'.format(progress))
                 exit()
-
 
     tmp_expr = sum(model.reactive[j].T for j in model.TRAY)
     for j in model.TRAY_nonreactive:
@@ -786,14 +804,12 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
                 beautify(pe,model)
                 log_now()
                 check_iteration(output_dir)
-                if not_optimum_counter == 2:
+                if not_optimum_counter == 1:
                     print('NOT Optimum: ' + results.solver.termination_condition.key)
                     master_log.write('Failed: {}\n'.format(progress))
                     exit()
 
-
     plot_distribution(model,pdf,'Non-reactive stage + catalyst / feed adjustment')
-
 
     '''
     Move temperatures to design point (gently)
@@ -810,6 +826,7 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
 
             for t in trange:
                 model.reactive[j].T.setub(t)
+                # model.reactive[j].T.setlb(model.reactive[j].T.ub - 10)
 
                 progress = 'Working on adjusting stage {} temperature to {:.2f}C '.format(j,t-273.15)
 
@@ -827,7 +844,7 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
                     beautify(pe,model)
                     log_now()
                     check_iteration(output_dir)
-                    if not_optimum_counter == 2:
+                    if not_optimum_counter == 1:
                         print('NOT Optimum: ' + results.solver.termination_condition.key)
                         master_log.write('Failed: {}\n'.format(progress))
                         exit()
@@ -840,6 +857,7 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
 
             for t in trange:
                 model.reactive[j].T.setub(t)
+                # model.reactive[j].T.setlb(model.reactive[j].T.ub - 10)
 
                 progress = 'Working on adjusting stage {} temperature to {:.2f}C '.format(j,t-273.15)
 
@@ -857,7 +875,7 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
                     beautify(pe,model)
                     log_now()
                     check_iteration(output_dir)
-                    if not_optimum_counter == 2:
+                    if not_optimum_counter == 1:
                         print('NOT Optimum: ' + results.solver.termination_condition.key)
                         master_log.write('Failed: {}\n'.format(progress))
                         exit()
@@ -1000,7 +1018,9 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
         model.reactive[j].MPCC_P_pf.rho = 100000
     model.reboiler.MPCC_P_pf.rho = 100000
 
-    opt = add_solver(pe, max_iter = 2000, warm_start = True, output = output_dir, scale = True)
+    disable_restoration(mode = 'disable', option_dir = option_dir)
+
+    opt = add_solver(pe, max_iter = 2000, warm_start = True, output = output_dir, option_dir = option_dir)
 
     progress = '> Added DDF formulation'
 
@@ -1074,8 +1094,6 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
     model.N_tray['diesel'].setlb(11)
     model.N_tray['diesel'].setub(18)
 
-    disable_restoration(mode = 'disable')
-
     progress = '> One-step Optimization'
 
     results = opt.solve(model,tee=False)
@@ -1093,7 +1111,7 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
             master_log.write('Failed: {}\n'.format(progress))
             exit()
         else:
-            print('DDF Complete\nPlease check the logs for details')
+            print('Optimization Complete\nPlease check the logs for details')
             master_log.write('Success: {}\n'.format(progress))
 
     plot_distribution(model,pdf,'Optimized Temperature, reflux, product flow and tray, feed, catalyst')
