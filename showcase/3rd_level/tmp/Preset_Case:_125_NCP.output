@@ -1,0 +1,2304 @@
+
+List of user-set options:
+
+                                    Name   Value                used
+                           compl_inf_tol = 1                     yes
+                         constr_viol_tol = 1                     yes
+                            dual_inf_tol = 1000                  yes
+                           linear_solver = ma97                  yes
+                              ma86_small = 1e-30                  no
+                                  ma86_u = 0.0001                 no
+                              ma97_order = best                  yes
+                              ma97_small = 1e-30                 yes
+                            ma97_switch1 = at_start              yes
+                            ma97_switch2 = od_hd_reuse           yes
+                                  ma97_u = 1e-06                 yes
+                               ma97_umax = 0.5                   yes
+                                max_iter = 2000                  yes
+                    max_refinement_steps = 20                    yes
+                    min_refinement_steps = 5                     yes
+                                 mu_init = 1e-06                 yes
+           mu_superlinear_decrease_power = 1.25                  yes
+                   nlp_scaling_min_value = 1e-08                 yes
+                        option_file_name = Preset_Case:_125_NCP.opt  yes
+                             output_file = ./tmp/Preset_Case:_125_NCP.output  yes
+                      print_user_options = yes                   yes
+                                     tol = 0.0001                yes
+                   warm_start_bound_frac = 1e-20                 yes
+                   warm_start_bound_push = 1e-20                 yes
+                   warm_start_init_point = yes                   yes
+              warm_start_mult_bound_push = 1e-20                 yes
+                warm_start_mult_init_max = 1e+40                 yes
+             warm_start_slack_bound_frac = 1e-20                 yes
+             warm_start_slack_bound_push = 1e-20                 yes
+
+******************************************************************************
+This program contains Ipopt, a library for large-scale nonlinear optimization.
+ Ipopt is released as open source code under the Eclipse Public License (EPL).
+         For more information visit http://projects.coin-or.org/Ipopt
+******************************************************************************
+
+This is Ipopt version 3.12.10, running with linear solver ma97.
+
+Number of nonzeros in equality constraint Jacobian...:   103002
+Number of nonzeros in inequality constraint Jacobian.:        0
+Number of nonzeros in Lagrangian Hessian.............:    40110
+
+Total number of variables............................:    29049
+                     variables with only lower bounds:    11213
+                variables with lower and upper bounds:    14309
+                     variables with only upper bounds:        0
+Total number of equality constraints.................:    29039
+Total number of inequality constraints...............:        0
+        inequality constraints with only lower bounds:        0
+   inequality constraints with lower and upper bounds:        0
+        inequality constraints with only upper bounds:        0
+
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+   0 -4.9998848e+03 8.51e+01 2.26e-02  -6.0 0.00e+00    -  0.00e+00 0.00e+00   0
+   1r-4.9998848e+03 8.51e+01 1.00e+03   1.8 0.00e+00    -  0.00e+00 6.65e-10R  2
+   2r-4.9946859e+03 1.07e+02 1.00e+03   1.8 9.07e+10    -  3.75e-09 6.90e-09f  1
+   3r-4.9946861e+03 1.07e+02 1.00e+03   1.1 1.11e+05    -  2.37e-06 4.93e-07f  1
+   4r-4.9946869e+03 1.07e+02 1.00e+03   1.1 1.13e+05    -  4.80e-06 3.19e-06f  1
+   5r-4.9946911e+03 1.04e+02 1.00e+03   1.1 1.12e+05    -  1.07e-05 1.68e-05f  1
+   6r-4.9946999e+03 9.94e+01 1.00e+03   1.1 1.08e+05    -  9.10e-05 3.67e-05f  1
+   7r-4.9947322e+03 7.93e+01 1.22e+03   1.1 9.35e+04    -  2.11e-04 1.69e-04f  1
+   8r-4.9947861e+03 3.27e+01 3.35e+03   1.1 6.25e+04    -  1.17e-03 5.88e-04f  1
+   9 -4.9947922e+03 3.24e+01 6.02e+02  -6.0 5.12e+02    -  1.26e-03 7.74e-03h  1
+In iteration 9, 1 Slack too small, adjusting variable bound
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+  10 -4.9947160e+03 3.16e+01 6.89e+03  -6.0 7.67e+02    -  7.20e-03 2.46e-02h  1
+  11 -4.9940264e+03 2.98e+01 4.48e+04  -6.0 1.63e+03    -  1.37e-02 5.82e-02h  1
+  12 -4.9938324e+03 2.95e+01 4.43e+04  -6.0 1.33e+03    -  9.48e-03 8.03e-03h  1
+In iteration 12, 1 Slack too small, adjusting variable bound
+  13 -4.9923355e+03 2.76e+01 3.60e+04  -6.0 1.36e+03    -  1.65e-02 6.38e-02h  1
+  14 -4.9911489e+03 2.62e+01 2.80e+04  -6.0 1.18e+03    -  1.32e-01 5.10e-02h  1
+  15 -4.9885829e+03 2.32e+01 5.29e+04  -6.0 1.06e+03    -  9.41e-02 1.13e-01h  1
+  16 -4.9880673e+03 2.10e+01 5.67e+04  -6.0 6.11e+02    -  3.44e-06 9.33e-02h  1
+  17 -4.9891720e+03 1.88e+01 5.07e+04  -6.0 5.43e+02    -  2.58e-01 1.07e-01h  1
+  18 -4.9914529e+03 1.70e+01 5.01e+04  -6.0 9.79e+02    -  6.59e-02 9.55e-02f  1
+  19 -4.9919806e+03 1.67e+01 5.87e+04  -6.0 1.23e+03    -  4.10e-03 1.79e-02h  1
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+  20r-4.9919806e+03 1.67e+01 9.99e+02   1.1 0.00e+00    -  0.00e+00 1.38e-08R  2
+  21r-4.9919806e+03 1.67e+01 2.41e+04   1.1 1.31e+04    -  1.43e-08 1.82e-07f  1
+  22r-4.9919806e+03 1.67e+01 2.41e+04   1.1 1.31e+04    -  1.37e-04 8.62e-08f  1
+  23r-4.9919787e+03 1.60e+01 2.41e+04   1.1 1.15e+04    -  2.87e-06 4.60e-05f  1
+  24r-4.9919669e+03 1.20e+01 2.41e+04   1.1 1.10e+04    -  1.23e-03 2.86e-04f  1
+  25 -4.9920462e+03 1.20e+01 2.32e+02  -6.0 7.30e+03    -  5.59e-07 5.47e-04h  1
+  26 -4.9920676e+03 1.20e+01 3.69e+02  -6.0 9.57e+03    -  2.18e-04 1.28e-04h  1
+  27 -4.9924526e+03 1.20e+01 4.39e+04  -6.0 1.02e+04    -  7.65e-04 2.16e-03f  1
+  28 -4.9924099e+03 1.20e+01 4.33e+04  -6.0 2.34e+05    -  1.70e-05 1.70e-05s  7
+  29 -4.9923125e+03 1.20e+01 4.11e+04  -6.0 3.16e+05    -  3.25e-05 3.25e-05s  7
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+  30 -4.9921048e+03 1.19e+01 3.85e+04  -6.0 3.93e+05    -  6.35e-05 6.35e-05s  7
+  31r-4.9921048e+03 1.19e+01 9.99e+02   1.0 0.00e+00    -  0.00e+00 0.00e+00R  1
+  32r-4.9921048e+03 1.19e+01 3.26e+04   1.0 9.39e+03    -  1.39e-07 1.77e-07f  1
+  33r-4.9921048e+03 1.19e+01 3.26e+04   1.0 9.39e+03    -  9.00e-06 3.04e-07f  1
+  34r-4.9921052e+03 1.15e+01 3.26e+04   1.0 9.30e+03    -  4.72e-05 3.93e-05f  1
+  35r-4.9921062e+03 9.81e+00 3.25e+04   1.0 8.54e+03    -  4.58e-03 1.54e-04f  1
+  36 -4.9921063e+03 9.81e+00 1.80e+05  -6.0 4.18e+03    -  1.03e-02 6.23e-07h  1
+  37 -4.9916382e+03 9.79e+00 9.95e+07  -6.0 1.85e+04    -  2.31e-06 1.28e-03h  1
+  38 -4.9917333e+03 9.79e+00 9.94e+07  -6.0 1.47e+04    -  5.22e-09 3.61e-04f  1
+  39 -4.9932074e+03 9.74e+00 9.91e+07  -6.0 2.82e+04    -  4.32e-04 3.80e-03f  1
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+  40 -4.9931443e+03 9.70e+00 9.86e+07  -6.0 2.00e+03    -  2.81e-02 4.60e-03h  1
+  41 -4.9918694e+03 9.03e+00 9.27e+07  -6.0 2.51e+03    -  1.33e-02 5.95e-02h  1
+  42r-4.9918694e+03 9.03e+00 1.00e+03   0.9 0.00e+00    -  0.00e+00 1.66e-09R  2
+  43r-4.9918694e+03 9.03e+00 2.23e+04   0.9 1.85e+06    -  7.16e-07 6.92e-09f  1
+  44r-4.9918694e+03 9.01e+00 2.23e+04   0.9 7.09e+03    -  3.25e-04 1.84e-06f  1
+  45r-4.9918764e+03 6.31e+00 3.11e+04   0.9 5.35e+03    -  8.29e-03 4.91e-04f  1
+  46 -4.9918763e+03 6.31e+00 1.38e+06  -6.0 9.66e+02    -  3.75e-02 1.05e-05h  1
+  47 -4.9908763e+03 5.92e+00 6.96e+09  -6.0 1.15e+03    -  1.22e-05 6.13e-02h  1
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+  48 -4.9908872e+03 5.92e+00 6.96e+09  -6.0 5.36e+03    -  4.99e-03 1.02e-04h  2
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+  49 -4.9908926e+03 5.92e+00 6.96e+09  -6.0 5.64e+03    -  2.70e-09 4.98e-05f  2
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+  50 -4.9908949e+03 5.92e+00 6.96e+09  -6.0 4.79e+03  -2.0 1.89e-03 2.28e-05h  1
+  51 -4.9908951e+03 5.92e+00 6.96e+09  -6.0 1.16e+04    -  2.76e-09 8.06e-07h  1
+  52 -4.9908951e+03 5.92e+00 6.96e+09  -6.0 4.85e+03  -2.5 5.61e-09 9.08e-09h  2
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+  53 -4.9908961e+03 5.92e+00 6.96e+09  -6.0 9.60e+03  -3.0 2.05e-10 1.14e-05f  2
+  54 -4.9908974e+03 5.92e+00 6.96e+09  -6.0 1.72e+03  -2.5 9.05e-04 9.22e-05h  1
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+  55 -4.9909023e+03 5.92e+00 6.96e+09  -6.0 1.89e+04    -  4.68e-10 1.34e-05f  2
+  56 -4.9909024e+03 5.92e+00 6.96e+09  -6.0 1.53e+03  -2.1 5.49e-05 3.12e-06h  1
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+  57 -4.9909059e+03 5.92e+00 6.96e+09  -6.0 2.13e+04    -  8.95e-10 8.57e-06f  2
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+  58 -4.9909060e+03 5.92e+00 6.96e+09  -6.0 3.24e+03  -2.6 3.08e-03 9.54e-06h  3
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+  59 -4.9909066e+03 5.92e+00 6.96e+09  -6.0 6.59e+03    -  3.24e-06 5.26e-06h  3
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+  60 -4.9909068e+03 5.92e+00 6.96e+09  -6.0 2.05e+03  -2.2 3.77e-05 1.29e-05h  2
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+  61 -4.9909068e+03 5.92e+00 6.96e+09  -6.0 2.18e+03  -1.7 1.36e-03 2.07e-06h  4
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+  62 -4.9909069e+03 5.92e+00 6.96e+09  -6.0 1.57e+03  -1.3 5.44e-05 3.17e-06h  2
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+  63 -4.9909069e+03 5.92e+00 6.96e+09  -6.0 1.49e+03  -0.9 3.81e-03 1.47e-06h  2
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+  64 -4.9909069e+03 5.92e+00 6.96e+09  -6.0 2.65e+03  -1.4 5.59e-05 2.82e-07h  9
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+  65 -4.9909069e+03 5.92e+00 6.96e+09  -6.0 2.62e+03  -1.8 1.02e-04 1.01e-07h 16
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+  66 -4.9909069e+03 5.92e+00 6.96e+09  -6.0 2.33e+03  -1.4 1.29e-04 1.64e-07h  6
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Evaluation error during soft restoration phase step.
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Evaluation error during soft restoration phase step.
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Evaluation error during soft restoration phase step.
+  67r-4.9909069e+03 5.92e+00 1.00e+03   0.6 0.00e+00  -1.0 0.00e+00 1.49e-09R 12
+  68r-4.9909044e+03 5.92e+00 2.46e+03   0.6 7.07e+06    -  1.09e-05 5.74e-08f  2
+  69r-4.9909053e+03 5.93e+00 2.43e+03   0.6 4.14e+03    -  1.17e-04 4.71e-05f  1
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+  70r-4.9909094e+03 6.00e+00 2.43e+03   0.6 3.54e+03    -  6.62e-05 2.55e-04f  1
+  71 -4.9909204e+03 6.00e+00 1.09e+05  -6.0 1.46e+03    -  9.66e-03 3.42e-04h  1
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+  72 -4.9909211e+03 5.99e+00 9.97e+03  -6.0 2.34e+03    -  3.44e-04 4.26e-05h  2
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+  73 -4.9909216e+03 5.99e+00 1.30e+04  -6.0 2.34e+03    -  1.46e-02 3.06e-05h  2
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+  74 -4.9909168e+03 5.99e+00 1.02e+04  -6.0 6.78e+03    -  4.28e-04 3.90e-05h  2
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+  75 -4.9908978e+03 5.99e+00 1.05e+05  -6.0 1.31e+04    -  2.56e-03 7.85e-05h  2
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+  76 -4.9908107e+03 5.99e+00 1.18e+05  -6.0 1.68e+04    -  6.50e-04 2.80e-04h  3
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+  77 -4.9908107e+03 5.99e+00 7.88e+07  -6.0 2.34e+03  -1.5 1.93e-02 5.41e-06h  4
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+  78 -4.9903838e+03 5.98e+00 7.85e+07  -6.0 1.84e+04    -  8.56e-04 1.25e-03h  5
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+  79 -4.9900317e+03 5.98e+00 8.00e+07  -6.0 2.31e+04    -  3.26e-03 8.06e-04h  5
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+  80 -4.9898441e+03 5.98e+00 7.76e+07  -6.0 2.59e+04    -  4.61e-03 3.78e-04h  6
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+  81 -4.9898441e+03 5.98e+00 7.49e+07  -6.0 4.48e+04  -0.1 1.04e-06 3.87e-08h 14
+In iteration 81, 1 Slack too small, adjusting variable bound
+  82 -4.9898441e+03 5.98e+00 1.73e+09  -6.0 1.55e+03   3.0 5.54e-02 5.04e-10w  1
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+  83r-4.9898441e+03 5.98e+00 1.00e+03   0.5 0.00e+00   2.5 0.00e+00 1.26e-10R  2
+  84r-4.9898381e+03 5.98e+00 3.86e+03   0.5 2.58e+06    -  6.29e-04 3.90e-07f  1
+  85r-4.9898554e+03 6.15e+00 2.37e+04   0.5 1.89e+03    -  1.52e-02 1.22e-03f  1
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+  86 -4.9898560e+03 6.15e+00 1.86e+06  -6.0 1.47e+03    -  4.30e-02 6.64e-05h  2
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+  87 -4.9898541e+03 6.15e+00 1.31e+06  -6.0 2.18e+03    -  6.82e-05 4.79e-05h  2
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+  88 -4.9898523e+03 6.15e+00 1.33e+06  -6.0 2.75e+03    -  2.69e-02 3.61e-05h  2
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+  89 -4.9894705e+03 6.14e+00 1.42e+06  -6.0 2.10e+04    -  1.53e-04 9.68e-04h  3
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+  90 -4.9891913e+03 6.14e+00 1.42e+06  -6.0 2.23e+04    -  7.31e-03 6.67e-04h  3
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+  91 -4.9889393e+03 6.13e+00 1.42e+06  -6.0 2.56e+04    -  2.11e-03 5.45e-04h  5
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+  92 -4.9886494e+03 6.13e+00 1.56e+06  -6.0 2.65e+04    -  7.90e-03 6.02e-04h  5
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+  93 -4.9884026e+03 6.13e+00 1.97e+06  -6.0 2.76e+04    -  4.16e-03 4.85e-04h  6
+  94 -4.9881625e+03 6.13e+00 2.98e+06  -6.0 2.84e+04    -  8.97e-03 4.54e-04h  6
+  95 -4.9879286e+03 6.12e+00 3.72e+06  -6.0 2.92e+04    -  6.24e-03 4.25e-04h  6
+  96 -4.9806415e+03 5.98e+00 2.58e+06  -6.0 3.00e+04    -  1.03e-02 1.28e-02w  1
+  97 -4.9805894e+03 5.98e+00 2.36e+07  -6.0 1.10e+05    -  2.75e-03 2.41e-05w  1
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+  98 -4.9877009e+03 6.12e+00 5.05e+06  -6.0 1.25e+05    -  1.03e-02 4.00e-04h  5
+  99 -4.9874786e+03 6.12e+00 6.13e+06  -6.0 3.07e+04    -  8.03e-03 3.76e-04h  6
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 100 -4.9872615e+03 6.12e+00 7.79e+06  -6.0 3.15e+04    -  1.13e-02 3.56e-04h  6
+ 101 -4.9870477e+03 6.11e+00 8.61e+06  -6.0 3.22e+04    -  5.48e-03 3.38e-04h  6
+ 102 -4.9868367e+03 6.11e+00 1.10e+07  -6.0 3.29e+04    -  1.43e-02 3.23e-04h  6
+ 103 -4.9866228e+03 6.11e+00 1.17e+07  -6.0 3.36e+04    -  4.09e-03 3.18e-04h  6
+ 104 -4.9864082e+03 6.11e+00 1.47e+07  -6.0 3.44e+04    -  1.51e-02 3.10e-04h  6
+ 105 -4.9861653e+03 6.11e+00 1.58e+07  -6.0 3.53e+04    -  5.15e-03 3.42e-04h  6
+ 106 -4.9858994e+03 6.10e+00 2.02e+07  -6.0 3.63e+04    -  1.75e-02 3.64e-04h  6
+ 107 -4.9856951e+03 6.10e+00 2.43e+07  -6.0 3.73e+04    -  1.38e-02 2.68e-04h  7
+ 108 -4.9714753e+03 9.81e+00 2.00e+07  -6.0 3.81e+04    -  1.09e-02 1.78e-02w  1
+ 109 -4.9716981e+03 9.81e+00 1.86e+07  -6.0 6.11e+05    -  3.92e-06 4.71e-05w  1
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 110 -4.9719687e+03 9.81e+00 1.86e+07  -6.0 7.77e+04    -  9.27e-07 1.95e-04w  1
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 111 -4.9854729e+03 6.10e+00 2.83e+07  -6.0 5.56e+04    -  1.09e-02 2.78e-04h  6
+ 112 -4.9852452e+03 6.10e+00 3.61e+07  -6.0 3.89e+04    -  1.72e-02 2.72e-04h  7
+ 113 -4.9850856e+03 6.10e+00 3.97e+07  -6.0 3.95e+04    -  5.58e-03 1.75e-04h  7
+ 114 -4.9848729e+03 6.10e+00 5.67e+07  -6.0 4.00e+04    -  2.12e-02 2.22e-04h  6
+ 115 -4.9847188e+03 6.09e+00 5.79e+07  -6.0 4.02e+04    -  1.03e-03 1.37e-04h  5
+ 116 -4.9845728e+03 6.09e+00 8.02e+07  -6.0 4.07e+04    -  1.45e-02 1.27e-04h  5
+ 117 -4.9844126e+03 6.09e+00 8.15e+07  -6.0 4.05e+04    -  6.25e-04 1.17e-04h  4
+ 118 -4.9842694e+03 6.09e+00 9.73e+07  -6.0 4.08e+04    -  5.91e-03 1.03e-04h  4
+ 119 -4.9841652e+03 6.09e+00 9.93e+07  -6.0 4.42e+04    -  6.28e-04 6.74e-05h  4
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 120 -4.9840714e+03 6.09e+00 1.35e+08  -6.0 4.59e+04    -  9.47e-03 5.94e-05h  4
+ 121 -4.9830748e+03 6.08e+00 1.35e+08  -6.0 6.55e+04    -  4.49e-04 5.26e-04w  1
+In iteration 121, 1 Slack too small, adjusting variable bound
+ 122 -4.9808023e+03 6.06e+00 1.58e+08  -6.0 7.90e+04    -  4.18e-03 1.05e-03w  1
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 123 -4.9840091e+03 6.09e+00 1.37e+08  -6.0 1.61e+05    -  4.49e-04 3.29e-05h  4
+ 124 -4.9839648e+03 6.09e+00 1.61e+08  -6.0 6.74e+04    -  4.15e-03 2.29e-05h  6
+ 125r-4.9839648e+03 6.09e+00 1.00e+03  -0.1 0.00e+00    -  0.00e+00 3.51e-07R 14
+ 126r-4.9839648e+03 6.09e+00 6.30e+03  -0.1 7.63e+02    -  1.58e-02 1.70e-06f  1
+ 127r-4.9840081e+03 6.11e+00 9.13e+03  -0.1 2.42e+02    -  2.64e-02 1.68e-02f  1
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 128 -4.9840088e+03 6.11e+00 1.00e+02  -6.0 6.85e+02    -  5.43e-02 2.72e-04h  2
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 129 -4.9840064e+03 6.11e+00 1.41e+04  -6.0 7.94e+02    -  5.32e-02 1.90e-04h  2
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 130 -4.9838466e+03 6.10e+00 1.92e+05  -6.0 1.57e+04    -  2.72e-02 5.30e-04h  3
+ 131 -4.9836920e+03 6.10e+00 3.82e+05  -6.0 1.94e+04    -  2.27e-02 4.23e-04h  6
+ 132 -4.9835406e+03 6.10e+00 6.08e+05  -6.0 1.97e+04    -  2.69e-02 4.00e-04h  6
+ 133 -4.9833908e+03 6.10e+00 8.87e+05  -6.0 2.00e+04    -  3.29e-02 3.85e-04h  6
+ 134 -4.9832352e+03 6.09e+00 1.17e+06  -6.0 2.03e+04    -  3.33e-02 3.90e-04h  6
+ 135 -4.9830475e+03 6.09e+00 1.49e+06  -6.0 2.06e+04    -  3.44e-02 4.61e-04h  6
+ 136 -4.9828911e+03 6.09e+00 1.84e+06  -6.0 2.10e+04    -  3.32e-02 3.72e-04h  7
+ 137 -4.9828031e+03 6.09e+00 2.14e+06  -6.0 2.12e+04    -  2.35e-02 1.99e-04h  8
+ 138 -4.9710834e+03 5.86e+00 1.09e+07  -6.0 2.12e+04    -  5.21e-02 2.54e-02w  1
+ 139 -4.9717885e+03 5.86e+00 1.10e+07  -6.0 5.83e+05    -  7.81e-04 1.21e-04w  1
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 140 -4.9717885e+03 5.86e+00 1.10e+07  -6.0 1.04e+06    -  1.40e-06 3.28e-10w  1
+ 141 -4.9827115e+03 6.09e+00 3.00e+06  -6.0 1.08e+06    -  5.21e-02 1.98e-04h  7
+ 142 -4.9826046e+03 6.08e+00 3.26e+06  -6.0 2.10e+04    -  8.80e-03 1.98e-04h  8
+ 143 -4.9824915e+03 6.08e+00 4.13e+06  -6.0 2.10e+04    -  2.26e-02 1.97e-04h  8
+ 144 -4.9823587e+03 6.08e+00 4.34e+06  -6.0 2.09e+04    -  3.35e-03 1.96e-04h  8
+ 145 -4.9822263e+03 6.08e+00 6.51e+06  -6.0 2.10e+04    -  2.77e-02 1.89e-04h  8
+ 146 -4.9821582e+03 6.08e+00 6.72e+06  -6.0 2.86e+04    -  1.44e-03 7.52e-05h  9
+ 147 -4.9820887e+03 6.08e+00 8.30e+06  -6.0 3.03e+04    -  9.85e-03 7.51e-05h  9
+ 148 -4.9820484e+03 6.08e+00 8.55e+06  -6.0 4.19e+04    -  1.16e-03 3.80e-05h 10
+ 149 -4.9820075e+03 6.08e+00 1.16e+07  -6.0 4.39e+04    -  1.32e-02 3.78e-05h 10
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 150r-4.9820075e+03 6.08e+00 1.00e+03  -0.9 0.00e+00    -  0.00e+00 4.05e-07R 16
+ 151r-4.9820075e+03 6.08e+00 9.16e+03  -0.9 1.47e+02    -  1.62e-01 1.37e-05f  1
+ 152r-4.9820090e+03 6.06e+00 1.45e+04  -0.9 8.54e+01    -  7.97e-02 1.21e-03f  1
+ 153r-4.9821696e+03 4.38e+00 3.80e+04  -0.9 7.79e+01    -  5.04e-01 1.27e-01f  1
+ 154r-4.9827303e+03 2.84e+00 2.44e+04  -0.9 7.44e+01    -  2.20e-01 2.82e-01f  1
+ 155r-4.9841638e+03 2.04e+00 7.92e+03  -0.9 7.87e+01    -  4.05e-01 7.05e-01f  1
+ 156r-4.9860054e+03 5.27e-01 1.34e+04  -0.9 7.25e+01    -  5.42e-01 1.00e+00f  1
+ 157r-4.9871123e+03 8.52e-01 6.28e+03  -0.9 5.16e+01    -  6.46e-01 1.00e+00f  1
+ 158r-4.9871118e+03 1.83e+00 2.89e+03  -0.9 1.24e-01   0.0 5.13e-01 3.44e-01f  2
+ 159r-4.9871116e+03 2.20e+00 1.30e+03  -0.9 4.17e-02   1.3 5.60e-01 3.83e-01f  2
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 160r-4.9871114e+03 1.60e+00 1.03e+03  -0.9 5.51e-02   1.8 6.63e-01 3.32e-01h  1
+ 161r-4.9871770e+03 2.39e+00 1.89e+04  -0.9 5.83e+01    -  6.01e-01 9.76e-02f  2
+ 162r-4.9875674e+03 6.70e+00 1.95e+04  -0.9 6.10e+01    -  3.66e-01 6.16e-01f  1
+ 163r-4.9877925e+03 2.53e+00 3.43e+03  -0.9 2.30e+01    -  8.56e-01 1.00e+00f  1
+ 164r-4.9877136e+03 6.71e-01 7.40e+02  -0.9 1.27e+01    -  1.00e+00 1.00e+00h  1
+ 165r-4.9876275e+03 6.35e-01 4.25e+01  -0.9 1.44e+01    -  1.00e+00 1.00e+00h  1
+ 166 -4.9875711e+03 6.30e-01 1.28e+03  -6.0 5.53e+02    -  1.39e-01 7.01e-03h  5
+ 167 -4.9875010e+03 6.25e-01 2.65e+03  -6.0 5.10e+02    -  8.31e-02 7.98e-03h  5
+ 168 -4.9874320e+03 6.19e-01 4.08e+03  -6.0 4.95e+02    -  1.66e-01 8.52e-03h  5
+ 169 -4.9873844e+03 6.12e-01 5.76e+03  -6.0 5.11e+02    -  1.87e-01 9.40e-03h  5
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 170 -4.9873910e+03 6.04e-01 8.15e+03  -6.0 5.90e+02    -  2.01e-01 1.08e-02h  5
+ 171 -4.9889560e+03 5.97e-01 1.16e+06  -6.0 8.59e+02    -  2.44e-01 1.71e-01f  1
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 172 -4.9889559e+03 5.97e-01 1.16e+06  -6.0 2.27e+02   2.1 1.08e-02 1.14e-05h  2
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Evaluation error during soft restoration phase step.
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Evaluation error during soft restoration phase step.
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Evaluation error during soft restoration phase step.
+ 173r-4.9889559e+03 5.97e-01 1.00e+03  -0.2 0.00e+00   1.6 0.00e+00 2.55e-07R  7
+ 174r-4.9889560e+03 5.90e-01 2.39e+04  -0.2 1.09e+03    -  2.08e-02 1.27e-05f  1
+ 175r-4.9890696e+03 2.06e-01 2.72e+04  -0.2 2.28e+02    -  5.12e-02 2.18e-02f  1
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 176 -4.9890701e+03 2.05e-01 1.21e+02  -6.0 6.85e+02    -  3.07e-02 1.27e-04h  2
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 177 -4.9891007e+03 2.05e-01 9.54e+03  -6.0 1.71e+03    -  1.02e-01 6.48e-04f  2
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 178 -4.9904418e+03 1.91e-01 3.90e+04  -6.0 6.33e+03    -  7.97e-02 1.00e-02f  2
+ 179 -4.9964220e+03 2.01e+00 5.49e+05  -6.0 8.56e+03    -  8.96e-02 3.96e-02f  1
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 180 -4.9971145e+03 2.05e+00 5.55e+05  -6.0 1.70e+04    -  1.16e-02 3.42e-03f  2
+ 181 -4.9991859e+03 2.69e+00 2.88e+06  -6.0 2.10e+04    -  1.29e-01 9.53e-03f  1
+ 182 -4.9991936e+03 2.69e+00 1.01e+07  -6.0 4.24e+04    -  5.07e-02 4.25e-05h  1
+ 183 -4.9997757e+03 2.99e+00 2.53e+07  -6.0 4.08e+04    -  4.70e-02 3.38e-03f  1
+ 184 -4.9997516e+03 2.99e+00 3.45e+08  -6.0 3.94e+04    -  3.00e-02 2.69e-04h  1
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 185 -4.9997275e+03 2.99e+00 6.10e+09  -6.0 3.71e+04    -  3.98e-02 2.99e-04h  4
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 186 -4.9997064e+03 2.99e+00 1.16e+11  -6.0 3.77e+04    -  4.34e-02 2.27e-04h  4
+ 187 -4.9996694e+03 2.99e+00 2.70e+11  -6.0 3.22e+04    -  3.80e-02 3.43e-04h  3
+ 188 -4.9996407e+03 2.99e+00 4.86e+11  -6.0 3.15e+04    -  6.34e-02 2.82e-04h  3
+ 189 -4.9996181e+03 2.99e+00 4.86e+11  -6.0 3.15e+04    -  3.22e-02 2.33e-04h  3
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 190 -4.9995820e+03 2.98e+00 4.86e+11  -6.0 3.24e+04    -  7.37e-02 3.85e-04h  2
+ 191 -4.9995592e+03 2.98e+00 4.86e+11  -6.0 3.73e+04    -  2.48e-02 2.67e-04h  2
+ 192 -4.9995459e+03 2.98e+00 4.85e+11  -6.0 4.52e+04    -  8.00e-02 1.85e-04h  2
+ 193 -4.9995424e+03 2.98e+00 5.41e+11  -6.0 5.03e+04    -  1.73e-02 1.20e-04h  2
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 194 -4.9995452e+03 2.98e+00 3.19e+12  -6.0 4.93e+04    -  7.50e-02 7.28e-05h  2
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Evaluation error during soft restoration phase step.
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Evaluation error during soft restoration phase step.
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Evaluation error during soft restoration phase step.
+ 195r-4.9995452e+03 2.98e+00 1.00e+03   0.3 0.00e+00   7.4 0.00e+00 4.65e-07R  5
+ 196r-4.9995451e+03 2.97e+00 3.81e+04   0.3 7.19e+03    -  1.81e-02 4.21e-06f  1
+ 197r-4.9995507e+03 1.60e+00 4.01e+04   0.3 1.05e+03    -  4.05e-02 1.91e-02f  1
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 198 -4.9995493e+03 1.60e+00 7.02e+01  -6.0 7.71e+02    -  3.41e-02 2.43e-04h  2
+ 199 -4.9995527e+03 1.60e+00 5.45e+03  -6.0 1.53e+03    -  3.06e-02 2.29e-04h  1
+In iteration 199, 1 Slack too small, adjusting variable bound
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 200 -4.9995527e+03 1.60e+00 3.03e+04  -6.0 1.66e+04    -  5.85e-03 2.97e-07h  1
+ 201 -4.9995680e+03 1.60e+00 5.74e+04  -6.0 1.96e+04    -  4.96e-03 6.85e-05f  1
+In iteration 201, 1 Slack too small, adjusting variable bound
+ 202 -4.9995683e+03 1.60e+00 9.79e+04  -6.0 3.02e+04    -  3.19e-03 9.88e-07h  1
+ 203 -4.9997662e+03 1.60e+00 1.50e+05  -6.0 3.02e+04    -  3.22e-03 8.07e-04f  1
+ 204 -4.9997672e+03 1.60e+00 5.29e+05  -6.0 6.87e+03    -  5.71e-04 8.10e-05h  1
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 205 -4.9997688e+03 1.60e+00 1.53e+05  -6.0 6.74e+03    -  1.63e-10 8.26e-05f  2
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 206 -4.9998157e+03 1.60e+00 8.82e+06  -6.0 2.32e+05    -  3.52e-03 1.21e-04f  2
+ 207 -5.0009710e+03 1.14e+01 5.12e+06  -6.0 3.80e+05    -  7.51e-05 1.80e-03f  1
+ 208 -5.0009711e+03 1.14e+01 1.04e+10  -6.0 6.25e+03    -  4.83e-02 5.82e-06h  1
+In iteration 208, 1 Slack too small, adjusting variable bound
+ 209 -5.0009749e+03 1.14e+01 1.44e+12  -6.0 1.26e+04    -  7.22e-02 2.96e-05h  1
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 210 -5.0009744e+03 1.14e+01 1.10e+13  -6.0 3.48e+03    -  4.85e-02 1.51e-05h  2
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 211 -5.0009740e+03 1.14e+01 2.81e+13  -6.0 3.48e+03    -  6.02e-02 1.11e-05h  2
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Evaluation error during soft restoration phase step.
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Evaluation error during soft restoration phase step.
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Evaluation error during soft restoration phase step.
+ 212r-5.0009740e+03 1.14e+01 1.00e+03   1.0 0.00e+00    -  0.00e+00 2.68e-07R  7
+ 213r-5.0009740e+03 1.14e+01 5.26e+04   1.0 1.14e+04    -  1.05e-02 4.78e-07f  1
+ 214r-5.0009696e+03 1.20e+01 5.21e+04   1.0 9.89e+02    -  1.99e-02 1.15e-02f  1
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 215 -5.0009671e+03 1.20e+01 3.37e+01  -6.0 6.58e+03    -  7.32e-03 1.09e-04h  2
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 216 -5.0009447e+03 1.20e+01 1.81e+01  -6.0 1.47e+04    -  1.02e-06 1.49e-04h  2
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 217 -5.0009340e+03 1.20e+01 1.72e+01  -6.0 1.16e+04    -  7.41e-05 8.68e-05h  2
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 218 -5.0009254e+03 1.20e+01 5.94e+02  -6.0 1.03e+04    -  1.54e-03 5.91e-05h  2
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 219 -5.0008088e+03 1.20e+01 1.28e+02  -6.0 2.49e+04    -  2.82e-06 3.43e-04h  2
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 220 -5.0007580e+03 1.20e+01 5.18e+02  -6.0 2.35e+04    -  4.28e-04 1.56e-04h  2
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 221 -5.0006632e+03 1.20e+01 2.46e+03  -6.0 2.54e+04    -  1.05e-03 2.72e-04h  2
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 222 -5.0004376e+03 1.20e+01 6.44e+02  -6.0 2.62e+04    -  2.07e-04 6.29e-04h  2
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 223 -5.0002962e+03 1.20e+01 4.64e+03  -6.0 2.20e+04    -  1.47e-05 3.73e-04h  2
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 224 -5.0002853e+03 1.20e+01 5.39e+05  -6.0 1.89e+04    -  6.23e-03 3.26e-05h  2
+ 225 -4.9988577e+03 1.19e+01 5.14e+05  -6.0 2.23e+04    -  4.31e-04 3.71e-03w  1
+ 226 -4.9988574e+03 1.19e+01 5.48e+05  -6.0 2.82e+04    -  1.72e-03 3.31e-07w  1
+ 227 -4.9976949e+03 1.19e+01 6.16e+05  -6.0 2.85e+04    -  5.42e-03 1.84e-03w  1
+ 228 -4.9999284e+03 1.20e+01 5.35e+05  -6.0 7.26e+04    -  4.31e-04 9.28e-04h  2
+ 229 -4.9997921e+03 1.20e+01 5.70e+05  -6.0 2.19e+04    -  5.64e-03 3.57e-04h  4
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 230 -4.9997771e+03 1.20e+01 5.84e+05  -6.0 2.17e+04    -  2.24e-03 3.94e-05h  7
+ 231 -4.9997697e+03 1.20e+01 6.28e+05  -6.0 2.17e+04    -  6.79e-03 1.94e-05h  8
+ 232r-4.9997697e+03 1.20e+01 1.00e+03  -0.5 0.00e+00    -  0.00e+00 3.02e-07R 14
+ 233r-4.9997697e+03 1.20e+01 9.90e+02  -0.5 4.58e+03    -  1.01e-02 2.74e-06f  1
+ 234r-4.9997423e+03 1.16e+01 2.98e+03  -0.5 5.50e+02    -  3.38e-02 1.02e-02f  1
+ 235r-4.9997183e+03 1.03e+01 2.69e+03  -0.5 9.74e+01    -  4.34e-02 4.51e-02f  1
+ 236r-4.9997161e+03 7.77e+00 3.77e+04  -0.5 9.33e+01    -  4.64e-01 1.07e-01f  1
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 237 -4.9996103e+03 7.76e+00 9.88e+02  -6.0 9.14e+03    -  6.07e-03 5.34e-04h  2
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 238 -4.9994918e+03 7.76e+00 1.66e+04  -6.0 1.00e+04    -  6.93e-02 5.56e-04h  2
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 239 -4.9992496e+03 7.75e+00 1.75e+04  -6.0 1.17e+04    -  4.33e-03 1.00e-03h  4
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 240 -4.9990391e+03 7.74e+00 2.81e+04  -6.0 1.17e+04    -  3.50e-02 8.71e-04h  4
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 241 -4.9988116e+03 7.74e+00 2.93e+04  -6.0 1.18e+04    -  6.90e-03 9.34e-04h  5
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 242 -4.9985558e+03 7.73e+00 4.87e+04  -6.0 1.18e+04    -  1.08e-01 1.05e-03h  5
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 243 -4.9983818e+03 7.72e+00 4.90e+04  -6.0 1.18e+04    -  8.29e-03 7.10e-04h  8
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 244 -4.9981990e+03 7.72e+00 5.03e+04  -6.0 1.18e+04    -  3.04e-02 7.46e-04h  8
+ 245 -4.9979967e+03 7.71e+00 5.07e+04  -6.0 1.17e+04    -  1.27e-02 8.26e-04h  8
+ 246 -4.9977966e+03 7.70e+00 7.10e+04  -6.0 1.17e+04    -  1.10e-01 8.17e-04h  8
+ 247 -4.9725255e+03 2.90e+01 4.93e+06  -6.0 1.18e+04    -  1.16e-02 1.03e-01w  1
+ 248 -4.9725196e+03 2.90e+01 4.93e+06  -6.0 2.25e+04    -  3.57e-04 1.10e-05w  1
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 249 -4.9975992e+03 7.70e+00 7.37e+04  -6.0 2.26e+04    -  1.16e-02 8.06e-04h  7
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 250 -4.9973936e+03 7.69e+00 7.35e+04  -6.0 1.16e+04    -  6.35e-04 8.17e-04h  8
+ 251 -4.9971785e+03 7.68e+00 8.19e+04  -6.0 1.14e+04    -  3.55e-02 8.31e-04h  8
+ 252 -4.9969634e+03 7.68e+00 8.20e+04  -6.0 1.13e+04    -  1.46e-03 8.27e-04h  8
+ 253 -4.9967497e+03 7.67e+00 8.71e+04  -6.0 1.13e+04    -  2.21e-02 8.21e-04h  8
+ 254 -4.9965364e+03 7.66e+00 8.75e+04  -6.0 1.13e+04    -  3.09e-03 8.16e-04h  8
+ 255 -4.9963244e+03 7.66e+00 1.25e+05  -6.0 1.12e+04    -  1.51e-01 8.09e-04h  8
+ 256 -4.9961054e+03 7.65e+00 1.25e+05  -6.0 1.11e+04    -  3.60e-03 8.22e-04h  8
+ 257 -4.9958873e+03 7.64e+00 1.29e+05  -6.0 1.10e+04    -  1.93e-02 8.17e-04h  8
+ 258 -4.9956693e+03 7.64e+00 1.30e+05  -6.0 1.10e+04    -  6.12e-03 8.14e-04h  8
+ 259 -4.9678593e+03 2.54e+01 4.32e+06  -6.0 1.09e+04    -  1.59e-01 1.04e-01w  1
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 260 -4.9677331e+03 2.54e+01 4.32e+06  -6.0 2.68e+04    -  2.16e-03 1.72e-04w  1
+ 261 -4.9507300e+03 2.68e+01 8.65e+06  -6.0 2.72e+04    -  2.72e-03 2.29e-02w  1
+ 262 -4.9954520e+03 7.63e+00 1.64e+05  -6.0 1.83e+03   6.9 1.59e-01 8.09e-04h  7
+ 263 -4.9952212e+03 7.63e+00 1.65e+05  -6.0 1.06e+04    -  5.66e-03 8.42e-04h  8
+ 264 -4.9949908e+03 7.62e+00 1.69e+05  -6.0 1.06e+04    -  2.41e-02 8.38e-04h  8
+ 265 -4.9947588e+03 7.61e+00 1.71e+05  -6.0 1.05e+04    -  9.01e-03 8.40e-04h  8
+ 266 -4.9945267e+03 7.61e+00 2.06e+05  -6.0 1.04e+04    -  1.67e-01 8.37e-04h  8
+ 267 -4.9942703e+03 7.60e+00 2.07e+05  -6.0 9.92e+03    -  7.85e-03 9.01e-04h  8
+ 268 -4.9940133e+03 7.59e+00 2.14e+05  -6.0 9.87e+03    -  2.95e-02 9.00e-04h  8
+ 269 -4.9937513e+03 7.58e+00 2.17e+05  -6.0 9.74e+03    -  1.21e-02 9.11e-04h  8
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 270 -4.9934876e+03 7.58e+00 2.72e+05  -6.0 9.67e+03    -  1.85e-01 9.13e-04h  8
+ 271 -4.9932040e+03 7.57e+00 2.76e+05  -6.0 9.08e+03    -  1.04e-02 9.50e-04h  8
+ 272 -4.9569274e+03 3.42e+01 6.44e+06  -6.0 9.12e+03    -  3.58e-02 1.21e-01w  1
+ 273 -4.9569027e+03 3.42e+01 6.44e+06  -6.0 2.12e+05    -  7.96e-04 8.58e-06w  1
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 274 -4.9929206e+03 7.56e+00 2.94e+05  -6.0 2.55e+05    -  3.58e-02 9.44e-04h  7
+ 275 -4.9926361e+03 7.56e+00 3.03e+05  -6.0 9.22e+03    -  1.58e-02 9.39e-04h  8
+ 276 -4.9923516e+03 7.55e+00 4.39e+05  -6.0 9.27e+03    -  2.00e-01 9.34e-04h  8
+ 277 -4.9922046e+03 7.54e+00 4.58e+05  -6.0 1.15e+04    -  1.39e-02 4.65e-04h  9
+ 278 -4.9920574e+03 7.54e+00 5.33e+05  -6.0 1.18e+04    -  4.74e-02 4.63e-04h  9
+ 279 -4.9919091e+03 7.54e+00 5.72e+05  -6.0 1.25e+04    -  1.98e-02 4.62e-04h  9
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 280 -4.9917604e+03 7.53e+00 1.02e+06  -6.0 1.29e+04    -  1.89e-01 4.61e-04h  9
+ 281 -4.9916065e+03 7.53e+00 1.11e+06  -6.0 1.66e+04    -  1.90e-02 4.60e-04h  9
+ 282 -4.9914522e+03 7.53e+00 1.72e+06  -6.0 1.71e+04    -  1.03e-01 4.59e-04h  9
+ 283 -4.9912945e+03 7.52e+00 1.97e+06  -6.0 1.97e+04    -  2.53e-02 4.58e-04h  9
+ 284 -4.9506813e+03 9.21e+01 3.10e+07  -6.0 2.05e+04    -  1.63e-01 1.17e-01w  1
+ 285 -4.9496403e+03 9.33e+01 3.10e+07  -6.0 7.15e+05    -  2.60e-04 3.63e-04w  1
+ 286 -4.9496403e+03 9.33e+01 3.10e+07  -6.0 6.80e+05    -  1.00e-03 1.01e-09w  1
+ 287 -4.9911358e+03 7.52e+00 3.92e+06  -6.0 3.35e+05    -  1.63e-01 4.56e-04h  8
+ 288 -4.9910527e+03 7.52e+00 4.64e+06  -6.0 2.55e+04    -  2.87e-02 2.28e-04h 10
+ 289 -4.9909686e+03 7.52e+00 9.16e+06  -6.0 2.66e+04    -  1.49e-01 2.28e-04h 10
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 290 -4.9908732e+03 7.51e+00 9.85e+06  -6.0 3.29e+04    -  1.14e-02 2.29e-04h 10
+ 291 -4.9907767e+03 7.51e+00 1.24e+07  -6.0 3.37e+04    -  3.88e-02 2.25e-04h 10
+ 292 -4.9907369e+03 7.51e+00 1.27e+07  -6.0 3.79e+04    -  4.10e-03 7.68e-05h 11
+ 293 -4.9906981e+03 7.51e+00 1.40e+07  -6.0 3.82e+04    -  1.53e-02 7.42e-05h 11
+ 294 -4.9906618e+03 7.51e+00 1.44e+07  -6.0 3.93e+04    -  4.37e-03 6.74e-05h 11
+ 295 -4.9906263e+03 7.51e+00 1.95e+07  -6.0 3.96e+04    -  5.25e-02 6.51e-05h 11
+ 296 -4.9905982e+03 7.51e+00 1.98e+07  -6.0 4.27e+04    -  2.85e-03 4.72e-05h 11
+ 297 -4.9620750e+03 6.69e+01 3.85e+07  -6.0 4.27e+04    -  1.62e-02 4.77e-02w  1
+ 298 -4.9620750e+03 6.69e+01 3.85e+07  -6.0 2.57e+05    -  2.34e-04 1.53e-08w  1
+ 299 -4.9618016e+03 6.68e+01 3.85e+07  -6.0 1.75e+05    -  4.60e-04 2.56e-04w  1
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 300 -4.9905704e+03 7.51e+00 2.19e+07  -6.0 6.12e+04    -  1.62e-02 4.66e-05h 10
+ 301 -4.9905432e+03 7.51e+00 2.23e+07  -6.0 4.25e+04    -  3.20e-03 4.51e-05h 11
+ 302 -4.9905163e+03 7.51e+00 3.13e+07  -6.0 4.25e+04    -  7.06e-02 4.45e-05h 11
+ 303 -4.9905039e+03 7.51e+00 3.16e+07  -6.0 4.21e+04    -  2.54e-03 1.98e-05h 12
+ 304 -4.9904916e+03 7.51e+00 3.34e+07  -6.0 4.21e+04    -  1.26e-02 1.96e-05h 12
+ 305 -4.9904796e+03 7.51e+00 3.39e+07  -6.0 4.22e+04    -  2.99e-03 1.91e-05h 12
+ 306 -4.9904676e+03 7.51e+00 4.33e+07  -6.0 4.22e+04    -  6.38e-02 1.89e-05h 12
+ 307 -4.9904565e+03 7.51e+00 4.37e+07  -6.0 4.25e+04    -  2.30e-03 1.69e-05h 12
+ 308 -4.9904454e+03 7.51e+00 4.56e+07  -6.0 4.26e+04    -  1.14e-02 1.68e-05h 12
+ 309r-4.9904454e+03 7.51e+00 1.00e+03  -0.8 0.00e+00    -  0.00e+00 2.60e-07R 18
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 310r-4.9904461e+03 7.50e+00 1.35e+04  -0.8 1.70e+02    -  2.25e-01 4.26e-04f  1
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 311 -4.9904423e+03 7.50e+00 2.17e+05  -6.0 2.49e+03    -  2.78e-02 7.35e-05h  2
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 312 -4.9904141e+03 7.49e+00 4.37e+05  -6.0 8.36e+03    -  7.41e-05 1.49e-04h  2
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 313 -4.9903961e+03 7.49e+00 4.37e+05  -6.0 8.11e+03    -  4.60e-04 9.79e-05h  2
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 314 -4.9903518e+03 7.49e+00 4.37e+05  -6.0 1.04e+04    -  6.36e-04 1.91e-04h  2
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 315 -4.9902717e+03 7.49e+00 4.37e+05  -6.0 1.12e+04    -  5.58e-03 3.22e-04h  2
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 316 -4.9901095e+03 7.49e+00 4.36e+05  -6.0 1.18e+04    -  9.18e-04 6.21e-04h  4
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 317 -4.9899413e+03 7.48e+00 4.36e+05  -6.0 1.18e+04    -  3.44e-02 6.42e-04h  4
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 318 -4.9897609e+03 7.48e+00 4.36e+05  -6.0 1.18e+04    -  2.19e-03 6.81e-04h  7
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 319 -4.9895765e+03 7.47e+00 4.36e+05  -6.0 1.18e+04    -  2.20e-02 6.93e-04h  7
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 320 -4.9893020e+03 7.46e+00 4.35e+05  -6.0 1.18e+04    -  3.96e-03 1.02e-03h  7
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 321 -4.9891613e+03 7.46e+00 4.42e+05  -6.0 1.18e+04    -  3.78e-02 5.21e-04h  7
+ 322 -4.9890834e+03 7.46e+00 4.64e+05  -6.0 1.18e+04    -  5.68e-03 2.86e-04h  9
+ 323 -4.9890639e+03 7.46e+00 6.10e+05  -6.0 1.18e+04    -  3.67e-02 7.10e-05h 11
+ 324r-4.9890639e+03 7.46e+00 1.00e+03  -1.1 0.00e+00    -  0.00e+00 2.77e-07R 19
+ 325r-4.9890640e+03 7.46e+00 1.00e+03  -1.1 2.63e+02    -  5.36e-03 9.13e-06f  1
+ 326r-4.9890735e+03 7.13e+00 8.34e+03  -1.1 1.65e+02    -  2.43e-01 6.36e-03f  1
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 327 -4.9890724e+03 7.13e+00 6.35e+02  -6.0 2.46e+03    -  2.80e-02 2.20e-05h  2
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 328 -4.9890670e+03 7.13e+00 1.50e+05  -6.0 1.09e+04    -  4.08e-02 2.17e-05h  4
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Evaluation error during soft restoration phase step.
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Evaluation error during soft restoration phase step.
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Evaluation error during soft restoration phase step.
+ 329r-4.9890670e+03 7.13e+00 1.00e+03  -1.9 0.00e+00    -  0.00e+00 2.67e-07R 18
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 330r-4.9890671e+03 7.12e+00 1.00e+03  -1.9 8.10e+02    -  1.58e-02 3.20e-05f  1
+ 331r-4.9890974e+03 5.02e+00 9.97e+02  -1.9 2.75e+02    -  4.72e-03 1.05e-02f  1
+ 332r-4.9891111e+03 4.37e+00 9.87e+02  -1.9 1.36e+02    -  1.00e-02 5.28e-03f  1
+ 333r-4.9891242e+03 3.86e+00 9.77e+02  -1.9 9.97e+01    -  1.63e-02 5.80e-03f  1
+ 334r-4.9891497e+03 3.03e+00 9.62e+02  -1.9 7.27e+01    -  1.72e-02 1.45e-02f  1
+ 335r-4.9891633e+03 2.64e+00 1.18e+03  -1.9 7.56e+01    -  2.20e-02 1.07e-02f  1
+ 336r-4.9892022e+03 1.62e+00 9.15e+02  -1.9 6.63e+01    -  2.02e-02 4.09e-02f  1
+ 337r-4.9892129e+03 1.37e+00 2.80e+03  -1.9 6.86e+01    -  7.42e-02 1.94e-02f  1
+ 338r-4.9892270e+03 1.19e+00 4.38e+03  -1.9 6.35e+01    -  7.69e-02 4.00e-02f  1
+ 339r-4.9892577e+03 1.34e+00 2.25e+03  -1.9 5.39e+01    -  4.42e-02 8.50e-02f  1
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 340r-4.9892761e+03 1.32e+00 6.00e+03  -1.9 3.76e+01    -  1.23e-01 4.94e-02f  1
+ 341r-4.9893078e+03 1.28e+00 4.26e+03  -1.9 3.81e+01    -  4.25e-02 6.62e-02f  1
+ 342r-4.9893583e+03 1.23e+00 6.40e+03  -1.9 4.30e+01    -  1.38e-01 9.37e-02f  1
+ 343r-4.9894104e+03 1.16e+00 5.62e+03  -1.9 4.54e+01    -  9.15e-02 9.48e-02f  1
+ 344r-4.9894918e+03 1.07e+00 6.45e+03  -1.9 4.60e+01    -  1.65e-01 1.37e-01f  1
+ 345r-4.9895682e+03 9.71e-01 1.37e+04  -1.9 4.31e+01    -  2.78e-01 1.25e-01f  1
+ 346r-4.9897277e+03 8.36e-01 1.21e+04  -1.9 4.06e+01    -  2.47e-01 2.14e-01f  1
+ 347r-4.9898792e+03 7.15e-01 1.05e+04  -1.9 3.23e+01    -  1.97e-01 1.80e-01f  1
+ 348r-4.9900172e+03 6.29e-01 1.12e+04  -1.9 3.35e+01    -  2.28e-01 1.44e-01f  1
+ 349r-4.9901853e+03 5.45e-01 1.15e+04  -1.9 3.57e+01    -  2.72e-01 1.67e-01f  1
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 350r-4.9904557e+03 4.55e-01 9.15e+03  -1.9 3.84e+01    -  2.81e-01 2.51e-01f  1
+ 351r-4.9905662e+03 4.86e-01 8.78e+03  -1.9 3.84e+01    -  1.54e-01 1.07e-01f  1
+ 352r-4.9907010e+03 6.38e-01 7.26e+03  -1.9 4.02e+01    -  1.31e-01 1.50e-01f  1
+ 353r-4.9911658e+03 9.71e-01 3.76e+03  -1.9 3.86e+01    -  4.45e-01 4.62e-01f  1
+ 354r-4.9913624e+03 7.59e-01 5.09e+03  -1.9 3.60e+01    -  6.92e-01 2.18e-01f  1
+ 355r-4.9919713e+03 3.00e-01 2.14e+03  -1.9 4.30e+01    -  8.10e-01 6.50e-01f  1
+ 356r-4.9921710e+03 1.72e-01 1.26e+03  -1.9 1.81e+01    -  1.72e-01 4.29e-01f  1
+ 357r-4.9924335e+03 1.84e-02 6.07e+01  -1.9 9.78e+00    -  6.60e-01 1.00e+00f  1
+ 358r-4.9924335e+03 1.84e-02 9.99e+02  -2.5 0.00e+00    -  0.00e+00 3.14e-07R 17
+ 359r-4.9924336e+03 1.80e-02 4.28e+03  -2.5 2.86e+01    -  1.75e-01 1.00e-03f  1
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 360 -4.9935917e+03 2.09e-01 8.30e+01  -6.0 3.31e+04    -  1.21e-02 3.42e-03f  1
+ 361 -4.9954121e+03 7.86e-01 2.25e+02  -6.0 3.31e+04    -  4.29e-02 5.71e-03f  1
+ 362 -4.9972324e+03 1.42e+00 4.03e+02  -6.0 2.71e+04    -  4.58e-02 7.36e-03f  2
+ 363 -4.9980681e+03 1.45e+00 5.00e+02  -6.0 1.46e+04    -  6.24e-02 6.49e-03f  2
+ 364 -4.9986414e+03 1.45e+00 6.87e+02  -6.0 1.58e+04    -  1.92e-02 6.02e-03f  1
+ 365 -4.9989091e+03 1.44e+00 6.88e+02  -6.0 1.31e+04    -  4.25e-02 3.85e-03f  3
+ 366 -4.9998028e+03 1.43e+00 2.41e+03  -6.0 1.23e+04    -  2.26e-02 1.23e-02f  1
+ 367 -5.0005424e+03 1.74e+00 4.33e+03  -6.0 1.77e+04    -  8.42e-03 7.31e-03f  1
+ 368 -5.0005051e+03 1.74e+00 4.33e+03  -6.0 1.38e+04    -  6.23e-02 8.91e-04h  2
+ 369 -5.0004679e+03 1.74e+00 4.35e+03  -6.0 1.53e+04    -  9.06e-03 8.04e-04h  1
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 370 -5.0004516e+03 1.74e+00 4.35e+03  -6.0 3.22e+04    -  1.80e-02 2.00e-04h  6
+ 371 -5.0004337e+03 1.74e+00 4.35e+03  -6.0 3.24e+04    -  2.30e-02 1.91e-04h  6
+ 372 -5.0004099e+03 1.74e+00 4.34e+03  -6.0 3.15e+04    -  9.79e-05 2.41e-04h  6
+ 373 -5.0003717e+03 1.74e+00 4.35e+03  -6.0 3.13e+04    -  3.66e-05 3.54e-04h  6
+ 374 -5.0003324e+03 1.74e+00 4.35e+03  -6.0 3.10e+04    -  7.84e-03 3.56e-04h  6
+ 375 -5.0002872e+03 1.73e+00 4.35e+03  -6.0 3.00e+04    -  3.88e-04 3.83e-04h  6
+ 376 -5.0002428e+03 1.73e+00 4.35e+03  -6.0 2.97e+04    -  3.23e-03 3.75e-04h  6
+ 377 -5.0001989e+03 1.73e+00 4.35e+03  -6.0 2.90e+04    -  1.41e-03 3.71e-04h  6
+ 378 -5.0001557e+03 1.73e+00 4.35e+03  -6.0 2.86e+04    -  1.10e-02 3.65e-04h  6
+ 379 -5.0001126e+03 1.73e+00 4.36e+03  -6.0 2.76e+04    -  1.89e-03 3.66e-04h  6
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 380 -4.9987808e+03 3.06e+00 1.85e+05  -6.0 2.72e+04    -  1.09e-02 1.15e-02w  1
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 381 -5.0000710e+03 1.73e+00 4.37e+03  -6.0 1.45e+04    -  1.09e-02 3.60e-04h  5
+ 382 -5.0000316e+03 1.73e+00 4.39e+03  -6.0 2.64e+04    -  3.84e-03 3.59e-04h  6
+ 383 -4.9999940e+03 1.73e+00 4.41e+03  -6.0 2.60e+04    -  2.62e-02 3.53e-04h  6
+ 384 -4.9999603e+03 1.73e+00 5.44e+03  -6.0 2.54e+04    -  6.79e-03 3.35e-04h  6
+ 385 -4.9999008e+03 1.73e+00 1.96e+04  -6.0 2.51e+04    -  3.05e-02 6.10e-04h  5
+ 386 -4.9998479e+03 1.73e+00 4.20e+04  -6.0 2.46e+04    -  1.28e-02 5.51e-04h  5
+ 387 -4.9997993e+03 1.73e+00 2.65e+05  -6.0 2.42e+04    -  5.46e-02 5.09e-04h  5
+ 388 -4.9997930e+03 1.73e+00 5.27e+05  -6.0 2.40e+04    -  9.73e-03 6.42e-05h  8
+ 389 -4.9997898e+03 1.73e+00 2.30e+06  -6.0 2.40e+04    -  3.28e-02 3.26e-05h  9
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 390r-4.9997898e+03 1.73e+00 1.00e+03   0.2 0.00e+00    -  0.00e+00 2.73e-07R 16
+ 391r-4.9997898e+03 1.72e+00 1.01e+03   0.2 4.03e+04    -  1.16e-05 3.86e-06f  1
+ 392r-4.9997901e+03 1.69e+00 1.00e+03   0.2 4.00e+04    -  1.30e-07 3.07e-05f  1
+ 393r-4.9997903e+03 1.66e+00 5.01e+03   0.2 3.99e+04    -  4.08e-04 3.07e-05f  1
+ 394r-4.9997928e+03 9.33e-01 1.66e+04   0.2 3.45e+04    -  2.32e-03 7.48e-04f  1
+ 395 -4.9998080e+03 9.32e-01 6.72e+03  -6.0 8.81e+03    -  3.43e-07 8.77e-04h  1
+ 396r-4.9998080e+03 9.32e-01 9.99e+02  -0.0 0.00e+00    -  0.00e+00 4.09e-07R  4
+ 397r-4.9998080e+03 9.32e-01 9.99e+02  -0.0 1.66e+04    -  2.42e-06 6.74e-08f  2
+ 398r-4.9998079e+03 9.27e-01 9.99e+02  -0.0 1.66e+04    -  1.37e-04 8.51e-06f  1
+ 399r-4.9998063e+03 7.74e-01 9.99e+02  -0.0 1.56e+04    -  9.12e-05 2.80e-04f  1
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 400 -4.9998345e+03 7.76e-01 3.41e+04  -6.0 9.18e+03    -  2.98e-03 1.54e-03h  1
+ 401r-4.9998345e+03 7.76e-01 9.99e+02  -0.1 0.00e+00    -  0.00e+00 1.19e-09R  2
+ 402r-4.9998345e+03 7.76e-01 4.29e+03  -0.1 6.50e+06    -  4.36e-07 6.23e-08f  1
+ 403r-4.9998345e+03 7.75e-01 4.29e+03  -0.1 1.43e+04    -  3.30e-04 1.07e-06f  1
+ 404r-4.9998338e+03 6.12e-01 2.02e+04  -0.1 1.22e+04    -  6.68e-03 3.95e-04f  1
+ 405 -4.9998524e+03 6.29e-01 1.81e+05  -6.0 8.65e+03    -  4.42e-03 4.25e-03h  1
+ 406 -4.9998390e+03 6.29e-01 1.82e+05  -6.0 3.99e+03    -  4.26e-03 3.74e-04h  6
+ 407 -4.9998354e+03 6.29e-01 1.82e+05  -6.0 3.82e+03    -  1.13e-02 1.00e-04h  8
+ 408 -4.9998345e+03 6.29e-01 1.82e+05  -6.0 4.04e+03    -  8.03e-03 2.61e-05h 10
+ 409 -4.9998341e+03 6.29e-01 1.82e+05  -6.0 4.52e+03    -  2.26e-02 1.35e-05h 11
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 410r-4.9998341e+03 6.29e-01 9.99e+02  -0.2 0.00e+00    -  0.00e+00 4.73e-07R 16
+ 411r-4.9998341e+03 6.29e-01 1.73e+04  -0.2 1.01e+04    -  7.65e-03 3.36e-07f  2
+ 412r-4.9998371e+03 1.89e-01 2.96e+04  -0.2 1.50e+03    -  1.74e-02 7.41e-03f  1
+ 413 -4.9998374e+03 1.89e-01 3.23e+02  -6.0 1.20e+04    -  3.92e-02 4.08e-06h  1
+ 414 -5.0005579e+03 7.84e-01 9.40e+06  -6.0 1.16e+04    -  1.40e-02 1.57e-02f  1
+ 415 -5.0005257e+03 7.84e-01 9.40e+06  -6.0 2.81e+04    -  1.89e-03 1.62e-04h  8
+ 416 -5.0004935e+03 7.84e-01 9.39e+06  -6.0 2.87e+04    -  2.31e-03 1.61e-04h  8
+ 417 -5.0004613e+03 7.85e-01 9.39e+06  -6.0 2.95e+04    -  2.78e-03 1.59e-04h  8
+ 418 -5.0004295e+03 7.85e-01 9.39e+06  -6.0 3.08e+04    -  2.55e-03 1.58e-04h  8
+ 419 -5.0004060e+03 7.85e-01 9.39e+06  -6.0 4.02e+04    -  2.38e-09 8.73e-05h  9
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 420r-5.0004060e+03 7.85e-01 9.99e+02  -0.1 0.00e+00   7.4 0.00e+00 1.75e-07R  2
+ 421r-5.0004060e+03 7.85e-01 1.96e+04  -0.1 1.05e+04    -  9.38e-03 1.29e-06f  2
+ 422r-5.0004068e+03 1.56e-01 3.02e+04  -0.1 1.01e+03    -  1.84e-02 8.49e-03f  1
+ 423 -5.0004077e+03 1.56e-01 2.50e+03  -6.0 4.11e+03    -  7.69e-02 3.04e-05h  1
+ 424 -5.0004454e+03 1.57e-01 6.82e+04  -6.0 2.98e+03    -  6.51e-02 4.80e-03h  1
+ 425 -5.0006803e+03 1.94e-01 9.51e+05  -6.0 3.34e+03    -  1.18e-06 1.63e-02f  1
+ 426 -5.0008792e+03 2.69e-01 2.66e+06  -6.0 4.97e+03    -  2.09e-03 1.04e-02f  1
+ 427 -5.0008627e+03 2.69e-01 2.66e+06  -6.0 3.77e+04    -  3.27e-08 9.13e-05h  5
+ 428 -5.0008471e+03 2.69e-01 2.66e+06  -6.0 3.89e+04    -  3.48e-03 8.22e-05h  5
+ 429 -5.0008174e+03 2.69e-01 2.66e+06  -6.0 3.68e+04    -  1.85e-04 1.63e-04h  4
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 430 -5.0007918e+03 2.69e-01 2.66e+06  -6.0 3.58e+04    -  5.49e-03 1.46e-04h  4
+ 431 -5.0007691e+03 2.69e-01 2.66e+06  -6.0 3.33e+04    -  5.75e-04 1.37e-04h  4
+ 432 -5.0007494e+03 2.69e-01 2.66e+06  -6.0 3.26e+04    -  7.01e-03 1.22e-04h  4
+ 433 -5.0007150e+03 2.69e-01 2.66e+06  -6.0 3.06e+04    -  9.64e-04 2.29e-04h  3
+ 434 -5.0006895e+03 2.69e-01 2.66e+06  -6.0 2.95e+04    -  9.33e-03 1.77e-04h  3
+ 435 -5.0006551e+03 2.69e-01 2.66e+06  -6.0 2.53e+04    -  1.77e-03 3.15e-04h  2
+ 436 -5.0006460e+03 2.69e-01 2.66e+06  -6.0 1.62e+04    -  2.89e-02 5.51e-04h  1
+ 437 -5.0011435e+03 3.94e-01 2.78e+06  -6.0 1.60e+04    -  1.94e-02 5.32e-03f  1
+ 438r-5.0011435e+03 3.94e-01 1.00e+03  -0.5 0.00e+00    -  0.00e+00 4.32e-09R  2
+ 439r-5.0011434e+03 3.93e-01 1.00e+03  -0.5 2.90e+03    -  4.46e-06 3.58e-06f  1
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 440r-5.0011434e+03 3.88e-01 2.55e+03  -0.5 8.31e+02    -  3.65e-03 1.22e-05f  1
+ 441r-5.0011435e+03 8.97e-02 1.26e+04  -0.5 2.03e+02    -  2.04e-02 4.65e-03f  1
+ 442 -5.0011443e+03 8.97e-02 2.71e+02  -6.0 9.10e+03    -  1.87e-02 1.36e-05h  1
+ 443 -5.0011273e+03 8.96e-02 2.06e+03  -6.0 4.19e+03    -  1.47e-02 1.98e-03h  5
+ 444 -5.0011095e+03 8.96e-02 4.04e+03  -6.0 4.15e+03    -  1.49e-02 2.23e-03h  4
+ 445 -5.0010959e+03 8.95e-02 7.09e+03  -6.0 4.10e+03    -  2.15e-02 1.71e-03h  5
+ 446 -5.0010847e+03 8.94e-02 1.36e+04  -6.0 4.07e+03    -  4.20e-02 1.55e-03h  5
+ 447 -5.0010732e+03 8.94e-02 2.08e+04  -6.0 4.04e+03    -  3.89e-02 1.51e-03h  5
+ 448 -5.0010345e+03 8.93e-02 2.57e+04  -6.0 4.01e+03    -  2.38e-02 3.22e-03h  4
+ 449 -5.0009908e+03 8.91e-02 4.28e+04  -6.0 3.95e+03    -  6.63e-02 2.81e-03h  4
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 450 -5.0009478e+03 8.90e-02 5.06e+04  -6.0 3.90e+03    -  1.96e-02 2.49e-03h  4
+ 451 -5.0008687e+03 8.88e-02 9.22e+04  -6.0 3.85e+03    -  7.53e-02 4.49e-03h  3
+ 452 -5.0008057e+03 8.85e-02 1.15e+05  -6.0 3.77e+03    -  1.99e-02 3.65e-03h  3
+ 453 -5.0006005e+03 9.62e-02 1.05e+06  -6.0 3.70e+03    -  5.68e-02 1.21e-02w  1
+ 454 -5.0006005e+03 9.62e-02 1.05e+06  -6.0 3.50e+03    -  1.83e-02 5.51e-08w  1
+ 455 -5.0006109e+03 9.62e-02 3.64e+07  -6.0 3.77e+04    -  1.70e-02 5.10e-05w  1
+ 456 -5.0007544e+03 8.84e-02 2.32e+05  -6.0 3.70e+04    -  5.68e-02 3.02e-03h  2
+ 457 -5.0006718e+03 8.82e-02 5.87e+05  -6.0 3.65e+03    -  2.38e-02 5.07e-03h  2
+ 458 -5.0006163e+03 8.80e-02 9.89e+05  -6.0 3.57e+03    -  4.42e-02 3.36e-03h  2
+ 459 -5.0005386e+03 8.78e-02 3.25e+06  -6.0 3.51e+03    -  2.89e-02 4.55e-03h  1
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 460r-5.0005386e+03 8.78e-02 1.00e+03  -1.3 0.00e+00    -  0.00e+00 9.68e-09R  2
+ 461r-5.0005384e+03 8.77e-02 2.48e+03  -1.3 2.68e+02    -  2.57e-02 3.47e-04f  1
+ 462r-5.0005384e+03 8.77e-02 9.99e+02  -1.5 0.00e+00    -  0.00e+00 4.77e-07R  4
+ 463r-5.0005384e+03 8.77e-02 2.03e+03  -1.5 2.32e+02    -  3.05e-03 1.30e-06f  1
+ 464r-5.0005363e+03 8.73e-02 1.90e+03  -1.5 1.01e+02    -  1.88e-03 4.05e-03f  1
+ 465 -5.0005362e+03 8.73e-02 1.74e+02  -6.0 1.22e+03    -  1.92e-02 1.33e-04h  1
+ 466 -5.0005495e+03 8.73e-02 1.29e+05  -6.0 3.20e+04    -  4.54e-02 5.25e-05f  1
+ 467 -5.0006086e+03 8.73e-02 6.91e+05  -6.0 4.08e+04    -  7.49e-02 2.20e-04f  1
+ 468 -5.0006086e+03 8.73e-02 2.38e+07  -6.0 3.78e+04    -  2.12e-02 2.17e-08h  2
+ 469 -5.0006432e+03 8.82e-02 1.49e+09  -6.0 3.69e+04    -  3.28e-02 5.12e-04f  1
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 470r-5.0006432e+03 8.82e-02 1.00e+03  -2.0 0.00e+00    -  0.00e+00 2.73e-07R  6
+ 471r-5.0006432e+03 8.82e-02 9.92e+02  -2.0 1.27e+02    -  3.42e-02 9.67e-05f  1
+ 472r-5.0006431e+03 8.14e-02 2.04e+03  -2.0 3.86e+01    -  7.28e-02 3.52e-02f  1
+ 473r-5.0006431e+03 8.14e-02 9.99e+02  -2.2 0.00e+00    -  0.00e+00 3.16e-07R  5
+ 474r-5.0006431e+03 8.13e-02 9.99e+02  -2.2 4.01e+01    -  1.89e-02 1.74e-05f  1
+ 475r-5.0006421e+03 7.71e-02 9.87e+02  -2.2 3.17e+01    -  1.22e-02 1.99e-02f  1
+ 476 -5.0006445e+03 7.71e-02 8.31e+01  -6.0 3.80e+03    -  9.25e-03 1.06e-04h  1
+ 477 -5.0006505e+03 7.71e-02 2.67e+05  -6.0 4.80e+04    -  6.39e-02 2.06e-05f  1
+ 478 -5.0007225e+03 7.71e-02 1.25e+06  -6.0 4.86e+04    -  6.42e-02 2.44e-04f  1
+ 479r-5.0007225e+03 7.71e-02 1.00e+03  -2.8 0.00e+00    -  0.00e+00 3.40e-10R  2
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 480r-5.0007225e+03 7.63e-02 9.99e+02  -2.8 9.33e+01    -  2.96e-02 1.00e-03f  1
+ 481 -5.0007225e+03 7.63e-02 5.77e+05  -6.0 1.12e+04    -  1.08e-02 1.17e-08h  2
+ 482r-5.0007225e+03 7.63e-02 1.00e+03  -3.2 0.00e+00    -  0.00e+00 2.61e-07R  4
+ 483r-5.0007225e+03 7.51e-02 9.99e+02  -3.2 1.36e+02    -  1.62e-02 6.31e-04f  1
+ 484r-5.0007225e+03 7.09e-02 9.96e+02  -3.2 7.49e+01    -  1.43e-02 3.24e-03f  1
+ 485r-5.0007225e+03 5.82e-02 9.83e+02  -3.2 7.08e+01    -  1.54e-02 1.29e-02f  1
+ 486r-5.0007225e+03 5.04e-02 1.03e+03  -3.2 6.24e+01    -  4.05e-02 1.24e-02f  1
+ 487r-5.0007225e+03 4.40e-02 9.79e+02  -3.2 5.26e+01    -  1.19e-03 2.61e-02f  1
+ 488r-5.0007225e+03 4.17e-02 2.13e+03  -3.2 4.70e+01    -  7.18e-02 1.12e-02f  1
+ 489r-5.0007225e+03 3.51e-02 1.60e+03  -3.2 4.47e+01    -  2.88e-02 4.27e-02f  1
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 490r-5.0007225e+03 3.35e-02 4.11e+03  -3.2 5.53e+01    -  6.93e-02 1.40e-02f  1
+ 491r-5.0007225e+03 3.06e-02 4.25e+03  -3.2 6.05e+01    -  4.02e-02 3.10e-02f  1
+ 492r-5.0007225e+03 2.93e-02 4.20e+03  -3.2 8.15e+01    -  1.82e-02 1.63e-02f  1
+ 493r-5.0007225e+03 2.73e-02 4.09e+03  -3.2 8.76e+01    -  3.06e-02 2.61e-02f  1
+ 494r-5.0007225e+03 2.63e-02 4.25e+03  -3.2 1.11e+02    -  3.49e-02 1.56e-02f  1
+ 495r-5.0007225e+03 2.45e-02 4.38e+03  -3.2 1.06e+02    -  4.01e-02 3.19e-02f  1
+ 496r-5.0007225e+03 2.45e-02 4.42e+03  -3.2 1.27e+02    -  2.02e-02 1.66e-02f  1
+ 497r-5.0007225e+03 2.80e-02 5.08e+03  -3.2 1.34e+02    -  4.41e-02 2.07e-02f  1
+ 498r-5.0007225e+03 3.11e-02 6.25e+03  -3.2 1.38e+02    -  5.73e-02 1.74e-02f  1
+ 499r-5.0007226e+03 3.38e-02 8.40e+03  -3.2 1.20e+02    -  9.36e-02 1.95e-02f  1
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 500r-5.0007226e+03 3.47e-02 9.74e+03  -3.2 6.37e+01    -  7.57e-02 2.27e-02f  1
+ 501r-5.0007226e+03 3.59e-02 1.05e+04  -3.2 4.48e+01    -  8.08e-02 4.02e-02f  1
+ 502r-5.0007226e+03 3.58e-02 1.12e+04  -3.2 4.34e+01    -  6.62e-02 2.72e-02f  1
+ 503r-5.0007226e+03 3.53e-02 1.05e+04  -3.2 4.93e+01    -  4.20e-02 4.76e-02f  1
+ 504r-5.0007226e+03 4.15e-02 1.07e+04  -3.2 5.17e+01    -  9.00e-02 5.78e-02f  1
+ 505r-5.0007226e+03 6.32e-02 1.10e+04  -3.2 5.29e+01    -  1.51e-01 9.26e-02f  1
+ 506r-5.0007226e+03 6.25e-02 1.19e+04  -3.2 4.79e+01    -  6.22e-02 1.18e-02f  1
+ 507r-5.0007226e+03 7.33e-02 1.05e+04  -3.2 3.39e+01    -  1.20e-01 1.17e-01f  1
+ 508r-5.0007226e+03 7.23e-02 1.52e+04  -3.2 3.06e+01    -  2.97e-01 1.66e-02f  1
+ 509r-5.0007226e+03 6.93e-02 1.44e+04  -3.2 3.85e+01    -  1.79e-01 1.10e-01f  1
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 510r-5.0007226e+03 6.50e-02 1.57e+04  -3.2 4.66e+01    -  4.20e-01 1.32e-01f  1
+ 511r-5.0007226e+03 6.11e-02 1.22e+04  -3.2 8.83e+01    -  4.02e-02 1.66e-01f  1
+ 512r-5.0007226e+03 6.69e-02 1.14e+04  -3.2 8.51e+01    -  2.40e-01 1.29e-01f  1
+ 513r-5.0007226e+03 6.92e-02 1.04e+04  -3.2 9.02e+01    -  1.26e-01 9.63e-02f  1
+ 514r-5.0007226e+03 6.88e-02 9.15e+03  -3.2 8.32e+01    -  8.69e-02 1.12e-01f  1
+ 515r-5.0007227e+03 7.27e-02 8.04e+03  -3.2 8.75e+01    -  4.49e-02 9.73e-02f  1
+ 516r-5.0007227e+03 7.40e-02 8.24e+03  -3.2 1.52e+02    -  1.36e-01 2.86e-02f  1
+ 517r-5.0007228e+03 7.56e-02 8.75e+03  -3.2 1.15e+02    -  3.94e-01 8.00e-02f  1
+ 518r-5.0007228e+03 7.41e-02 1.36e+04  -3.2 1.42e+02    -  8.00e-01 2.08e-02f  1
+ 519r-5.0007228e+03 1.71e-01 1.36e+04  -3.2 1.20e+01  -2.0 7.75e-02 1.06e-02f  1
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 520r-5.0007247e+03 1.81e-01 1.08e+04  -3.2 1.89e+02    -  4.35e-01 2.54e-01f  1
+ 521r-5.0007275e+03 6.87e-01 7.66e+03  -3.2 1.72e+02    -  1.66e-01 2.62e-01f  1
+ 522r-5.0007308e+03 5.29e-01 6.77e+03  -3.2 1.09e+02    -  7.29e-01 2.43e-01f  1
+ 523r-5.0007624e+03 1.81e-01 1.40e+03  -3.2 8.45e+01    -  2.67e-01 7.36e-01f  1
+ 524r-5.0007995e+03 1.71e-02 4.29e+02  -3.2 1.69e+01    -  4.96e-01 9.55e-01f  1
+ 525r-5.0007995e+03 1.71e-02 4.87e+03  -3.2 5.76e-03   9.8 1.22e-04 1.21e-04h  1
+ 526r-5.0007995e+03 1.71e-02 1.42e+04  -3.2 9.69e-03   9.4 4.63e-04 4.15e-04h  1
+ 527r-5.0007995e+03 1.71e-02 2.58e+04  -3.2 9.84e-03   8.9 7.99e-04 1.52e-03h  1
+ 528r-5.0007995e+03 1.70e-02 4.40e+04  -3.2 9.81e-03   8.4 2.02e-03 7.23e-03h  1
+ 529r-5.0007995e+03 1.68e-02 6.98e+04  -3.2 9.72e-03   7.9 8.43e-03 3.24e-02h  1
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 530r-5.0007995e+03 1.55e-02 1.06e+05  -3.2 9.40e-03   7.5 3.18e-02 1.82e-01h  1
+ 531r-5.0007995e+03 9.83e-03 7.38e+04  -3.2 7.68e-03   7.0 1.54e-01 9.94e-01h  1
+ 532r-5.0007995e+03 9.79e-03 4.34e+04  -3.2 2.21e-04   6.5 1.00e+00 4.13e-01f  1
+ 533r-5.0007995e+03 9.77e-03 3.73e+04  -3.2 6.33e-04   6.0 8.19e-01 1.41e-01f  1
+ 534r-5.0007995e+03 9.74e-03 3.51e+04  -3.2 1.88e-03   5.6 7.21e-01 6.07e-02f  1
+ 535r-5.0007995e+03 9.63e-03 3.23e+04  -3.2 5.63e-03   5.1 4.05e-01 7.83e-02f  1
+ 536r-5.0007995e+03 9.46e-03 3.11e+04  -3.2 1.69e-02   4.6 4.66e-01 3.91e-02f  1
+ 537r-5.0007995e+03 8.38e-03 2.85e+04  -3.2 5.00e-02   4.1 2.40e-01 8.27e-02f  1
+ 538r-5.0007995e+03 7.38e-03 2.82e+04  -3.2 7.75e-02   3.6 3.21e-01 1.34e-02f  1
+ 539r-5.0007995e+03 3.28e-04 2.73e+04  -3.2 2.25e-01   3.2 1.36e-01 3.27e-02f  1
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 540 -5.0008024e+03 3.28e-04 8.73e+01  -6.0 8.05e+02    -  1.22e-02 1.14e-03f  2
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 541 -5.0008024e+03 3.28e-04 8.74e+01  -6.0 7.75e+02    -  2.15e-03 4.05e-05h  6
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 542 -5.0008048e+03 3.27e-04 1.29e+02  -6.0 7.81e+02    -  8.32e-03 8.53e-04f  2
+ 543 -5.0008068e+03 3.27e-04 1.73e+02  -6.0 9.80e+02    -  3.68e-03 4.95e-04f  1
+ 544r-5.0008068e+03 3.27e-04 9.99e+02  -3.5 0.00e+00    -  0.00e+00 5.57e-08R  2
+ 545r-5.0007672e+03 6.80e-04 9.96e+02  -3.5 2.32e+03    -  2.65e-02 2.84e-03f  1
+ 546r-5.0007660e+03 6.58e-04 2.28e+04  -3.5 9.95e+00    -  6.87e-01 3.10e-02f  1
+ 547r-5.0007492e+03 1.73e-02 1.37e+04  -3.5 1.41e+01    -  2.78e-01 3.42e-01f  1
+ 548r-5.0006961e+03 2.63e-02 1.84e+03  -3.5 1.51e+01    -  1.83e-01 5.45e-01f  1
+ 549r-5.0006780e+03 2.02e-02 4.83e+03  -3.5 1.81e+01    -  7.52e-01 4.54e-01f  1
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 550r-5.0006914e+03 2.05e-02 5.42e+03  -3.5 4.95e+01    -  3.15e-01 1.17e-01f  1
+ 551r-5.0006727e+03 8.57e-02 3.25e+03  -3.5 7.10e+01    -  2.13e-01 3.18e-01f  1
+ 552r-5.0006699e+03 8.47e-02 5.01e+03  -3.5 6.93e+01    -  6.40e-01 1.07e-01f  1
+ 553r-5.0006590e+03 8.85e-02 4.88e+03  -3.5 7.83e+01    -  4.89e-01 1.43e-01f  1
+ 554r-5.0006590e+03 6.94e-02 3.84e+03  -3.5 2.58e-02   4.0 2.14e-01 2.16e-01h  1
+ 555r-5.0006590e+03 1.61e-02 2.31e+03  -3.5 2.02e-02   3.5 3.53e-01 7.67e-01h  1
+ 556r-5.0006590e+03 1.36e-02 3.07e+03  -3.5 4.71e-03   3.0 1.00e+00 1.54e-01f  1
+ 557r-5.0006590e+03 6.19e-03 2.03e+03  -3.5 3.98e-03   2.6 1.00e+00 5.45e-01f  1
+ 558r-5.0006590e+03 2.83e-04 2.06e+00  -3.5 1.81e-03   2.1 1.00e+00 1.00e+00f  1
+ 559r-5.0006590e+03 2.83e-04 9.99e+02  -3.5 0.00e+00    -  0.00e+00 2.76e-07R 16
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 560r-5.0006568e+03 2.89e-04 3.45e+04  -3.5 5.83e+00    -  9.50e-01 1.76e-01f  1
+ 561r-5.0006624e+03 2.05e-02 2.67e+04  -3.5 4.99e+01    -  4.55e-01 2.60e-01f  1
+ 562r-5.0006656e+03 2.11e-02 2.68e+04  -3.5 5.34e+01    -  6.93e-01 7.74e-02f  1
+ 563r-5.0005213e+03 6.71e-02 1.87e+04  -3.5 6.96e+01    -  3.90e-01 3.08e-01f  1
+ 564r-5.0004335e+03 1.11e-01 9.52e+03  -3.5 9.07e+01    -  6.09e-01 4.94e-01f  1
+ 565r-5.0004228e+03 6.90e-02 6.10e+03  -3.5 1.30e+01  -4.0 9.89e-01 3.83e-01f  1
+ 566r-5.0003832e+03 2.55e-01 4.88e+01  -3.5 2.57e+01  -4.5 8.93e-01 1.00e+00f  1
+ 567r-5.0003912e+03 3.03e-01 3.69e+02  -3.5 1.17e+03    -  1.76e-01 2.29e-02h  1
+ 568r-5.0003709e+03 3.03e-01 1.91e+02  -3.5 2.45e+02    -  9.41e-01 2.97e-01f  1
+ 569r-5.0003054e+03 2.64e-01 1.62e+02  -3.5 8.62e+01    -  1.50e-01 1.32e-01f  1
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 570r-5.0002144e+03 1.99e-01 2.50e+02  -3.5 5.35e+01    -  1.00e+00 2.50e-01f  1
+ 571r-4.9999022e+03 4.59e-02 1.10e+01  -3.5 3.55e+01    -  5.26e-01 1.00e+00f  1
+ 572r-4.9998996e+03 1.56e-04 3.79e-03  -3.5 4.55e-01    -  1.00e+00 1.00e+00h  1
+ 573 -4.9998471e+03 6.07e-04 4.41e+02  -6.0 9.30e+02    -  3.41e-03 3.41e-03s 16
+ 574r-4.9998471e+03 6.07e-04 9.99e+02  -3.8 0.00e+00    -  0.00e+00 0.00e+00R  1
+ 575r-4.9998471e+03 6.02e-04 2.54e+04  -3.8 6.40e+00    -  9.14e-01 1.00e-03f  1
+ 576r-4.9997823e+03 3.56e-02 4.97e+03  -3.8 1.35e+01    -  8.52e-01 8.12e-01f  1
+ 577r-4.9996099e+03 2.66e-02 3.87e+03  -3.8 3.51e+01    -  7.86e-01 3.38e-01f  1
+ 578r-4.9992151e+03 2.80e-01 2.31e+03  -3.8 5.82e+01    -  1.75e-01 3.86e-01f  1
+ 579r-4.9992138e+03 4.72e-01 2.13e+03  -3.8 6.25e+00  -4.0 7.95e-02 7.69e-02f  1
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 580r-4.9983823e+03 7.85e-02 3.85e+02  -3.8 4.61e+01    -  7.62e-01 1.00e+00f  1
+ 581r-4.9981382e+03 1.50e-01 7.16e+01  -3.8 1.55e+01    -  9.99e-01 8.28e-01h  1
+ 582r-4.9980941e+03 2.62e-03 1.69e-01  -3.8 3.28e+00    -  1.00e+00 1.00e+00f  1
+ 583r-4.9980941e+03 1.57e-04 1.33e-04  -3.8 8.23e-02    -  1.00e+00 1.00e+00h  1
+ 584r-4.9978134e+03 3.36e-02 5.02e+03  -5.9 3.01e+01    -  6.35e-01 4.63e-01f  1
+ 585r-4.9978134e+03 1.85e-02 4.03e+03  -5.9 1.39e-03   3.8 5.54e-01 4.50e-01f  1
+ 586r-4.9978134e+03 1.23e-02 2.29e+03  -5.9 7.67e-04   5.2 2.57e-01 3.32e-01f  1
+ 587r-4.9978134e+03 5.49e-03 4.75e+02  -5.9 5.12e-04   5.6 2.84e-01 5.55e-01f  1
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 588r-4.9978134e+03 4.82e-03 1.31e+03  -5.9 2.28e-04   6.0 6.21e-01 1.21e-01f  2
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 589r-4.9978134e+03 4.13e-03 1.26e+03  -5.9 2.00e-04   6.5 2.76e-01 1.43e-01f  2
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 590r-4.9978134e+03 3.63e-03 1.17e+03  -5.9 1.71e-04   6.9 2.13e-01 1.21e-01f  2
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 591r-4.9978134e+03 3.29e-03 1.10e+03  -5.9 8.42e-05   7.3 1.56e-01 9.41e-02f  2
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 592r-4.9978134e+03 3.07e-03 1.02e+03  -5.9 8.42e-05   7.7 5.62e-02 6.88e-02f  2
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 593r-4.9978134e+03 2.95e-03 9.72e+02  -5.9 8.19e-05   8.2 1.96e-02 3.70e-02h  2
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 594r-4.9978134e+03 2.93e-03 9.64e+02  -5.9 7.84e-05   8.6 1.23e-02 9.52e-03h  2
+ 595r-4.9978134e+03 2.91e-03 3.97e+03  -5.9 7.04e-05   9.9 3.03e-03 5.39e-03h  1
+ 596r-4.9978134e+03 2.79e-03 1.15e+04  -5.9 7.03e-05   9.4 5.41e-03 4.05e-02h  1
+ 597r-4.9978134e+03 2.75e-03 1.90e+04  -5.9 6.74e-05   9.9 1.71e-02 1.57e-02h  1
+ 598r-4.9978134e+03 2.71e-03 3.78e+04  -5.9 6.64e-05  10.3 1.62e-02 1.49e-02h  1
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 599r-4.9978134e+03 2.65e-03 4.57e+04  -5.9 6.54e-05   9.8 2.42e-02 2.05e-02h  2
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 600r-4.9978134e+03 2.65e-03 1.97e+07  -5.9 6.40e-05  12.9 3.52e-02 7.85e-05h  1
+ 601r-4.9978134e+03 2.64e-03 7.64e+07  -5.9 6.41e-05  13.4 4.12e-02 2.79e-03h  1
+ 602r-4.9978134e+03 2.61e-03 8.80e+07  -5.9 6.39e-05  12.9 4.46e-02 1.42e-02h  1
+ 603r-4.9978134e+03 2.52e-03 8.74e+07  -5.9 6.30e-05  12.4 6.44e-02 3.12e-02h  1
+ 604r-4.9978134e+03 2.45e-03 8.13e+07  -5.9 6.10e-05  11.9 9.86e-02 3.10e-02h  1
+ 605r-4.9978134e+03 2.24e-03 7.08e+07  -5.9 5.91e-05  11.5 1.29e-01 8.27e-02h  1
+ 606r-4.9978134e+03 1.85e-03 5.31e+07  -5.9 5.42e-05  11.0 2.39e-01 1.74e-01h  1
+ 607r-4.9978134e+03 1.20e-03 3.01e+07  -5.9 4.48e-05  10.5 4.16e-01 3.52e-01h  1
+ 608r-4.9978134e+03 8.81e-04 1.05e+07  -5.9 2.90e-05  10.0 5.55e-01 2.67e-01h  1
+ 609r-4.9978134e+03 7.60e-04 6.59e+06  -5.9 2.12e-05   9.6 4.50e-01 1.37e-01h  1
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 610r-4.9978134e+03 6.83e-04 5.93e+06  -5.9 1.82e-05   9.1 1.42e-01 1.01e-01f  1
+ 611r-4.9978134e+03 6.52e-04 5.66e+06  -5.9 1.61e-05   8.6 2.95e-01 4.62e-02f  1
+ 612r-4.9978134e+03 6.21e-04 5.39e+06  -5.9 1.45e-05   8.1 1.77e-01 4.64e-02f  1
+ 613r-4.9978134e+03 6.03e-04 5.23e+06  -5.9 1.94e-05   7.6 2.66e-01 2.97e-02f  1
+ 614r-4.9978134e+03 5.87e-04 5.10e+06  -5.9 4.96e-05   7.2 5.70e-02 2.63e-02f  1
+ 615r-4.9978134e+03 5.81e-04 5.04e+06  -5.9 1.40e-04   6.7 3.41e-02 1.08e-02f  1
+ 616r-4.9978134e+03 5.77e-04 5.01e+06  -5.9 4.12e-04   6.2 2.63e-02 6.64e-03f  1
+ 617r-4.9978134e+03 5.74e-04 4.99e+06  -5.9 1.22e-03   5.7 2.22e-02 4.13e-03f  1
+ 618r-4.9978134e+03 5.73e-04 4.97e+06  -5.9 3.54e-03   5.3 1.95e-02 2.76e-03f  1
+ 619r-4.9978134e+03 5.72e-04 4.96e+06  -5.9 7.55e-03   4.8 1.84e-02 2.22e-03f  1
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 620r-4.9978134e+03 5.69e-04 4.94e+06  -5.9 1.64e-02   4.3 1.70e-02 3.61e-03f  1
+ 621r-4.9978134e+03 5.63e-04 4.89e+06  -5.9 5.30e-04   3.8 1.27e-02 1.17e-02f  1
+ 622r-4.9978134e+03 5.55e-04 4.82e+06  -5.9 6.59e-04   3.3 1.84e-02 1.33e-02f  1
+ 623r-4.9978134e+03 5.47e-04 4.75e+06  -5.9 1.91e-03   2.9 1.96e-02 1.56e-02f  1
+ 624r-4.9978134e+03 5.38e-04 4.67e+06  -5.9 7.56e-04   3.3 2.02e-02 1.61e-02f  1
+ 625r-4.9978134e+03 5.23e-04 4.54e+06  -5.9 2.55e-03   2.8 5.57e-02 2.83e-02f  1
+ 626r-4.9978134e+03 4.90e-04 4.25e+06  -5.9 9.76e-04   3.2 5.52e-02 6.27e-02f  1
+ 627r-4.9978134e+03 4.74e-04 4.11e+06  -5.9 7.04e-03   2.8 5.70e-02 3.32e-02f  1
+ 628r-4.9978134e+03 4.50e-04 3.91e+06  -5.9 9.95e-04   3.2 6.52e-02 5.03e-02f  1
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 629r-4.9978134e+03 4.32e-04 3.75e+06  -5.9 4.08e-04   3.6 8.74e-02 3.93e-02f  2
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 630r-4.9978134e+03 4.24e-04 3.68e+06  -5.9 1.02e-03   3.1 2.10e-01 1.87e-02h  3
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 631r-4.9978134e+03 4.18e-04 3.63e+06  -5.9 4.27e-04   3.6 1.20e-01 1.49e-02h  4
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 632r-4.9978134e+03 4.14e-04 3.60e+06  -5.9 1.03e-03   3.1 6.05e-02 8.31e-03h  5
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 633r-4.9978134e+03 4.11e-04 3.57e+06  -5.9 4.59e-04   3.5 1.56e-01 8.08e-03h  6
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 634r-4.9978134e+03 4.09e-04 3.55e+06  -5.9 1.09e-03   3.0 6.47e-02 5.41e-03h  6
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 635r-4.9978134e+03 4.08e-04 3.54e+06  -5.9 4.93e-04   3.5 1.22e-01 2.52e-03h  8
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 636r-4.9978134e+03 4.07e-04 3.54e+06  -5.9 1.16e-03   3.0 7.63e-02 8.81e-04h  8
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 637r-4.9978134e+03 4.07e-04 3.53e+06  -5.9 5.32e-04   3.4 2.72e-01 9.83e-04h 10
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 638r-4.9978134e+03 4.07e-04 3.53e+06  -5.9 1.23e-03   2.9 6.57e-02 4.93e-04h 10
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 639r-4.9978134e+03 4.07e-04 3.53e+06  -5.9 5.74e-04   3.4 5.07e-01 2.75e-04h  8
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 640r-4.9978134e+03 4.06e-04 3.53e+06  -5.9 1.30e-03   2.9 7.08e-02 2.48e-04h 10
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 641r-4.9978134e+03 4.06e-04 3.53e+06  -5.9 6.06e-04   3.3 1.53e-01 1.91e-04h 13
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 642r-4.9978134e+03 4.06e-04 3.53e+06  -5.9 1.38e-03   2.8 6.99e-02 9.38e-05h 12
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 643r-4.9978134e+03 4.06e-04 3.53e+06  -5.9 6.55e-04   3.3 1.09e-01 4.80e-05h 15
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 644r-4.9978134e+03 4.06e-04 3.53e+06  -5.9 1.53e-03   2.8 8.16e-02 4.10e-05h 10
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 645r-4.9978134e+03 4.06e-04 3.53e+06  -5.9 7.05e-04   3.2 1.64e-01 3.78e-05h 15
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 646r-4.9978134e+03 4.06e-04 3.53e+06  -5.9 1.63e-03   2.7 5.53e-02 1.28e-05h 13
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 647r-4.9978134e+03 4.06e-04 3.53e+06  -5.9 7.61e-04   3.2 1.19e-01 1.20e-05h 16
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 648r-4.9978134e+03 4.06e-04 3.53e+06  -5.9 8.05e-03   2.7 5.17e-02 7.30e-06h 14
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 649r-4.9978134e+03 4.06e-04 3.53e+06  -5.9 8.28e-04   3.1 1.06e-01 2.61e-06h 17
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 650r-4.9978134e+03 4.06e-04 3.53e+06  -5.9 3.86e-04   3.5 9.63e-01 2.96e-06h 16
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 651r-4.9978134e+03 4.06e-04 3.53e+06  -5.9 9.31e-04   3.1 9.15e-02 1.03e-06h 18
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Evaluation error during soft restoration phase step.
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Evaluation error during soft restoration phase step.
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Evaluation error during soft restoration phase step.
+ 652r-4.9978134e+03 4.06e-04 3.53e+06  -5.9 4.29e-04   3.5 0.00e+00 3.64e-12R 39
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 653r-4.9978134e+03 4.06e-04 3.53e+06  -5.9 9.93e-04   3.0 1.40e-01 1.40e-06f 19
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 654r-4.9978134e+03 4.06e-04 3.53e+06  -5.9 4.67e-04   3.4 1.87e-01 4.75e-07f 22
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 655r-4.9978134e+03 4.06e-04 3.53e+06  -5.9 1.07e-03   3.0 1.24e-01 2.92e-07f 21
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 656r-4.9978134e+03 4.06e-04 3.53e+06  -5.9 5.08e-04   3.4 1.84e-01 2.38e-07f 23
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 657r-4.9978134e+03 4.06e-04 3.53e+06  -5.9 1.16e-03   2.9 8.43e-02 1.25e-07f 22
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 658r-4.9978134e+03 4.06e-04 3.53e+06  -5.9 5.57e-04   3.3 1.86e-01 7.87e-10h 31
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 659r-4.9978134e+03 4.06e-04 3.53e+06  -5.9 1.31e-03   2.9 8.62e-02 1.62e-07f 18
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+ 660r-4.9978134e+03 4.06e-04 3.53e+06  -5.9 6.06e-04   3.3 1.91e-01 8.21e-08f 24
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 661r-4.9978134e+03 4.06e-04 3.53e+06  -5.9 1.43e-03   2.8 6.23e-02 1.23e-10h 29
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 662r-4.9978134e+03 4.06e-04 3.53e+06  -5.9 6.64e-04   3.2 1.48e-01 6.36e-10h 31
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 663r-4.9978134e+03 4.06e-04 3.53e+06  -5.9 1.56e-03   2.8 5.37e-02 2.04e-11h 31
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 664r-4.9978134e+03 4.06e-04 3.53e+06  -5.9 7.28e-04   3.2 1.26e-01 1.17e-10h 33
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 665r-4.9978134e+03 4.06e-04 3.53e+06  -5.9 1.87e-03   2.7 5.69e-02 1.51e-12h 36
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+ 666r-4.9978134e+03 4.06e-04 3.53e+06  -5.9 7.96e-04   3.1 1.22e-01 4.70e-13h 41
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Cutting back alpha due to evaluation error
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Evaluation error during soft restoration phase step.
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Evaluation error during soft restoration phase step.
+Error in an AMPL evaluation. Run with "halt_on_ampl_error yes" to see details.
+Warning: Evaluation error during soft restoration phase step.
+Restoration phase is called at point that is almost feasible,
+  with constraint violation 2.973526e-09. Abort.
+Restoration phase in the restoration phase failed.
+
+Number of Iterations....: 666
+
+                                   (scaled)                 (unscaled)
+Objective...............:  -4.9978133722175980e+03   -4.9978133722175980e+03
+Dual infeasibility......:   2.5233423815847826e+06    2.5233423815847826e+06
+Constraint violation....:   1.4901537837984876e-04    4.0627444922591849e-04
+Complementarity.........:   1.1843317352243514e-05    1.1843317352243514e-05
+Overall NLP error.......:   2.5121044200925351e+05    2.5233423815847826e+06
+
+
+Number of objective function evaluations             = 2298
+Number of objective gradient evaluations             = 410
+Number of equality constraint evaluations            = 3019
+Number of inequality constraint evaluations          = 0
+Number of equality constraint Jacobian evaluations   = 693
+Number of inequality constraint Jacobian evaluations = 0
+Number of Lagrangian Hessian evaluations             = 667
+Total CPU secs in IPOPT (w/o function evaluations)   =    232.529
+Total CPU secs in NLP function evaluations           =     12.868
+
+EXIT: Restoration Failed!
