@@ -828,7 +828,7 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
                 model.reactive[j].T.setub(t)
                 # model.reactive[j].T.setlb(model.reactive[j].T.ub - 10)
 
-                progress = 'Working on adjusting stage {} temperature to {:.2f}C '.format(j,t-273.15)
+                progress = '> Working on adjusting stage {} temperature to {:.2f}C '.format(j,t-273.15)
 
                 results = opt.solve(model,tee=False)
                 update_dual(pe,model)
@@ -859,7 +859,7 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
                 model.reactive[j].T.setub(t)
                 # model.reactive[j].T.setlb(model.reactive[j].T.ub - 10)
 
-                progress = 'Working on adjusting stage {} temperature to {:.2f}C '.format(j,t-273.15)
+                progress = '> Working on adjusting stage {} temperature to {:.2f}C '.format(j,t-273.15)
 
                 results = opt.solve(model,tee=False)
                 update_dual(pe,model)
