@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 '''
-How to Train Your Dragon: V5
+How to Train Your Dragon: V6
+New changes, remove reboiler (set it to fixed value in this case)
 To be used with multi-start, randomized system operating parameters
 Sequentially initialize FT reactive distillation model automatically
 Add DDF module and then optimize during one step
@@ -63,7 +64,7 @@ elif len(sys.argv) == 4:
     output_dir = './tmp/'+logname+'.output'
     log_master_dir = './log/master/'+sys.argv[3]
 else:
-    exit('Argument Number MIS-MATCH')
+    exit('Argument Number DO NOT MATCH')
 
 '''
 write its own option files, clean up after done
@@ -91,7 +92,7 @@ model input, randomized, or input from already generated random files
 if len(sys.argv) == 1:
     # The following parameters requires manual input
     tray_number = 20
-    non_reactive_flag = [1,2,3,4,5,6,7,8,19,20]
+    non_reactive_flag = [1,2,3,4,5,6,7]
 
     # The following parameters is generated manually
     # reset random seeds
@@ -127,13 +128,13 @@ if len(sys.argv) == 1:
     # generating catalyst profile, total = 30000 kg
     profile_tmp = {j:np.random.rand() for j in range(1,tray_number+1) if j not in non_reactive_flag}
     total_tmp = sum(profile_tmp[j] for j in profile_tmp)
-    catalyst_flag = {j:100 + (30000-100*10)*profile_tmp[j]/total_tmp for j in range(1,tray_number+1) if j not in non_reactive_flag}
+    catalyst_flag = {j:100 + (30000-100*len(profile_tmp))*profile_tmp[j]/total_tmp for j in range(1,tray_number+1) if j not in non_reactive_flag}
     catalyst_flag.update({j:0 for j in non_reactive_flag})
 
     # generating feed profile, total = 10 kmol/s
     profile_tmp = {j:np.random.rand() for j in range(1,tray_number+1) if j not in non_reactive_flag}
     total_tmp = sum(profile_tmp[j] for j in profile_tmp)
-    feed_flag = {j:0.01 + (10-0.01*10)*profile_tmp[j]/total_tmp for j in range(1,tray_number+1) if j not in non_reactive_flag}
+    feed_flag = {j:0.01 + (10-0.01*len(profile_tmp))*profile_tmp[j]/total_tmp for j in range(1,tray_number+1) if j not in non_reactive_flag}
     feed_flag.update({j:0 for j in non_reactive_flag})
 
 elif len(sys.argv) == 4:
@@ -1020,7 +1021,7 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
 
     disable_restoration(mode = 'disable', option_dir = option_dir)
 
-    opt = add_solver(pe, max_iter = 2000, warm_start = True, output = output_dir, option_dir = option_dir)
+    opt = add_solver(pe, max_iter = 2500, warm_start = True, output = output_dir, option_dir = option_dir)
 
     progress = '> Added DDF formulation'
 
@@ -1059,7 +1060,7 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
     model.P_total['diesel'].unfix()
 
     model.quality_spec = pe.Param(m.PRODUCT,initialize={\
-                        'naphtha':0.75,'gasoline':0.75,'diesel':0.6,'heavy':0.85},mutable=True)
+                        'naphtha':0.75,'gasoline':0.75,'diesel':0.75,'heavy':0.85},mutable=True)
 
     def product_spec_rule(model,p):
         if p == 'intermediate':
