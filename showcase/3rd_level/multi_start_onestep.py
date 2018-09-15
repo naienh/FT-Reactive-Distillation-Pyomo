@@ -629,7 +629,7 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
             master_log.write('Failed: {}\n'.format(progress))
             exit()
 
-    plot_distribution(model,pdf,progress)
+    # plot_distribution(model,pdf,progress)
 
     '''
     Introduce reflux, in a gentle way.
@@ -668,7 +668,7 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
                 master_log.write('Failed: {}\n'.format(progress))
                 exit()
 
-    plot_distribution(model,pdf,progress)
+    # plot_distribution(model,pdf,progress)
 
     '''
     Start the reboiler
@@ -699,7 +699,7 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
                 master_log.write('Failed: {}\n'.format(progress))
                 exit()
 
-    # plot_distribution(model,pdf,'Reboiler')
+    # # plot_distribution(model,pdf,'Reboiler')
 
 
     '''
@@ -732,7 +732,7 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
                 master_log.write('Failed: {}\n'.format(progress))
                 exit()
 
-    plot_distribution(model,pdf,'Side draw')
+    # plot_distribution(model,pdf,'Side draw')
 
     '''
     Following design specification, remove non-reactive stages' catalyst and feed, feed cat first then Q
@@ -810,7 +810,7 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
                     master_log.write('Failed: {}\n'.format(progress))
                     exit()
 
-    plot_distribution(model,pdf,'Non-reactive stage + catalyst / feed adjustment')
+    # plot_distribution(model,pdf,'Non-reactive stage + catalyst / feed adjustment')
 
     '''
     Move temperatures to design point (gently)
@@ -881,7 +881,7 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
                         master_log.write('Failed: {}\n'.format(progress))
                         exit()
 
-    plot_distribution(model,pdf,'Finalized Stage Temperatures')
+    # plot_distribution(model,pdf,'Finalized Stage Temperatures')
 
     with HiddenLogs(log_text_dir):
         if results.solver.termination_condition.key != 'optimal':
@@ -1115,5 +1115,5 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
             print('Optimization Complete\nPlease check the logs for details')
             master_log.write('Success: {}\n'.format(progress))
 
-    plot_distribution(model,pdf,'Optimized Temperature, reflux, product flow and tray, feed, catalyst')
-    plot_product_distribution(model,pdf)
+    # plot_distribution(model,pdf,'Optimized Temperature, reflux, product flow and tray, feed, catalyst')
+    # plot_product_distribution(model,pdf)
