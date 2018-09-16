@@ -1021,7 +1021,7 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
 
     disable_restoration(mode = 'disable', option_dir = option_dir)
 
-    opt = add_solver(pe, max_iter = 2500, warm_start = True, output = output_dir, option_dir = option_dir)
+    opt = add_solver(pe, max_iter = 1000, warm_start = True, output = output_dir, option_dir = option_dir)
 
     progress = '> Added DDF formulation'
 
