@@ -1060,16 +1060,13 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
     model.P_total['diesel'].unfix()
 
     model.quality_spec = pe.Param(m.PRODUCT,initialize={\
-                        'naphtha':0.75,'gasoline':0.75,'diesel':0.75,'heavy':0.85},mutable=True)
+                        'naphtha':0.75,'gasoline':0.75,'diesel':0.75,'heavy':0.75},mutable=True)
 
     def product_spec_rule(model,p):
         if p == 'intermediate':
             return pe.Constraint.Skip
         return sum(model.x_P_dry[i,p] for i in m.PRODUCT_cnumber[p]) >= model.quality_spec[p]
     model.product_spec_con = pe.Constraint(m.PRODUCT,rule=product_spec_rule)
-
-    model.del_component(model.obj)
-    model.obj = augmented_objective(pe,model,expr = model.P_total['gasoline'], sense = pe.maximize)
 
     model.total_feed_con = pe.ConstraintList()
     model.total_feed_con.add(expr = sum(model.reactive[j].F for j in model.reactive) == 10);
@@ -1095,7 +1092,18 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
     model.N_tray['diesel'].setlb(11)
     model.N_tray['diesel'].setub(18)
 
-    progress = '> One-step Optimization'
+    with HiddenPrints():
+        delete_dual(pe,model)
+        add_dual(pe,model)
+
+    '''save a version that could be reused
+    '''
+    master_model = deepcopy(model)
+
+    model.del_component(model.obj)
+    model.obj = augmented_objective(pe,model,expr = model.P_total['gasoline'], sense = pe.maximize)
+
+    progress = '> One-step Optimization - Gasoline'
 
     results = opt.solve(model,tee=False)
     update_dual(pe,model)
@@ -1110,10 +1118,62 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
         if results.solver.termination_condition.key != 'optimal':
             print('NOT Optimum: ' + results.solver.termination_condition.key)
             master_log.write('Failed: {}\n'.format(progress))
-            exit()
         else:
             print('Optimization Complete\nPlease check the logs for details')
             master_log.write('Success: {}\n'.format(progress))
 
     # plot_distribution(model,pdf,'Optimized Temperature, reflux, product flow and tray, feed, catalyst')
     # plot_product_distribution(model,pdf)
+
+    '''diesel opt
+    '''
+    model = deepcopy(master_model)
+
+    model.del_component(model.obj)
+    model.obj = augmented_objective(pe,model,expr = model.P_total['diesel'], sense = pe.maximize)
+
+    progress = '> One-step Optimization - Diesel'
+
+    results = opt.solve(model,tee=False)
+    update_dual(pe,model)
+
+    with HiddenLogs(log_text_dir):
+        print('\n{}'.format(progress))
+        print('-'*108)
+        beautify(pe,model)
+        check_product_spec(model)
+        log_now()
+        check_iteration(output_dir)
+        if results.solver.termination_condition.key != 'optimal':
+            print('NOT Optimum: ' + results.solver.termination_condition.key)
+            master_log.write('Failed: {}\n'.format(progress))
+        else:
+            print('Optimization Complete\nPlease check the logs for details')
+            master_log.write('Success: {}\n'.format(progress))
+
+    '''multi opt
+    '''
+    model = deepcopy(master_model)
+
+    model.del_component(model.obj)
+    model.obj = augmented_objective(pe,model,expr = model.P_total['diesel'] + \
+                                    model.P_total['gasoline'] + model.P_total['naphtha'], sense = pe.maximize)
+
+    progress = '> One-step Optimization - Naphtha + Gasoline + Diesel'
+
+    results = opt.solve(model,tee=False)
+    update_dual(pe,model)
+
+    with HiddenLogs(log_text_dir):
+        print('\n{}'.format(progress))
+        print('-'*108)
+        beautify(pe,model)
+        check_product_spec(model)
+        log_now()
+        check_iteration(output_dir)
+        if results.solver.termination_condition.key != 'optimal':
+            print('NOT Optimum: ' + results.solver.termination_condition.key)
+            master_log.write('Failed: {}\n'.format(progress))
+        else:
+            print('Optimization Complete\nPlease check the logs for details')
+            master_log.write('Success: {}\n'.format(progress))
