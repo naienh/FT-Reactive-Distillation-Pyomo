@@ -1,0 +1,92 @@
+
+------------------------------------------------------------------------------------------------------------
+ATTENTION: NEW RUN BEGINNING
+2018-09-18 15:32:11
+log name: Preset_Case:_665_NCP
+Success: > Initialization
+Success: > Added DDF formulation
+Failed: > One-step Optimization - Gasoline
+Failed: > One-step Optimization - Diesel
+Success: > One-step Optimization - Naphtha + Gasoline + Diesel
+
+------------------------------------------------------------------------------------------------------------
+ATTENTION: NEW RUN BEGINNING
+2018-09-18 17:10:25
+log name: Preset_Case:_666_NCP
+Failed: > Working to adjust and feed from stage 19:
+
+------------------------------------------------------------------------------------------------------------
+ATTENTION: NEW RUN BEGINNING
+2018-09-18 17:38:22
+log name: Preset_Case:_667_NCP
+Failed: > Working on adjusting stage 13 temperature to 240.00C 
+
+------------------------------------------------------------------------------------------------------------
+ATTENTION: NEW RUN BEGINNING
+2018-09-18 18:18:13
+log name: Preset_Case:_668_NCP
+Failed: > Working to adjust and feed from stage 18:
+
+------------------------------------------------------------------------------------------------------------
+ATTENTION: NEW RUN BEGINNING
+2018-09-18 18:51:21
+log name: Preset_Case:_669_NCP
+Success: > Initialization
+Success: > Added DDF formulation
+Failed: > One-step Optimization - Gasoline
+Success: > One-step Optimization - Diesel
+Success: > One-step Optimization - Naphtha + Gasoline + Diesel
+
+------------------------------------------------------------------------------------------------------------
+ATTENTION: NEW RUN BEGINNING
+2018-09-18 20:00:32
+log name: Preset_Case:_670_NCP
+Success: > Initialization
+Failed: > Added DDF formulation
+
+------------------------------------------------------------------------------------------------------------
+ATTENTION: NEW RUN BEGINNING
+2018-09-18 20:31:52
+log name: Preset_Case:_671_NCP
+Success: > Initialization
+Success: > Added DDF formulation
+Success: > One-step Optimization - Gasoline
+Success: > One-step Optimization - Diesel
+Failed: > One-step Optimization - Naphtha + Gasoline + Diesel
+
+------------------------------------------------------------------------------------------------------------
+ATTENTION: NEW RUN BEGINNING
+2018-09-18 21:58:30
+log name: Preset_Case:_672_NCP
+Success: > Initialization
+Success: > Added DDF formulation
+Failed: > One-step Optimization - Gasoline
+Success: > One-step Optimization - Diesel
+Success: > One-step Optimization - Naphtha + Gasoline + Diesel
+
+------------------------------------------------------------------------------------------------------------
+ATTENTION: NEW RUN BEGINNING
+2018-09-18 23:28:21
+log name: Preset_Case:_673_NCP
+Success: > Initialization
+Success: > Added DDF formulation
+Success: > One-step Optimization - Gasoline
+Success: > One-step Optimization - Diesel
+Failed: > One-step Optimization - Naphtha + Gasoline + Diesel
+
+------------------------------------------------------------------------------------------------------------
+ATTENTION: NEW RUN BEGINNING
+2018-09-19 01:09:14
+log name: Preset_Case:_674_NCP
+Success: > Initialization
+Success: > Added DDF formulation
+Success: > One-step Optimization - Gasoline
+Success: > One-step Optimization - Diesel
+Success: > One-step Optimization - Naphtha + Gasoline + Diesel
+
+------------------------------------------------------------------------------------------------------------
+ATTENTION: NEW RUN BEGINNING
+2018-09-19 02:38:27
+log name: Preset_Case:_675_NCP
+Success: > Initialization
+Failed: > Added DDF formulation

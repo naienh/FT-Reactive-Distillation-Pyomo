@@ -1,0 +1,90 @@
+
+------------------------------------------------------------------------------------------------------------
+ATTENTION: NEW RUN BEGINNING
+2018-09-18 15:31:21
+log name: Preset_Case:_642_NCP
+Success: > Initialization
+Success: > Added DDF formulation
+Success: > One-step Optimization - Gasoline
+Failed: > One-step Optimization - Diesel
+Success: > One-step Optimization - Naphtha + Gasoline + Diesel
+
+------------------------------------------------------------------------------------------------------------
+ATTENTION: NEW RUN BEGINNING
+2018-09-18 16:34:51
+log name: Preset_Case:_643_NCP
+Success: > Initialization
+Success: > Added DDF formulation
+Success: > One-step Optimization - Gasoline
+Success: > One-step Optimization - Diesel
+Success: > One-step Optimization - Naphtha + Gasoline + Diesel
+
+------------------------------------------------------------------------------------------------------------
+ATTENTION: NEW RUN BEGINNING
+2018-09-18 17:37:03
+log name: Preset_Case:_644_NCP
+Success: > Initialization
+Success: > Added DDF formulation
+Success: > One-step Optimization - Gasoline
+Success: > One-step Optimization - Diesel
+Success: > One-step Optimization - Naphtha + Gasoline + Diesel
+
+------------------------------------------------------------------------------------------------------------
+ATTENTION: NEW RUN BEGINNING
+2018-09-18 18:46:36
+log name: Preset_Case:_645_NCP
+Success: > Initialization
+Success: > Added DDF formulation
+Failed: > One-step Optimization - Gasoline
+Success: > One-step Optimization - Diesel
+Failed: > One-step Optimization - Naphtha + Gasoline + Diesel
+
+------------------------------------------------------------------------------------------------------------
+ATTENTION: NEW RUN BEGINNING
+2018-09-18 20:34:08
+log name: Preset_Case:_646_NCP
+Success: > Initialization
+Success: > Added DDF formulation
+Success: > One-step Optimization - Gasoline
+Success: > One-step Optimization - Diesel
+Success: > One-step Optimization - Naphtha + Gasoline + Diesel
+
+------------------------------------------------------------------------------------------------------------
+ATTENTION: NEW RUN BEGINNING
+2018-09-18 21:55:14
+log name: Preset_Case:_647_NCP
+Success: > Initialization
+Success: > Added DDF formulation
+Success: > One-step Optimization - Gasoline
+Success: > One-step Optimization - Diesel
+Success: > One-step Optimization - Naphtha + Gasoline + Diesel
+
+------------------------------------------------------------------------------------------------------------
+ATTENTION: NEW RUN BEGINNING
+2018-09-18 22:45:03
+log name: Preset_Case:_648_NCP
+Success: > Initialization
+Success: > Added DDF formulation
+Success: > One-step Optimization - Gasoline
+Failed: > One-step Optimization - Diesel
+Success: > One-step Optimization - Naphtha + Gasoline + Diesel
+
+------------------------------------------------------------------------------------------------------------
+ATTENTION: NEW RUN BEGINNING
+2018-09-19 00:06:35
+log name: Preset_Case:_649_NCP
+Success: > Initialization
+Success: > Added DDF formulation
+Success: > One-step Optimization - Gasoline
+Failed: > One-step Optimization - Diesel
+Failed: > One-step Optimization - Naphtha + Gasoline + Diesel
+
+------------------------------------------------------------------------------------------------------------
+ATTENTION: NEW RUN BEGINNING
+2018-09-19 01:24:09
+log name: Preset_Case:_650_NCP
+Success: > Initialization
+Success: > Added DDF formulation
+Success: > One-step Optimization - Gasoline
+Success: > One-step Optimization - Diesel
+Failed: > One-step Optimization - Naphtha + Gasoline + Diesel
