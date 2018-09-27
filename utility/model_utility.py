@@ -203,7 +203,7 @@ Note1: when switch from solved solution, variabl value should be set accordingly
 def select_MPCC(block,formulation):
     # get the corresponding value, only if a MPCC block is currently active
     mpcc_block = which_MPCC(block)
-    if mpcc_block:
+    if mpcc_block is not None:
         s_L = mpcc_block.s_L.value
         s_V = mpcc_block.s_V.value
 
@@ -304,7 +304,7 @@ effectively disables it
 -----------------------------------------------------------------------------'''
 def disable_restoration(mode = 'disable', option_dir = None):
     if not option_dir:
-        option_dir = 'ipopt.opt'
+        option_dir = './ipopt.opt'
 
     if mode == 'disable':
         with open(option_dir,'r') as opt_file:

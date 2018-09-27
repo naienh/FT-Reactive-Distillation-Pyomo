@@ -67,7 +67,7 @@ else:
     exit('Argument Number DO NOT MATCH')
 
 '''
-write its own option files, clean up after done
+write its own option files (because it's gonna alter it during solve), clean up after exit
 '''
 
 option_dir = logname+'.opt'

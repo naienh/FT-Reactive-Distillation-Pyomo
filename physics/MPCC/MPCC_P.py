@@ -4,7 +4,7 @@
 # this module define the rules for constructing a energy block in the master block
 # this is the global component set import, so that all modules uses the same set
 from global_sets.component import m
-
+from data import kinetic_data as k
 from pyomo import environ as pe
 
 # define MPCC_beta_NCP rule
@@ -44,14 +44,46 @@ def P_NCP_block_rule(block):
     #-----------------------------Global equations------------------------------
     if block.parent_block().VLE_block.find_component('pressure_equal_con'):
         block.parent_block().VLE_block.del_component(block.parent_block().VLE_block.pressure_equal_con)
-        print('Deleted original P_equal constraint')
+        print('> Deleted original P_equal constraint')
     else:
-        print('No constraint to delete')
+        print('> No constraint to delete')
     print('')
 
     def pressure_equal_rule(block):
         return block.parent_block().VLE_block.P_VLE - block.parent_block().P == block.s_L - block.s_V
     block.pressure_equal_con = pe.Constraint(rule=pressure_equal_rule)
+
+    if 'kinetics_block' in [i.local_name for i in block.parent_block().block_data_objects()]:
+        if block.parent_block().kinetics_block.find_component('f_V_MPCC'):
+            print('> Already replaced f_V_MPCC')
+        else:
+            block.parent_block().kinetics_block.del_component(block.parent_block().kinetics_block.r_FT_total_con)
+            block.parent_block().kinetics_block.del_component(block.parent_block().kinetics_block.r_WGS_con)
+
+            print('> Deleted kinetics rates constraints')
+
+            block.parent_block().kinetics_block.f_V_MPCC = pe.Var(m.COMP_INORG,within=pe.NonNegativeReals,initialize=1e-20)
+
+            def f_V_MPCC_rule(block,i):
+                return block.f_V_MPCC[i] == block.parent_block().P * block.parent_block().y[i]
+            block.parent_block().kinetics_block.f_V_MPCC_con = pe.Constraint(m.COMP_INORG,rule=f_V_MPCC_rule)
+
+            def r_FT_total_MPCC_rule(block):
+                return block.r_FT_total * (1+k.c_FT*(block.f_V_MPCC['CO'])**0.5+k.d_FT*(block.f_V_MPCC['H2'])**0.5)**2 == \
+                (block.parent_block().cat*block.k_FT*block.f_V_MPCC['CO']**0.5*block.f_V_MPCC['H2']**0.5)
+            block.parent_block().kinetics_block.r_FT_total_con = pe.Constraint(rule=r_FT_total_MPCC_rule)
+
+            def r_WGS_MPCC_rule(block):
+                return block.r_WGS * (block.Ke_WGS*block.f_V_MPCC['H2O'])\
+                 == 0.5*block.parent_block().cat*block.k_WGS*block.parent_block().P**0.75*(block.f_V_MPCC['CO']* \
+                            (block.Ke_WGS*block.f_V_MPCC['H2O']) - (block.f_V_MPCC['H2']*block.f_V_MPCC['CO2']) )
+            block.parent_block().kinetics_block.r_WGS_con = pe.Constraint(rule=r_WGS_MPCC_rule)
+
+            print('> Added f_V_MPCC, rates constraints')
+
+    else:
+        print('> Find no kinetics_block')
+    print('')
 
 # define MPCC_beta_Reg rule
 def P_Reg_block_rule(block):
@@ -98,6 +130,38 @@ def P_Reg_block_rule(block):
         return block.parent_block().VLE_block.P_VLE - block.parent_block().P == block.s_L - block.s_V
     block.pressure_equal_con = pe.Constraint(rule=pressure_equal_rule)
 
+    if 'kinetics_block' in [i.local_name for i in block.parent_block().block_data_objects()]:
+        if block.parent_block().kinetics_block.find_component('f_V_MPCC'):
+            print('> Already replaced f_V_MPCC')
+        else:
+            block.parent_block().kinetics_block.del_component(block.parent_block().kinetics_block.r_FT_total_con)
+            block.parent_block().kinetics_block.del_component(block.parent_block().kinetics_block.r_WGS_con)
+
+            print('> Deleted kinetics rates constraints')
+
+            block.parent_block().kinetics_block.f_V_MPCC = pe.Var(m.COMP_INORG,within=pe.NonNegativeReals,initialize=1e-20)
+
+            def f_V_MPCC_rule(block,i):
+                return block.f_V_MPCC[i] == block.parent_block().P * block.parent_block().y[i]
+            block.parent_block().kinetics_block.f_V_MPCC_con = pe.Constraint(m.COMP_INORG,rule=f_V_MPCC_rule)
+
+            def r_FT_total_MPCC_rule(block):
+                return block.r_FT_total * (1+k.c_FT*(block.f_V_MPCC['CO'])**0.5+k.d_FT*(block.f_V_MPCC['H2'])**0.5)**2 == \
+                (block.parent_block().cat*block.k_FT*block.f_V_MPCC['CO']**0.5*block.f_V_MPCC['H2']**0.5)
+            block.parent_block().kinetics_block.r_FT_total_con = pe.Constraint(rule=r_FT_total_MPCC_rule)
+
+            def r_WGS_MPCC_rule(block):
+                return block.r_WGS * (block.Ke_WGS*block.f_V_MPCC['H2O'])\
+                 == 0.5*block.parent_block().cat*block.k_WGS*block.parent_block().P**0.75*(block.f_V_MPCC['CO']* \
+                            (block.Ke_WGS*block.f_V_MPCC['H2O']) - (block.f_V_MPCC['H2']*block.f_V_MPCC['CO2']) )
+            block.parent_block().kinetics_block.r_WGS_con = pe.Constraint(rule=r_WGS_MPCC_rule)
+
+            print('> Added f_V_MPCC, rates constraints')
+
+    else:
+        print('> Find no kinetics_block')
+    print('')
+
 # define MPCC_beta_penalty_function rule
 def P_pf_block_rule(block):
 
@@ -138,3 +202,35 @@ def P_pf_block_rule(block):
     def pressure_equal_rule(block):
         return block.parent_block().VLE_block.P_VLE - block.parent_block().P == block.s_L - block.s_V
     block.pressure_equal_con = pe.Constraint(rule=pressure_equal_rule)
+
+    if 'kinetics_block' in [i.local_name for i in block.parent_block().block_data_objects()]:
+        if block.parent_block().kinetics_block.find_component('f_V_MPCC'):
+            print('> Already replaced f_V_MPCC')
+        else:
+            block.parent_block().kinetics_block.del_component(block.parent_block().kinetics_block.r_FT_total_con)
+            block.parent_block().kinetics_block.del_component(block.parent_block().kinetics_block.r_WGS_con)
+
+            print('> Deleted kinetics rates constraints')
+
+            block.parent_block().kinetics_block.f_V_MPCC = pe.Var(m.COMP_INORG,within=pe.NonNegativeReals,initialize=1e-20)
+
+            def f_V_MPCC_rule(block,i):
+                return block.f_V_MPCC[i] == block.parent_block().P * block.parent_block().y[i]
+            block.parent_block().kinetics_block.f_V_MPCC_con = pe.Constraint(m.COMP_INORG,rule=f_V_MPCC_rule)
+
+            def r_FT_total_MPCC_rule(block):
+                return block.r_FT_total * (1+k.c_FT*(block.f_V_MPCC['CO'])**0.5+k.d_FT*(block.f_V_MPCC['H2'])**0.5)**2 == \
+                (block.parent_block().cat*block.k_FT*block.f_V_MPCC['CO']**0.5*block.f_V_MPCC['H2']**0.5)
+            block.parent_block().kinetics_block.r_FT_total_con = pe.Constraint(rule=r_FT_total_MPCC_rule)
+
+            def r_WGS_MPCC_rule(block):
+                return block.r_WGS * (block.Ke_WGS*block.f_V_MPCC['H2O'])\
+                 == 0.5*block.parent_block().cat*block.k_WGS*block.parent_block().P**0.75*(block.f_V_MPCC['CO']* \
+                            (block.Ke_WGS*block.f_V_MPCC['H2O']) - (block.f_V_MPCC['H2']*block.f_V_MPCC['CO2']) )
+            block.parent_block().kinetics_block.r_WGS_con = pe.Constraint(rule=r_WGS_MPCC_rule)
+
+            print('> Added f_V_MPCC, updated rates constraints')
+
+    else:
+        print('> Find no kinetics_block')
+    print('')
