@@ -1259,7 +1259,7 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
         beautify(pe,model)
         check_product_spec(model)
         print('Reflux Tray Location:',model.N_reflux_tray.value)
-        print('Total Feed:',model.total_feed)
+        print('Total Feed:',model.total_feed.value)
         log_now()
         check_iteration(output_dir)
 
