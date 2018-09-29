@@ -48,7 +48,7 @@ plt.ion()
 Constructing the model and logfile
 '''
 model = pe.ConcreteModel(name='reactive_distillation')
-mpcc_type = 'NCP'
+mpcc_type = 'pf'
 # digest input arguments
 if len(sys.argv) == 1:
     logname = create_filename_time()+'_'+mpcc_type
@@ -105,15 +105,15 @@ if len(sys.argv) == 1:
     # generate three product flag, randint produces [low,high)
     side_draw_flag = {}
     # intermediate 2 - 4
-    rand_int = np.random.randint(low=2,high=5)
+    rand_int = np.random.randint(low=1,high=3)
     rand = np.random.rand()
-    side_draw_flag.update({rand_int:0.01+0.03*rand})
+    side_draw_flag.update({rand_int:0.01+0.02*rand})
     # gasoline 5 - 9
-    rand_int = np.random.randint(low=5,high=10)
+    rand_int = np.random.randint(low=3,high=10)
     rand = np.random.rand()
     side_draw_flag.update({rand_int:0.1+0.2*rand})
     # diesel 11 - 18
-    rand_int = np.random.randint(low=11,high=19)
+    rand_int = np.random.randint(low=10,high=19)
     rand = np.random.rand()
     side_draw_flag.update({rand_int:0.2+0.3*rand})
 
@@ -737,7 +737,7 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
     '''
     Following design specification, remove non-reactive stages' catalyst and feed, feed cat first then Q
     '''
-    for j in model.reactive:
+    for j in model.TRAY_nonreactive:
 
         model.reactive[j].cat.fix(catalyst_flag[j])
         model.reactive[j].F.fix(feed_flag[j])
@@ -745,7 +745,37 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
         # Therefore, add an additional layer of protection with temperature lower bounds
         # model.reactive[j].T.setlb(model.reactive[j].T.ub - 1)
 
-        progress = '> Working to adjust and feed from stage {}:'.format(j)
+        progress = '> Working to adjust catalyst and feed {}:'.format(j)
+
+        results = opt.solve(model,tee=False)
+        update_dual(pe,model)
+
+        if results.solver.termination_condition.key != 'optimal':
+            not_optimum_counter += 1
+        else:
+            not_optimum_counter = 0
+
+        with HiddenLogs(log_text_dir):
+            print('\n{}'.format(progress))
+            print('-'*108)
+            beautify(pe,model)
+            log_now()
+            check_iteration(output_dir)
+            if not_optimum_counter == 1:
+                print('NOT Optimum: ' + results.solver.termination_condition.key)
+                master_log.write('Failed: {}\n'.format(progress))
+                exit()
+
+    for alpha in np.arange(0,1,0.05)+0.05:
+        for j in model.TRAY_reactive:
+
+            model.reactive[j].cat.fix(catalyst_flag[j]*alpha + 3000*(1-alpha))
+            model.reactive[j].F.fix(feed_flag[j]*alpha + 1*(1-alpha))
+        # During this step, it is very likely for the temperature to not conform to the given profile
+        # Therefore, add an additional layer of protection with temperature lower bounds
+        # model.reactive[j].T.setlb(model.reactive[j].T.ub - 1)
+
+        progress = '> Working to adjust catalyst and feed, alpha = {}:'.format(alpha)
 
         results = opt.solve(model,tee=False)
         update_dual(pe,model)
@@ -1068,9 +1098,11 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
         return sum(model.x_P_dry[i,p] for i in m.PRODUCT_cnumber[p]) >= model.quality_spec[p]
     model.product_spec_con = pe.Constraint(m.PRODUCT,rule=product_spec_rule)
 
+    model.total_feed = pe.Var(within=pe.NonNegativeReals,bounds=(1,10),initialize=10)
     model.total_feed_con = pe.ConstraintList()
-    model.total_feed_con.add(expr = sum(model.reactive[j].F for j in model.reactive) == 10);
+    model.total_feed_con.add(expr = sum(model.reactive[j].F for j in model.reactive) == model.total_feed);
 
+    model.total_feed.fix(10)
     for j in model.reactive:
         model.reactive[j].F.unfix()
         model.reactive[j].F.setlb(1e-3)
@@ -1085,11 +1117,11 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
     model.total_cat_con.add(expr = sum(model.reactive[j].cat for j in model.reactive) == 10*3000);
 
     model.N_tray['gasoline'].unfix();
-    model.N_tray['gasoline'].setlb(5)
+    model.N_tray['gasoline'].setlb(3)
     model.N_tray['gasoline'].setub(9)
 
     model.N_tray['diesel'].unfix();
-    model.N_tray['diesel'].setlb(11)
+    model.N_tray['diesel'].setlb(10)
     model.N_tray['diesel'].setub(18)
 
     with HiddenPrints():
@@ -1106,7 +1138,7 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
                                     20*model.P_total['intermediate']+\
                                     90*model.P_total['gasoline']+\
                                     128*model.P_total['diesel']+\
-                                    150*model.P_total['heavy'], sense = pe.maximize)
+                                    100*model.P_total['heavy'], sense = pe.maximize)
 
     progress = '> One-step Optimization - Revenue'
 
@@ -1140,7 +1172,7 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
     '''
 
     model.sigma_reflux = pe.Param(initialize=0.5,mutable=True)
-    model.N_reflux_tray = pe.Var(within=pe.NonNegativeReals,bounds=(1,7),initialize=1) # bounded by upper section non-reactive trays
+    model.N_reflux_tray = pe.Var(within=pe.NonNegativeReals,bounds=(1,5),initialize=1) # bounded by upper section non-reactive trays
 
     model.del_component(model.L_condenser_con)
     model.del_component(model.Lx_condenser_con)
@@ -1202,6 +1234,7 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
     '''
 
     model.N_reflux_tray.unfix();
+    model.total_feed.unfix()
 
     model.del_component(model.obj)
     model.obj = augmented_objective(pe,model,expr = \
@@ -1209,10 +1242,10 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
                                     20*model.P_total['intermediate']+\
                                     90*model.P_total['gasoline']+\
                                     128*model.P_total['diesel']+\
-                                    150*model.P_total['heavy']+\
+                                    100*model.P_total['heavy']+\
                                     1.8*model.condenser.V['P']-\
-                                    2.24*sum(model.reactive[j].F for j in model.reactive)+\
-                                    0.0025*(model.N_reflux_tray-1), sense = pe.maximize)
+                                    2.24*model.total_feed+\
+                                    0.005*(model.N_reflux_tray-1), sense = pe.maximize)
 
     progress = '> One-step Optimization - Profit'
 
@@ -1224,8 +1257,10 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
         print('-'*108)
         beautify(pe,model)
         check_product_spec(model)
+        print('Reflux Tray Location:',model.N_reflux_tray.value)
         log_now()
         check_iteration(output_dir)
+
         if results.solver.termination_condition.key != 'optimal':
             print('NOT Optimum: ' + results.solver.termination_condition.key)
             master_log.write('Failed: {}\n'.format(progress))
