@@ -1023,7 +1023,7 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
 
     opt = add_solver(pe, max_iter = 1000, warm_start = True, output = output_dir, option_dir = option_dir)
 
-    progress = '> Added DDF formulation'
+    progress = '> Added DDF formulation - Product'
 
     results = opt.solve(model,tee=False)
     update_dual(pe,model)
@@ -1098,12 +1098,17 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
 
     '''save a version that could be reused
     '''
-    master_model = deepcopy(model)
+    # master_model = deepcopy(model)
 
     model.del_component(model.obj)
-    model.obj = augmented_objective(pe,model,expr = model.P_total['gasoline'], sense = pe.maximize)
+    model.obj = augmented_objective(pe,model,expr = \
+                                    43*model.P_total['naphtha']+\
+                                    20*model.P_total['intermediate']+\
+                                    90*model.P_total['gasoline']+\
+                                    128*model.P_total['diesel']+\
+                                    150*model.P_total['heavy'], sense = pe.maximize)
 
-    progress = '> One-step Optimization - Gasoline'
+    progress = '> One-step Optimization - Revenue'
 
     results = opt.solve(model,tee=False)
     update_dual(pe,model)
@@ -1118,6 +1123,7 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
         if results.solver.termination_condition.key != 'optimal':
             print('NOT Optimum: ' + results.solver.termination_condition.key)
             master_log.write('Failed: {}\n'.format(progress))
+            exit()
         else:
             print('Optimization Complete\nPlease check the logs for details')
             master_log.write('Success: {}\n'.format(progress))
@@ -1125,14 +1131,53 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
     # plot_distribution(model,pdf,'Optimized Temperature, reflux, product flow and tray, feed, catalyst')
     # plot_product_distribution(model,pdf)
 
-    '''diesel opt
+    '''profit opt
     '''
-    model = deepcopy(master_model)
+    # model = deepcopy(master_model)
 
-    model.del_component(model.obj)
-    model.obj = augmented_objective(pe,model,expr = model.P_total['diesel'], sense = pe.maximize)
+    '''
+    First thing, again, is to transfer reflux to DDF formulation
+    '''
 
-    progress = '> One-step Optimization - Diesel'
+    model.sigma_reflux = pe.Param(initialize=0.5,mutable=True)
+    model.N_reflux_tray = pe.Var(within=pe.NonNegativeReals,bounds=(1,7),initialize=1) # bounded by upper section non-reactive trays
+
+    model.del_component(model.L_condenser_con)
+    model.del_component(model.Lx_condenser_con)
+    model.del_component(model.Lh_condenser_con)
+
+    def L_condenser_rule(model,j):
+        return pe.log(model.scale_epi + (model.reactive[j].L['R'] - model.epi)*sum(pe.exp(-(model.TRAY_total.ord(str(j_))-1-model.N_reflux_tray)**2\
+                /model.sigma_reflux) for j_ in model.TRAY)) == pe.log(model.scale_epi + (model.condenser.L['out'] - model.epi*len(model.TRAY)) * \
+                pe.exp(-(model.TRAY_total.ord(str(j))-1-model.N_reflux_tray)**2/model.sigma_reflux))
+    model.L_condenser_con = pe.Constraint(model.TRAY,rule=L_condenser_rule)
+
+    def Lx_condenser_rule(model,j,i):
+        return model.reactive[j].x_['R',i] == model.condenser.x[i]
+    model.Lx_condenser_con = pe.Constraint(model.TRAY,m.COMP_TOTAL,rule=Lx_condenser_rule)
+
+    def Lh_condenser_rule(model,j):
+        return model.reactive[j].H_L_['R'] == model.condenser.H_L
+    model.Lh_condenser_con = pe.Constraint(model.TRAY,rule=Lh_condenser_rule)
+
+    ''' Initialize
+    '''
+
+    model.reactive[model.TRAY.first()].L['in'].fix(0)
+    for i in m.COMP_TOTAL:
+        model.reactive[model.TRAY.first()].x_['in',i].fix(0)
+    model.reactive[model.TRAY.first()].H_L_['in'].fix(0)
+
+    for j in model.reactive:
+        model.reactive[j].L['R'].unfix(); model.reactive[j].L['R'].setlb(model.epi.value); model.reactive[j].L['R'].set_value(1.1*model.epi.value)
+        for i in m.COMP_TOTAL:
+            model.reactive[j].x_['R',i].unfix(); model.reactive[j].x_['R',i].set_value(model.condenser.x[i].value)
+        model.reactive[j].H_L_['R'].unfix(); model.reactive[j].H_L_['R'].set_value(model.condenser.H_L.value)
+
+    model.N_reflux_tray.fix(1)
+    model.reactive[model.TRAY.first()].L['R'].set_value(model.condenser.L['out'].value)
+
+    progress = '> Added DDF formulation - Reflux'
 
     results = opt.solve(model,tee=False)
     update_dual(pe,model)
@@ -1147,19 +1192,29 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
         if results.solver.termination_condition.key != 'optimal':
             print('NOT Optimum: ' + results.solver.termination_condition.key)
             master_log.write('Failed: {}\n'.format(progress))
+            exit()
         else:
             print('Optimization Complete\nPlease check the logs for details')
             master_log.write('Success: {}\n'.format(progress))
 
-    '''multi opt
+
+    ''' optimize
     '''
-    model = deepcopy(master_model)
+
+    model.N_reflux_tray.unfix();
 
     model.del_component(model.obj)
-    model.obj = augmented_objective(pe,model,expr = model.P_total['diesel'] + \
-                                    model.P_total['gasoline'] + model.P_total['naphtha'], sense = pe.maximize)
+    model.obj = augmented_objective(pe,model,expr = \
+                                    43*model.P_total['naphtha']+\
+                                    20*model.P_total['intermediate']+\
+                                    90*model.P_total['gasoline']+\
+                                    128*model.P_total['diesel']+\
+                                    150*model.P_total['heavy']+\
+                                    1.8*model.condenser.V['P']-\
+                                    2.24*sum(model.reactive[j].F for j in model.reactive)+\
+                                    0.0025*(model.N_reflux_tray-1), sense = pe.maximize)
 
-    progress = '> One-step Optimization - Naphtha + Gasoline + Diesel'
+    progress = '> One-step Optimization - Profit'
 
     results = opt.solve(model,tee=False)
     update_dual(pe,model)
