@@ -1148,6 +1148,7 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
     with HiddenLogs(log_text_dir):
         print('\n{}'.format(progress))
         print('-'*108)
+        print('obj',model.obj())
         beautify(pe,model)
         check_product_spec(model)
         log_now()
@@ -1243,7 +1244,7 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
                                     90*model.P_total['gasoline']+\
                                     128*model.P_total['diesel']+\
                                     100*model.P_total['heavy']+\
-                                    1.8*model.condenser.V['P']-\
+                                    1.3*model.condenser.V['P']-\
                                     2.24*model.total_feed+\
                                     0.005*(model.N_reflux_tray-1), sense = pe.maximize)
 
