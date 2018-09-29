@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 '''
 How to Train Your Dragon: V6
-New changes, remove reboiler (set it to fixed value in this case)
+New changes, remove stripping section (set it to fixed value in this case)
 To be used with multi-start, randomized system operating parameters
 Sequentially initialize FT reactive distillation model automatically
 Add DDF module and then optimize during one step
@@ -766,7 +766,7 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
                 master_log.write('Failed: {}\n'.format(progress))
                 exit()
 
-    for alpha in np.arange(0,1,0.05)+0.05:
+    for alpha in np.arange(0,1,0.04)+0.04:
         for j in model.TRAY_reactive:
 
             model.reactive[j].cat.fix(catalyst_flag[j]*alpha + 3000*(1-alpha))
@@ -775,7 +775,7 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
         # Therefore, add an additional layer of protection with temperature lower bounds
         # model.reactive[j].T.setlb(model.reactive[j].T.ub - 1)
 
-        progress = '> Working to adjust catalyst and feed, alpha = {}:'.format(alpha)
+        progress = '> Working to adjust catalyst and feed, alpha = {:.2f}:'.format(alpha)
 
         results = opt.solve(model,tee=False)
         update_dual(pe,model)
@@ -1098,12 +1098,12 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
         return sum(model.x_P_dry[i,p] for i in m.PRODUCT_cnumber[p]) >= model.quality_spec[p]
     model.product_spec_con = pe.Constraint(m.PRODUCT,rule=product_spec_rule)
 
-    model.total_feed = pe.Var(within=pe.NonNegativeReals,bounds=(1,10),initialize=10)
+    model.total_feed = pe.Var(within=pe.NonNegativeReals,bounds=(1,30),initialize=10)
     model.total_feed_con = pe.ConstraintList()
-    model.total_feed_con.add(expr = sum(model.reactive[j].F for j in model.reactive) == model.total_feed);
+    model.total_feed_con.add(expr = sum(model.reactive[j].F for j in model.TRAY_reactive) == model.total_feed);
 
     model.total_feed.fix(10)
-    for j in model.reactive:
+    for j in model.TRAY_reactive:
         model.reactive[j].F.unfix()
         model.reactive[j].F.setlb(1e-3)
         model.reactive[j].F.setub(10)
@@ -1234,7 +1234,7 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
     '''
 
     model.N_reflux_tray.unfix();
-    model.total_feed.unfix()
+    model.total_feed.unfix();
 
     model.del_component(model.obj)
     model.obj = augmented_objective(pe,model,expr = \
@@ -1255,9 +1255,11 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
     with HiddenLogs(log_text_dir):
         print('\n{}'.format(progress))
         print('-'*108)
+        print('obj',model.obj())
         beautify(pe,model)
         check_product_spec(model)
         print('Reflux Tray Location:',model.N_reflux_tray.value)
+        print('Total Feed:',model.total_feed)
         log_now()
         check_iteration(output_dir)
 
