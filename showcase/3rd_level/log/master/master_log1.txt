@@ -1,0 +1,40 @@
+
+------------------------------------------------------------------------------------------------------------
+ATTENTION: NEW RUN BEGINNING
+2018-09-30 20:38:02
+log name: Preset_Case:_11_pf
+
+------------------------------------------------------------------------------------------------------------
+ATTENTION: NEW RUN BEGINNING
+2018-09-30 20:43:10
+log name: Preset_Case:_11_pf
+
+------------------------------------------------------------------------------------------------------------
+ATTENTION: NEW RUN BEGINNING
+2018-09-30 20:46:59
+log name: Preset_Case:_11_pf
+Success: > Initialization
+Success: > Added DDF formulation - Product
+Success: > One-step Optimization - Revenue
+Success: > Added DDF formulation - Reflux
+Success: > One-step Optimization - Profit 3
+Success: > One-step Optimization - Profit 3-1
+Success: > One-step Optimization - Profit 3-2
+
+------------------------------------------------------------------------------------------------------------
+ATTENTION: NEW RUN BEGINNING
+2018-09-30 21:38:14
+log name: Preset_Case:_12_pf
+Success: > Initialization
+Success: > Added DDF formulation - Product
+Success: > One-step Optimization - Revenue
+Success: > Added DDF formulation - Reflux
+Success: > One-step Optimization - Profit 3
+Success: > One-step Optimization - Profit 3-1
+Success: > One-step Optimization - Profit 3-2
+
+------------------------------------------------------------------------------------------------------------
+ATTENTION: NEW RUN BEGINNING
+2018-09-30 22:20:59
+log name: Preset_Case:_13_pf
+Failed: > Working on stage 1, changing Q to 32.84:
