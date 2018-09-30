@@ -1,0 +1,39 @@
+
+------------------------------------------------------------------------------------------------------------
+ATTENTION: NEW RUN BEGINNING
+2018-09-30 16:41:28
+log name: Preset_Case:_14_pf
+Success: > Initialization
+Success: > Added DDF formulation - Product
+Success: > One-step Optimization - Revenue
+Success: > Added DDF formulation - Reflux
+Success: > One-step Optimization - Profit 3-1
+Success: > One-step Optimization - Profit 3-2
+Success: > One-step Optimization - Profit 3-3
+Success: > One-step Optimization - Profit 3-4
+
+------------------------------------------------------------------------------------------------------------
+ATTENTION: NEW RUN BEGINNING
+2018-09-30 17:25:19
+log name: Preset_Case:_15_pf
+Success: > Initialization
+Success: > Added DDF formulation - Product
+Success: > One-step Optimization - Revenue
+Success: > Added DDF formulation - Reflux
+Success: > One-step Optimization - Profit 3-1
+Success: > One-step Optimization - Profit 3-2
+Success: > One-step Optimization - Profit 3-3
+Success: > One-step Optimization - Profit 3-4
+
+------------------------------------------------------------------------------------------------------------
+ATTENTION: NEW RUN BEGINNING
+2018-09-30 18:14:49
+log name: Preset_Case:_16_pf
+Success: > Initialization
+Success: > Added DDF formulation - Product
+Success: > One-step Optimization - Revenue
+Success: > Added DDF formulation - Reflux
+Success: > One-step Optimization - Profit 3-1
+Success: > One-step Optimization - Profit 3-2
+Success: > One-step Optimization - Profit 3-3
+Success: > One-step Optimization - Profit 3-4
