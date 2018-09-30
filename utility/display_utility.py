@@ -5,7 +5,7 @@ import numpy as np
 from utility.data_utility import cal_MW, cal_cnumber
 from matplotlib import pyplot as plt
 from utility.model_utility import tray_translator
-# from matplotlib.backends.backend_pdf import PdfPages
+from matplotlib.backends.backend_pdf import PdfPages
 
 '''-----------------------------------------------------------------------------
 This can be used to duplicate the output to an external
@@ -465,5 +465,6 @@ def plot_product_distribution(model,open_log_pdf = None):
     if open_log_pdf:
         open_log_pdf.savefig()
 
-    plt.show()
+    if "DISPLAY" in os.environ:
+        plt.show()
     plt.close(fig)
