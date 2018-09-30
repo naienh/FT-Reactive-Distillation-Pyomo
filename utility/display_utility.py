@@ -1,5 +1,8 @@
 from global_sets.component import m
 import os, sys
+import matplotlib
+if "DISPLAY" not in os.environ:
+    matplotlib.use("Agg")
 import copy
 import numpy as np
 from utility.data_utility import cal_MW, cal_cnumber
@@ -439,8 +442,8 @@ def plot_distribution(model,open_log_pdf = None,title = None):
 
     if open_log_pdf:
         open_log_pdf.savefig()
-
-    plt.show()
+    if "DISPLAY" in os.environ:
+        plt.show()
     plt.close()
 
 def plot_product_distribution(model,open_log_pdf = None):
