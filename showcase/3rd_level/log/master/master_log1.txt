@@ -1,0 +1,105 @@
+
+------------------------------------------------------------------------------------------------------------
+ATTENTION: NEW RUN BEGINNING
+2018-09-30 08:30:56
+log name: Preset_Case:_1_pf
+Success: > Initialization
+Success: > Added DDF formulation - Product
+Success: > One-step Optimization - Revenue
+Success: > Added DDF formulation - Reflux
+Success: > One-step Optimization - Profit 3-1
+Success: > One-step Optimization - Profit 3-2
+Success: > One-step Optimization - Profit 3-3
+Success: > One-step Optimization - Profit 3-3
+
+------------------------------------------------------------------------------------------------------------
+ATTENTION: NEW RUN BEGINNING
+2018-09-30 09:06:05
+log name: Preset_Case:_2_pf
+Success: > Initialization
+Success: > Added DDF formulation - Product
+Failed: > One-step Optimization - Revenue
+
+------------------------------------------------------------------------------------------------------------
+ATTENTION: NEW RUN BEGINNING
+2018-09-30 09:43:16
+log name: Preset_Case:_3_pf
+Success: > Initialization
+Success: > Added DDF formulation - Product
+Failed: > One-step Optimization - Revenue
+
+------------------------------------------------------------------------------------------------------------
+ATTENTION: NEW RUN BEGINNING
+2018-09-30 10:37:58
+log name: Preset_Case:_4_pf
+Success: > Initialization
+Success: > Added DDF formulation - Product
+Success: > One-step Optimization - Revenue
+Success: > Added DDF formulation - Reflux
+Success: > One-step Optimization - Profit 3-1
+Success: > One-step Optimization - Profit 3-2
+Success: > One-step Optimization - Profit 3-3
+Success: > One-step Optimization - Profit 3-3
+
+------------------------------------------------------------------------------------------------------------
+ATTENTION: NEW RUN BEGINNING
+2018-09-30 11:10:47
+log name: Preset_Case:_5_pf
+Success: > Initialization
+Success: > Added DDF formulation - Product
+Success: > One-step Optimization - Revenue
+Success: > Added DDF formulation - Reflux
+Success: > One-step Optimization - Profit 3-1
+Success: > One-step Optimization - Profit 3-2
+Success: > One-step Optimization - Profit 3-3
+Success: > One-step Optimization - Profit 3-3
+
+------------------------------------------------------------------------------------------------------------
+ATTENTION: NEW RUN BEGINNING
+2018-09-30 11:48:00
+log name: Preset_Case:_6_pf
+Success: > Initialization
+Success: > Added DDF formulation - Product
+Failed: > One-step Optimization - Revenue
+
+------------------------------------------------------------------------------------------------------------
+ATTENTION: NEW RUN BEGINNING
+2018-09-30 12:27:18
+log name: Preset_Case:_7_pf
+Success: > Initialization
+Success: > Added DDF formulation - Product
+Success: > One-step Optimization - Revenue
+Success: > Added DDF formulation - Reflux
+Success: > One-step Optimization - Profit 3-1
+Success: > One-step Optimization - Profit 3-2
+Success: > One-step Optimization - Profit 3-3
+Success: > One-step Optimization - Profit 3-3
+
+------------------------------------------------------------------------------------------------------------
+ATTENTION: NEW RUN BEGINNING
+2018-09-30 13:10:53
+log name: Preset_Case:_8_pf
+Success: > Initialization
+Success: > Added DDF formulation - Product
+Failed: > One-step Optimization - Revenue
+
+------------------------------------------------------------------------------------------------------------
+ATTENTION: NEW RUN BEGINNING
+2018-09-30 13:51:51
+log name: Preset_Case:_9_pf
+Success: > Initialization
+Success: > Added DDF formulation - Product
+Failed: > One-step Optimization - Revenue
+
+------------------------------------------------------------------------------------------------------------
+ATTENTION: NEW RUN BEGINNING
+2018-09-30 14:22:48
+log name: Preset_Case:_10_pf
+Success: > Initialization
+Success: > Added DDF formulation - Product
+Success: > One-step Optimization - Revenue
+Success: > Added DDF formulation - Reflux
+Success: > One-step Optimization - Profit 3-1
+Success: > One-step Optimization - Profit 3-2
+Success: > One-step Optimization - Profit 3-3
+Success: > One-step Optimization - Profit 3-3
