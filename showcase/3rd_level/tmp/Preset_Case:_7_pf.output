@@ -1,0 +1,100 @@
+
+List of user-set options:
+
+                                    Name   Value                used
+                           compl_inf_tol = 1                     yes
+                         constr_viol_tol = 1                     yes
+                            dual_inf_tol = 1000                  yes
+                           linear_solver = ma97                  yes
+                              ma86_small = 1e-30                  no
+                                  ma86_u = 0.0001                 no
+                              ma97_order = best                  yes
+                              ma97_small = 1e-30                 yes
+                            ma97_switch1 = at_start              yes
+                            ma97_switch2 = od_hd_reuse           yes
+                                  ma97_u = 1e-06                 yes
+                               ma97_umax = 0.5                   yes
+                                max_iter = 1000                  yes
+                    max_refinement_steps = 20                    yes
+                    min_refinement_steps = 5                     yes
+                                 mu_init = 1e-06                 yes
+           mu_superlinear_decrease_power = 1.25                  yes
+                   nlp_scaling_min_value = 1e-08                 yes
+                        option_file_name = Preset_Case:_7_pf.opt  yes
+                             output_file = ./tmp/Preset_Case:_7_pf.output  yes
+                      print_user_options = yes                   yes
+        required_infeasibility_reduction = 1                      no
+                                     tol = 1e-08                 yes
+                   warm_start_bound_frac = 1e-20                 yes
+                   warm_start_bound_push = 1e-20                 yes
+                   warm_start_init_point = yes                   yes
+              warm_start_mult_bound_push = 1e-20                 yes
+                warm_start_mult_init_max = 1e+40                 yes
+             warm_start_slack_bound_frac = 1e-20                 yes
+             warm_start_slack_bound_push = 1e-20                 yes
+
+******************************************************************************
+This program contains Ipopt, a library for large-scale nonlinear optimization.
+ Ipopt is released as open source code under the Eclipse Public License (EPL).
+         For more information visit http://projects.coin-or.org/Ipopt
+******************************************************************************
+
+This is Ipopt version 3.12.10, running with linear solver ma97.
+
+Number of nonzeros in equality constraint Jacobian...:   123443
+Number of nonzeros in inequality constraint Jacobian.:      213
+Number of nonzeros in Lagrangian Hessian.............:    49069
+
+Total number of variables............................:    31591
+                     variables with only lower bounds:    12912
+                variables with lower and upper bounds:    15130
+                     variables with only upper bounds:        0
+Total number of equality constraints.................:    31483
+Total number of inequality constraints...............:       25
+        inequality constraints with only lower bounds:        4
+   inequality constraints with lower and upper bounds:        0
+        inequality constraints with only upper bounds:       21
+
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+   0 -1.4686139e+00 4.06e-03 1.02e+00  -6.0 0.00e+00    -  0.00e+00 0.00e+00   0
+   1 -1.4681326e+00 6.69e-03 1.02e+00  -6.0 2.77e+05    -  1.34e-04 2.70e-05h  7
+   2 -1.4682804e+00 6.68e-03 5.05e+01  -6.0 2.30e+03    -  2.24e-01 1.93e-03h  1
+   3 -1.4880982e+00 2.43e-01 1.90e+02  -6.0 2.30e+03    -  1.60e-01 2.60e-01f  1
+   4 -1.5166811e+00 1.17e+00 7.78e+02  -6.0 2.26e+03    -  5.90e-01 6.07e-01f  1
+   5 -1.5220288e+00 1.04e+00 5.10e+02  -6.0 1.80e+03    -  1.00e+00 1.00e+00h  1
+   6 -1.5190910e+00 5.13e-01 2.52e+02  -6.0 4.63e+02    -  1.00e+00 5.09e-01h  1
+   7 -1.5161077e+00 1.54e-02 4.64e+00  -6.0 2.38e+02    -  1.00e+00 1.00e+00h  1
+   8 -1.5160428e+00 1.84e-06 1.70e-01  -6.0 3.78e+00    -  1.00e+00 1.00e+00h  1
+   9 -1.5160420e+00 4.12e-08 8.17e-03  -6.0 6.16e-01    -  1.00e+00 1.00e+00h  1
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+  10 -1.5160419e+00 2.82e-10 1.61e-05  -6.0 2.73e-02    -  1.00e+00 1.00e+00h  1
+  11 -1.5161192e+00 5.86e-03 3.34e+01  -7.5 7.54e+01    -  6.56e-01 7.71e-01h  1
+  12 -1.5161279e+00 1.38e-03 1.33e+01  -7.5 1.93e+01    -  1.00e+00 8.34e-01h  1
+  13 -1.5161264e+00 1.98e-05 4.67e-03  -7.5 3.22e+00    -  1.00e+00 1.00e+00h  1
+  14 -1.5161264e+00 4.01e-10 9.76e-06  -7.5 2.04e-02    -  1.00e+00 1.00e+00h  1
+  15 -1.5161264e+00 2.94e-10 1.71e-11  -7.5 3.07e-05    -  1.00e+00 1.00e+00h  1
+  16 -1.5161281e+00 9.11e-06 9.83e-01  -9.0 2.52e+00    -  9.35e-01 8.26e-01h  1
+  17 -1.5161284e+00 4.07e-07 1.21e-04  -9.0 4.40e-01    -  1.00e+00 1.00e+00f  1
+  18 -1.5161284e+00 2.94e-10 5.10e-10  -9.0 5.10e-05    -  1.00e+00 1.00e+00h  1
+
+Number of Iterations....: 18
+
+                                   (scaled)                 (unscaled)
+Objective...............:  -1.1844753292410362e+00   -1.5161284214285262e+00
+Dual infeasibility......:   5.1026007725341440e-10    6.5313289888437044e-10
+Constraint violation....:   2.9363276827371054e-10    2.9363276827371054e-10
+Complementarity.........:   1.0587819096374047e-09    1.3552408443358781e-09
+Overall NLP error.......:   1.0587819096374047e-09    1.3552408443358781e-09
+
+
+Number of objective function evaluations             = 26
+Number of objective gradient evaluations             = 19
+Number of equality constraint evaluations            = 26
+Number of inequality constraint evaluations          = 26
+Number of equality constraint Jacobian evaluations   = 19
+Number of inequality constraint Jacobian evaluations = 19
+Number of Lagrangian Hessian evaluations             = 18
+Total CPU secs in IPOPT (w/o function evaluations)   =     23.857
+Total CPU secs in NLP function evaluations           =      0.539
+
+EXIT: Optimal Solution Found.

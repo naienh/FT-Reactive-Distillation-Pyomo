@@ -1,0 +1,88 @@
+
+------------------------------------------------------------------------------------------------------------
+ATTENTION: NEW RUN BEGINNING
+2018-09-29 21:36:07
+log name: Preset_Case:_21_pf
+Success: > Initialization
+Success: > Added DDF formulation - Product
+Success: > One-step Optimization - Revenue
+Success: > Added DDF formulation - Reflux
+Success: > One-step Optimization - Profit
+
+------------------------------------------------------------------------------------------------------------
+ATTENTION: NEW RUN BEGINNING
+2018-09-29 22:12:28
+log name: Preset_Case:_22_pf
+Success: > Initialization
+Success: > Added DDF formulation - Product
+Failed: > One-step Optimization - Revenue
+
+------------------------------------------------------------------------------------------------------------
+ATTENTION: NEW RUN BEGINNING
+2018-09-29 22:55:08
+log name: Preset_Case:_23_pf
+Success: > Initialization
+Success: > Added DDF formulation - Product
+Failed: > One-step Optimization - Revenue
+
+------------------------------------------------------------------------------------------------------------
+ATTENTION: NEW RUN BEGINNING
+2018-09-29 23:38:04
+log name: Preset_Case:_24_pf
+Success: > Initialization
+Success: > Added DDF formulation - Product
+Success: > One-step Optimization - Revenue
+Success: > Added DDF formulation - Reflux
+Success: > One-step Optimization - Profit
+
+------------------------------------------------------------------------------------------------------------
+ATTENTION: NEW RUN BEGINNING
+2018-09-30 00:05:00
+log name: Preset_Case:_25_pf
+Success: > Initialization
+Success: > Added DDF formulation - Product
+Success: > One-step Optimization - Revenue
+Success: > Added DDF formulation - Reflux
+Success: > One-step Optimization - Profit
+
+------------------------------------------------------------------------------------------------------------
+ATTENTION: NEW RUN BEGINNING
+2018-09-30 00:27:33
+log name: Preset_Case:_26_pf
+Success: > Initialization
+Success: > Added DDF formulation - Product
+Failed: > One-step Optimization - Revenue
+
+------------------------------------------------------------------------------------------------------------
+ATTENTION: NEW RUN BEGINNING
+2018-09-30 01:08:28
+log name: Preset_Case:_27_pf
+Success: > Initialization
+Success: > Added DDF formulation - Product
+Failed: > One-step Optimization - Revenue
+
+------------------------------------------------------------------------------------------------------------
+ATTENTION: NEW RUN BEGINNING
+2018-09-30 01:58:08
+log name: Preset_Case:_28_pf
+Success: > Initialization
+Success: > Added DDF formulation - Product
+Success: > One-step Optimization - Revenue
+Success: > Added DDF formulation - Reflux
+Success: > One-step Optimization - Profit
+
+------------------------------------------------------------------------------------------------------------
+ATTENTION: NEW RUN BEGINNING
+2018-09-30 02:25:47
+log name: Preset_Case:_29_pf
+Success: > Initialization
+Success: > Added DDF formulation - Product
+Success: > One-step Optimization - Revenue
+Success: > Added DDF formulation - Reflux
+Success: > One-step Optimization - Profit
+
+------------------------------------------------------------------------------------------------------------
+ATTENTION: NEW RUN BEGINNING
+2018-09-30 02:56:21
+log name: Preset_Case:_30_pf
+Failed: > Working to adjust catalyst and feed, alpha = 1.00:
