@@ -1234,6 +1234,8 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
     ''' optimize
     '''
 
+    master_model = deepcopy(model)
+
     model.N_reflux_tray.unfix();
     model.total_feed.unfix();
 
@@ -1274,6 +1276,8 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
     '''3-2
     '''
 
+    model = deepcopy(master_model)
+
     model.del_component(model.obj)
     model.obj = augmented_objective(pe,model,expr = \
                                     43*model.P_total['naphtha']+\
@@ -1282,7 +1286,7 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
                                     128*model.P_total['diesel']+\
                                     100*model.P_total['heavy']+\
                                     1.3*model.condenser.V['P']-\
-                                    1.5*model.total_feed+\
+                                    2.1*model.total_feed+\
                                     0.005*(model.N_reflux_tray-1), sense = pe.maximize)
 
     progress = '> One-step Optimization - Profit 3-2'
@@ -1308,8 +1312,39 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
             print('Optimization Complete\nPlease check the logs for details')
             master_log.write('Success: {}\n'.format(progress))
 
-    '''3-3
-    '''
+    model.del_component(model.obj)
+    model.obj = augmented_objective(pe,model,expr = \
+                                    43*model.P_total['naphtha']+\
+                                    20*model.P_total['intermediate']+\
+                                    90*model.P_total['gasoline']+\
+                                    128*model.P_total['diesel']+\
+                                    100*model.P_total['heavy']+\
+                                    1.3*model.condenser.V['P']-\
+                                    2*model.total_feed+\
+                                    0.005*(model.N_reflux_tray-1), sense = pe.maximize)
+
+    progress = '> One-step Optimization - Profit 3-3'
+
+    results = opt.solve(model,tee=False)
+    update_dual(pe,model)
+
+    with HiddenLogs(log_text_dir):
+        print('\n{}'.format(progress))
+        print('-'*108)
+        print('obj',model.obj())
+        beautify(pe,model)
+        check_product_spec(model)
+        print('Reflux Tray Location:',model.N_reflux_tray.value)
+        print('Total Feed:',model.total_feed.value)
+        log_now()
+        check_iteration(output_dir)
+
+        if results.solver.termination_condition.key != 'optimal':
+            print('NOT Optimum: ' + results.solver.termination_condition.key)
+            master_log.write('Failed: {}\n'.format(progress))
+        else:
+            print('Optimization Complete\nPlease check the logs for details')
+            master_log.write('Success: {}\n'.format(progress))
 
     model.del_component(model.obj)
     model.obj = augmented_objective(pe,model,expr = \
@@ -1319,10 +1354,10 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
                                     128*model.P_total['diesel']+\
                                     100*model.P_total['heavy']+\
                                     1.3*model.condenser.V['P']-\
-                                    3.5*model.total_feed+\
+                                    1.8*model.total_feed+\
                                     0.005*(model.N_reflux_tray-1), sense = pe.maximize)
 
-    progress = '> One-step Optimization - Profit 3-2'
+    progress = '> One-step Optimization - Profit 3-3'
 
     results = opt.solve(model,tee=False)
     update_dual(pe,model)
