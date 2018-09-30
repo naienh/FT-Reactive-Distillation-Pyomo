@@ -1234,10 +1234,12 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
     ''' optimize
     '''
 
-    master_model = deepcopy(model)
+
 
     model.N_reflux_tray.unfix();
     model.total_feed.unfix();
+
+    master_model = deepcopy(model)
 
     model.del_component(model.obj)
     model.obj = augmented_objective(pe,model,expr = \
@@ -1357,7 +1359,7 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
                                     1.8*model.total_feed+\
                                     0.005*(model.N_reflux_tray-1), sense = pe.maximize)
 
-    progress = '> One-step Optimization - Profit 3-3'
+    progress = '> One-step Optimization - Profit 3-4'
 
     results = opt.solve(model,tee=False)
     update_dual(pe,model)
