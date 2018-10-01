@@ -37,7 +37,7 @@ from stages.reactive_stage import reactive_stage_rule
 from stages.condenser_stage import condenser_stage_rule
 from stages.reboiler_stage import reboiler_stage_rule
 
-from utility.display_utility import beautify, beautify_reactive, HiddenLogs, HiddenPrints, \
+from utility.display_utility import beautify, beautify_reactive, HiddenLogs, HiddenPrints, plot_reflux_distribution,\
                                     plot_distribution, plot_product_distribution, check_product_spec
 from utility.model_utility import add_dual, update_dual, delete_dual, check_DOF, check_iteration, tray_translator
 from utility.model_utility import which_MPCC, select_MPCC, augmented_objective, add_solver, disable_restoration
@@ -1076,7 +1076,7 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
             master_log.write('Failed: {}\n'.format(progress))
             exit()
         else:
-            print('DDF Complete\nPlease check the logs for details')
+            print('DDF formulation - Product Complete\nPlease check the logs for details')
             master_log.write('Success: {}\n'.format(progress))
             plot_distribution(model,pdf,progress)
             plot_product_distribution(model,pdf)
@@ -1234,7 +1234,7 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
             master_log.write('Failed: {}\n'.format(progress))
             exit()
         else:
-            print('Optimization Complete\nPlease check the logs for details')
+            print('DDF formulation - Reflux Complete\nPlease check the logs for details')
             master_log.write('Success: {}\n'.format(progress))
 
     # plot_distribution(model,pdf,progress)
@@ -1284,10 +1284,16 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
         else:
             print('Optimization Complete\nPlease check the logs for details')
             master_log.write('Success: {}\n'.format(progress))
+
+            '''save the model
+            '''
+
             with open('{}.pickle'.format(model_save_dir),'wb') as f:
                 dill.dump(model,f,protocol=pickle.HIGHEST_PROTOCOL)
+
             plot_distribution(model,pdf,progress)
             plot_product_distribution(model,pdf)
+            plot_reflux_distribution(model,pdf)
 
     '''3-1
     '''
@@ -1303,7 +1309,7 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
                                     100*model.P_total['heavy']+\
                                     1.3*model.condenser.V['P']-\
                                     2.24*model.total_feed+\
-                                    0.2*(model.N_reflux_tray-1), sense = pe.maximize)
+                                    0.4*(model.N_reflux_tray-1), sense = pe.maximize)
 
     progress = '> One-step Optimization - Profit 3-1'
 
@@ -1329,6 +1335,7 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
             master_log.write('Success: {}\n'.format(progress))
             plot_distribution(model,pdf,progress)
             plot_product_distribution(model,pdf)
+            plot_reflux_distribution(model,pdf)
 
     '''3-2
     '''
@@ -1370,3 +1377,4 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
             master_log.write('Success: {}\n'.format(progress))
             plot_distribution(model,pdf,progress)
             plot_product_distribution(model,pdf)
+            plot_reflux_distribution(model,pdf)

@@ -1,8 +1,0 @@
-
-------------------------------------------------------------------------------------------------------------
-ATTENTION: NEW RUN BEGINNING
-2018-10-01 04:52:01
-log name: Preset_Case_18_pf
-Success: > Initialization
-Success: > Added DDF formulation - Product
-Failed: > One-step Optimization - Revenue

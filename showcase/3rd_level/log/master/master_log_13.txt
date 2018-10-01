@@ -1,6 +1,0 @@
-
-------------------------------------------------------------------------------------------------------------
-ATTENTION: NEW RUN BEGINNING
-2018-10-01 03:46:59
-log name: Preset_Case_13_pf
-Failed: > Working on stage 1, changing Q to 32.84:
