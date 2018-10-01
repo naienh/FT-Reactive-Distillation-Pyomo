@@ -15,12 +15,17 @@ import atexit
 sys.path.append(os.path.abspath('..'))
 sys.path.append(os.path.abspath('../..'))
 
+import matplotlib
+if "DISPLAY" not in os.environ:
+    matplotlib.use("Agg")
+
 import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
 
 import pickle
 import dill
+
 from copy import deepcopy
 from datetime import timedelta, datetime
 
@@ -59,7 +64,7 @@ if len(sys.argv) == 1:
     model_save_dir = './log/model/'+logname
 elif len(sys.argv) == 4:
     rand_file_name = sys.argv[1]
-    logname = 'Preset_Case:_{}'.format(sys.argv[2])+'_'+mpcc_type
+    logname = 'Preset_Case_{}'.format(sys.argv[2])+'_'+mpcc_type
     log_text_dir = './log/text/mul_onestep_'+logname+'.dat'
     log_figure_dir = './log/figure/mul_onestep_'+logname+'.pdf'
     output_dir = './tmp/'+logname+'.output'
@@ -632,8 +637,6 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
             master_log.write('Failed: {}\n'.format(progress))
             exit()
 
-    plot_distribution(model,pdf,progress)
-
     '''
     Introduce reflux, in a gentle way.
     linspace for rr_ratio is not linear in terms of reflux flow, has to be modified
@@ -914,7 +917,7 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
                         master_log.write('Failed: {}\n'.format(progress))
                         exit()
 
-    # plot_distribution(model,pdf,'Finalized Stage Temperatures')
+    # plot_distribution(model,pdf,'Initialization Complete')
 
     with HiddenLogs(log_text_dir):
         if results.solver.termination_condition.key != 'optimal':
@@ -1075,6 +1078,8 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
         else:
             print('DDF Complete\nPlease check the logs for details')
             master_log.write('Success: {}\n'.format(progress))
+            plot_distribution(model,pdf,progress)
+            plot_product_distribution(model,pdf)
 
     '''
     Optimization
@@ -1163,9 +1168,8 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
         else:
             print('Optimization Complete\nPlease check the logs for details')
             master_log.write('Success: {}\n'.format(progress))
-
-    # plot_distribution(model,pdf,'Optimized Temperature, reflux, product flow and tray, feed, catalyst')
-    # plot_product_distribution(model,pdf)
+            plot_distribution(model,pdf,progress)
+            plot_product_distribution(model,pdf)
 
     '''profit opt
     '''
@@ -1233,11 +1237,11 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
             print('Optimization Complete\nPlease check the logs for details')
             master_log.write('Success: {}\n'.format(progress))
 
+    # plot_distribution(model,pdf,progress)
+    # plot_product_distribution(model,pdf)
 
     ''' optimize
     '''
-
-
 
     model.N_reflux_tray.unfix();
     model.total_feed.unfix();
@@ -1281,7 +1285,9 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
             print('Optimization Complete\nPlease check the logs for details')
             master_log.write('Success: {}\n'.format(progress))
             with open('{}.pickle'.format(model_save_dir),'wb') as f:
-                dill.dump(model,f)
+                dill.dump(model,f,protocol=pickle.HIGHEST_PROTOCOL)
+            plot_distribution(model,pdf,progress)
+            plot_product_distribution(model,pdf)
 
     '''3-1
     '''
@@ -1297,7 +1303,7 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
                                     100*model.P_total['heavy']+\
                                     1.3*model.condenser.V['P']-\
                                     2.24*model.total_feed+\
-                                    0.5*(model.N_reflux_tray-1), sense = pe.maximize)
+                                    0.2*(model.N_reflux_tray-1), sense = pe.maximize)
 
     progress = '> One-step Optimization - Profit 3-1'
 
@@ -1321,6 +1327,8 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
         else:
             print('Optimization Complete\nPlease check the logs for details')
             master_log.write('Success: {}\n'.format(progress))
+            plot_distribution(model,pdf,progress)
+            plot_product_distribution(model,pdf)
 
     '''3-2
     '''
@@ -1360,3 +1368,5 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
         else:
             print('Optimization Complete\nPlease check the logs for details')
             master_log.write('Success: {}\n'.format(progress))
+            plot_distribution(model,pdf,progress)
+            plot_product_distribution(model,pdf)
