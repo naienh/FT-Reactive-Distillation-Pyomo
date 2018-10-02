@@ -1,0 +1,6 @@
+
+------------------------------------------------------------------------------------------------------------
+ATTENTION: NEW RUN BEGINNING
+2018-10-01 20:28:12
+log name: Preset_Case_431_pf
+Failed: > Working to adjust catalyst and feed, alpha = 0.84:

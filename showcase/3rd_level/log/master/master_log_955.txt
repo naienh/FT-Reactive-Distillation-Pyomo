@@ -1,0 +1,6 @@
+
+------------------------------------------------------------------------------------------------------------
+ATTENTION: NEW RUN BEGINNING
+2018-10-02 14:55:34
+log name: Preset_Case_955_pf
+Failed: > Working on adjusting stage 15 temperature to 230.00C 

@@ -1,0 +1,6 @@
+
+------------------------------------------------------------------------------------------------------------
+ATTENTION: NEW RUN BEGINNING
+2018-10-02 07:28:18
+log name: Preset_Case_742_pf
+Failed: > Working on stage 1, changing Q to 34.99:
