@@ -1245,6 +1245,10 @@ with PdfPages(log_figure_dir,keep_empty=False) as pdf, open(log_master_dir,'a') 
 
     model.N_reflux_tray.unfix();
     model.total_feed.unfix();
+    for j in model.TRAY_reactive:
+        model.reactive[j].F.unfix()
+        model.reactive[j].F.setlb(1e-3)
+        model.reactive[j].F.setub(30)    
 
     '''3
     '''
