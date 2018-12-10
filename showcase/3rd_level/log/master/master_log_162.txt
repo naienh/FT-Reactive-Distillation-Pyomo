@@ -1,0 +1,6 @@
+
+------------------------------------------------------------------------------------------------------------
+ATTENTION: NEW RUN BEGINNING
+2018-10-01 11:16:31
+log name: Preset_Case_162_pf
+Failed: > Working on adjusting stage 9 temperature to 230.00C 

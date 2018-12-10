@@ -1,0 +1,6 @@
+
+------------------------------------------------------------------------------------------------------------
+ATTENTION: NEW RUN BEGINNING
+2018-10-01 07:27:09
+log name: Preset_Case_41_pf
+Failed: > Working on stage 4, changing Q to 0.00:

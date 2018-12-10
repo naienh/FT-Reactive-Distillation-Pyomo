@@ -1,11 +1,14 @@
 from global_sets.component import m
 import os, sys
+import matplotlib
+if "DISPLAY" not in os.environ:
+    matplotlib.use("Agg")
 import copy
 import numpy as np
 from utility.data_utility import cal_MW, cal_cnumber
 from matplotlib import pyplot as plt
 from utility.model_utility import tray_translator
-# from matplotlib.backends.backend_pdf import PdfPages
+from matplotlib.backends.backend_pdf import PdfPages
 
 '''-----------------------------------------------------------------------------
 This can be used to duplicate the output to an external
@@ -439,9 +442,9 @@ def plot_distribution(model,open_log_pdf = None,title = None):
 
     if open_log_pdf:
         open_log_pdf.savefig()
-
-    plt.show()
-    plt.close(fig)
+    if "DISPLAY" in os.environ:
+        plt.show()
+    plt.close()
 
 def plot_product_distribution(model,open_log_pdf = None):
     tray_num = len(model.TRAY_total)
@@ -465,5 +468,30 @@ def plot_product_distribution(model,open_log_pdf = None):
     if open_log_pdf:
         open_log_pdf.savefig()
 
-    plt.show()
+    if "DISPLAY" in os.environ:
+        plt.show()
+    plt.close(fig)
+
+def plot_reflux_distribution(model,open_log_pdf = None):
+    tray_num = len(model.reactive)
+    tray_pos = np.arange(tray_num)
+
+    fig, ax = plt.subplots(figsize=(16,4))
+
+    reflux_flow = [model.reactive[j].L['R'].value for j in model.reactive]
+    ax.bar(tray_pos,reflux_flow,alpha=0.7)
+
+    ax.set_title('Reflux Distribution',fontsize=14)
+    ax.set_ylabel('Reflux Flow kmol/s',fontsize=14)
+
+    ax.set_xticks(tray_pos)
+    ax.set_xticklabels(['{:}'.format(j) for j in model.reactive])
+
+    ax.grid()
+
+    if open_log_pdf:
+        open_log_pdf.savefig()
+
+    if "DISPLAY" in os.environ:
+        plt.show()
     plt.close(fig)

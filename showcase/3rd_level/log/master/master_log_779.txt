@@ -1,0 +1,7 @@
+
+------------------------------------------------------------------------------------------------------------
+ATTENTION: NEW RUN BEGINNING
+2018-10-02 08:41:45
+log name: Preset_Case_779_pf
+Success: > Initialization
+Failed: > Added DDF formulation - Product

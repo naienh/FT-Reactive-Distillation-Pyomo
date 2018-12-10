@@ -1,0 +1,12 @@
+
+------------------------------------------------------------------------------------------------------------
+ATTENTION: NEW RUN BEGINNING
+2018-10-01 19:35:33
+log name: Preset_Case_407_pf
+Success: > Initialization
+Success: > Added DDF formulation - Product
+Success: > One-step Optimization - Revenue
+Success: > Added DDF formulation - Reflux
+Success: > One-step Optimization - Profit 3
+Success: > One-step Optimization - Profit 3-1
+Failed: > One-step Optimization - Profit 3-2
