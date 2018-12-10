@@ -7,7 +7,7 @@ compl_inf_tol 1
 nlp_scaling_min_value 1e-8
 # linear_system_scaling none
 
-# required_infeasibility_reduction 0.999999999999999
+required_infeasibility_reduction 0.999999999999999
 
 warm_start_bound_frac 1e-20
 warm_start_slack_bound_frac 1e-20

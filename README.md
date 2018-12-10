@@ -66,3 +66,67 @@ In this project, our goal is to build a **Fischer–Tropsch reactive distillatio
 * **columns:** This module is refered as `3rd level block` in this project. Here `2nd level stage blocks` are assembled and linked to simulate a reactive distillation column. For better support of presentations and data analysis, files in this section use  `Jupyter Notebook` format.
 
 * **Showcase:** Any completed model will be transfered to this section.
+
+
+```python
+# mass balance around each tray
+def mass_balance(model,j,i):
+    return model.F[j]*model.z[j,i] + model.r_total_comp[j,i] \
+           + model.L[j-1]*model.x[j-1,i] + model.V[j+1]*model.y[j+1,i]
+           == model.L[j]*model.x[j,i] + model.V[j]*model.y[j,i]
+# For all trays and all components
+model.mass_balance = pe.Constraint(model.TRAY,model.COMP_TOTAL,rule=mass_balance)
+```
+
+```python
+def gamma_rule(model,j,i):
+    return pe.log(model.gamma[j,i])*(model.n_ave[j] - u.cal_cnumber('C6H14')) == \
+            pe.log(model.gamma_ref[j])*(model.n_ave[j] - u.cal_cnumber(i))
+model.gamma_con = pe.Constraint(model.TRAY | model.COND | model.REBO, model.COMP_NONHENRY,rule=gamma_rule)
+```
+
+
+```python
+# deactivate henry components constraints
+model.f_L_HENRY_con.deavtivate()
+model.Hen_con.deactivate()
+model.Hen_ref_con.deactivate()
+# ...
+# activate activity coefficient constraints
+model.f_L_NONHENRY_con.activate()
+model.gamma_con.activate()
+model.P_sat_con.activate()
+# ...
+```
+```python
+# In 1st level physics block
+def VLE_block_rule(block):
+    # declare sets
+    block.COMP_HENRY = pe.Set(initialize=['H2','CO','CO2','H2O','C1H4','C2H6','C3H8','C2H4','C3H6'])
+    block.COMP_NONHENRY = m.COMP_TOTAL - block.COMP_HENRY
+    # ...    
+    # declare variables
+    block.Hen = pe.Var(block.COMP_HENRY,within=pe.NonNegativeReals,bounds=Hen_bounds)  # Bar
+    block.gamma = pe.Var(block.COMP_NONHENRY,within=pe.PositiveReals,initialize=0.1,bounds=gamma_bounds)
+    block.P_sat = pe.Var(block.COMP_NONHENRY,within=pe.PositiveReals,initialize=1e-10,bounds=P_sat_bounds)  # Bar
+    block.poynting = pe.Var(m.COMP_TOTAL,within=pe.Reals,bounds=poynting_bounds)
+    # ...
+    # declare equations
+    # henry component
+    def f_L_HENRY_rule(block,i):
+        return block.parent_block().f_L[i] == block.Hen[i]*block.parent_block().x[i]*block.poynting[i]
+    block.f_L_HENRY_con = pe.Constraint(block.COMP_HENRY,rule=f_L_HENRY_rule)
+
+    # henry's constant
+    def Hen_rule(block,i):
+        return block.Hen[i]*pe.exp(block.n_ave*e.henry.dHen[i]) == pe.exp(block.Hen0[i])
+    block.Hen_con = pe.Constraint(block.COMP_HENRY,rule=Hen_rule)
+
+
+# Kinetics Block
+block.kinetics_block = pe.Block(rule=kinetic_block_rule)
+# Energy Block
+block.energy_block = pe.Block(rule=energy_block_rule)
+# VLE block
+block.VLE_block = pe.Block(rule=VLE_block_rule)
+```
